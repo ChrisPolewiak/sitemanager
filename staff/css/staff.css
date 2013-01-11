@@ -1,0 +1,295 @@
+@import "/admin/css/staff-new.css";
+
+/*
+version: 4.00
+modify date: 2009-02-19
+*/
+
+#headTable {
+	height:35px;
+}
+.headTitle {
+	font-size:16px;
+	color:#FFFFFF;
+	font-weight:bold;
+}
+.headNav {
+	font-size:14px;
+	color:#F0F0F0;
+}
+.headInfo {
+	font-size:14px;
+	color:#FFFFFF;
+}
+a:hover.headInfo {
+	text-decoration:none;
+	color:#FFFFFF;
+}
+
+.navform {
+	font-family	: tahoma;
+	color		: #000000;
+	font-style	: normal;
+	font-weight	: bold;
+	font-size	: 12px;
+	text-decoration	: none;
+	background	: #ffffff;
+	border-color	: #c0c0c0;
+	border-style	: inset;
+	border-width	: 1px;
+	text-align	: right;
+}
+.navformb, a:link.navformb, a:active.navformb, a:visited.navformb {
+	font-family	: tahoma;
+	color		: #ffffff;
+	font-style	: normal;
+	font-weight	: bold;
+	font-size	: 11px;
+	text-decoration	: none;
+	background	: #3468A3;
+	border-color	: #c0c0c0;
+	border-style	: outset;
+	border-width	: 2px;
+	padding		: 2px;
+	text-align	: center;
+}
+.navformb:hover, a:hover.navformb {
+	font-family	: tahoma;
+	color		: #ffffff;
+	font-style	: normal;
+	font-weight	: bold;
+	font-size	: 11px;
+	text-decoration	: none; 
+	background	: #3468A3;
+	border-color	: #FF0000;
+	border-style	: outset;
+	border-width	: 2px;
+	padding		: 2px;
+	text-align:center;
+}
+
+button.navformb {
+	font-family	: tahoma;
+	color		: #f0f0f0;
+	font-style	: normal;
+	font-weight	: bold;
+	font-size	: 11px;
+	text-decoration	: none;
+	background	: #3468A3;
+	border-color	: #3468A3;
+	border-style	: outset;
+	border-width	: 2px;
+	padding		: 2px;
+	height		: 20px;
+	text-align	: center;
+	cursor		: pointer;
+	width		: 75px;
+}
+button.navformbdisabled {
+	font-family	: tahoma;
+	color		: #f0f0f0;
+	font-style	: normal;
+	font-weight	: bold;
+	font-size	: 11px;
+	text-decoration	: none;
+	background	: #c0c0c0; 
+	border-color	: #5488C3;
+	border-style	: outset;
+	border-width	: 1px;
+	padding		: 2px;
+	height		: 20px;
+	text-align	: center;
+	cursor		: pointer;
+	width		: 75px;
+}
+/*
+.form {
+	font-family	: "trebuchet ms",tahoma;
+	color		: #043873;
+	font-style	: normal;
+	font-weight	: bold;
+	font-size	: 11px;
+	text-decoration	: none; 
+	background	: #ffffff;
+	border-color	: #c0c0c0;
+	border-style	: inset;
+	border-width	: 1px;
+}
+*/
+
+
+input[disabled].formb {
+	font-family	: tahoma;
+	font-style	: normal;
+	font-weight	: bold;
+	font-size	: 13px;
+	text-decoration	: none;
+	color		: #cccccc;
+	border-color	: #808080;
+	background-color: #808080;
+	cursor		: default;
+	width		: 100px;
+	padding-left	: 5px;
+	padding-right	: 5px;
+}
+
+.app_name {
+	color		: #a66464;
+	font-weight	: bold;
+	font-size	: 16px;
+}
+.ca_name {
+	color		: #000000;
+	font-weight	: bold;
+	font-size	: 14px;
+}
+.tool_name {
+	color		: #ffffff;
+	font-weight	: bold;
+	font-size	: 14px;
+}
+.red {
+	color		: #ff2222;
+}
+.green {
+	color		: #40a040;
+}
+.gray {
+	color		: #999;
+}
+.se {
+	color		: #000000;
+	font-weight	: bold;
+	font-size	: 9px;
+	background-color: #ffff00;
+}
+div.title {
+	font-size: 16px;
+	background:#9ae0ff;
+	color:#0a6b94;
+	padding:0px 5px 0px 5px;
+	font-weight:bold;
+	margin:0px 2px 0px 2px;
+	border-top: dotted 1px #0a6b94;
+	border-left: dotted 1px #0a6b94;
+	border-right: dotted 1px #0a6b94;
+}
+.FormArea {
+	border-bottom: dotted 1px #0a6b94;
+	border-left: dotted 1px #0a6b94;
+	border-right: dotted 1px #0a6b94;
+	padding:3px;
+	margin:0px 2px 10px 2px;
+}
+
+.small {
+	font-size	: 9px;
+	text-decoration	: none;
+}
+
+a {
+	text-decoration	: underline;
+	color		: #000000;
+}
+a:hover {
+	text-decoration	: none;
+	color		: #000000;
+}
+a.white {
+	text-decoration : underline;
+	color		: #ffffff;
+}
+a:hover.white {
+	text-decoration	: none;
+	color		: #ffffff;
+	background	: #444444;
+}
+
+
+
+hr {
+	color		: #3468A3;
+	height		: 1px;
+}
+
+.text2button, a.text2button, a:hover.text2button {
+	display		: block;
+	width		: 150px;
+	text-align	: center;
+        font-family     : tahoma;
+        color           : #ffffff;
+        font-style      : normal;
+        font-weight     : bold;
+        font-size       : 11px;
+        text-decoration : none;
+        background      : #3468A3;
+        border-color    : #c0c0c0;
+        border-style    : outset;
+        border-width    : 2px;
+        padding         : 2px;
+}
+a:active.text2button {
+	display		: block;
+	width		: 150px;
+	text-align	: center;
+        font-family     : tahoma;
+        color           : #ffffff;
+        font-style      : normal;
+        font-weight     : bold;
+        font-size       : 11px;
+        text-decoration : none;
+        background      : #3468A3;
+        border-color    : #c0c0c0;
+        border-style    : inset;
+        border-width    : 2px;
+        padding         : 2px;
+}
+
+.Button a {
+	font-family: tahoma;
+	color: #fff;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 13px;
+	text-decoration: none;
+	border: 1px outset;
+	text-align: center;
+	background: #0a6b94;
+        cursor: pointer;
+	padding:2px;
+        padding-left: 10px;
+        padding-right: 10px;
+	margin:0px;
+}
+.Button a:hover {
+	border: 2px outset #000;
+	padding:1px;
+        padding-left: 9px;
+        padding-right: 9px;
+}
+
+.Paginator ul {
+	padding:0px;
+	margin:0px;
+}
+.Paginator li {
+	float:left;
+	list-style:none;
+}
+.Paginator a {
+	display:block;
+	margin:0 1 0 0;
+	padding:2 8 2 8;
+	text-decoration: none;
+	border:1px solid #eee;
+}
+.Paginator a:hover {
+	border:1px solid #444;
+}
+.Paginator a.selected {
+	border:1px solid #999;
+}
+form {
+	padding:0px;
+	margin:0px;
+}

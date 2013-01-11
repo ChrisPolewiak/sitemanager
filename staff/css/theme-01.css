@@ -1,0 +1,159 @@
+/*
+	COLORS
+	Color1	053b44
+	Color2	06736c
+	Color3	a53539
+	Color4	b9543c
+	Color5	ead075
+*/
+
+body {
+	color: #fff;
+	background: #000;
+}
+
+/* form elements border */
+fieldset {
+	border-color:#053b44 !important;
+}
+
+/* form elements background */
+fieldset {
+	background:#053b44;
+}
+
+/* form elements title */
+.fieldset-title {
+	background-color: #06736c !important;
+	color: #053b44;
+}
+
+/* left navigation title */
+#sm-main-menu .nav-header {
+	background: #053b44;
+}
+#sm-main-menu .nav-header a {
+	color: #06736c !important;
+	text-shadow: none !important;
+}
+#sm-main-menu .nav-header > a:hover {
+	background: #06736c !important;
+	color: #053b44 !important;
+}
+#sm-main-menu .menu-item a {
+	background: #ead075 !important;
+	color: #053b44 !important;
+	text-shadow: none !important;
+}
+#sm-main-menu .menu-item a:hover {
+	background: #053b44 !important;
+	color: #ead075 !important;
+}
+#sm-main-menu .menu-item.active a {
+	background: #b9543c !important;
+	color: #053b44 !important;
+}
+
+.control-group span.help-block,
+.checkbox span.help-block {
+	color: #bbb !important;
+}
+
+
+/* btn ok */
+.btn-info {
+	background: #053b44 !important;
+}
+.btn-info:hover {
+	background: #06736c !important;
+}
+/* btn danger */
+.btn-danger {
+	background: #bd362f !important;
+}
+.btn-danger:hover {
+	background: #ee5f5b !important;
+}
+
+.breadcrumb {
+	background: #053b44 !important;
+	border: none;
+}
+.breadcrumb li {
+	color: #06736c !important;
+	text-shadow: none !important;
+}
+.breadcrumb .divider {
+	color: #06736c !important;
+}
+.breadcrumb a {
+	color: #06736c !important;
+}
+
+/* top navbar */
+.navbar .navbar-inner {
+	background: #b9543c !important;
+	box-shadow: none !important;
+	border-color: #000 !important;
+}
+.navbar a {
+	color: #06736c !important;
+	text-shadow: none !important;
+}
+.navbar a:hover {
+	color: #06736c !important;
+	text-shadow: 1px 1px 0px #ccc !important;
+}
+
+.alert.alert-info {
+	background-color: #06736c;
+	border-color: #053b44;
+	color: #053b44;
+	text-shadow: none !important;
+}
+
+table.table, table.table th, table.table td {
+	border-color: #053b44 !important;
+}
+
+table.table thead th {
+	background-color: #053b44!important;
+	color: #06736c !important;
+}
+table.table .odd td {
+	background:#111 !important;
+}
+table.table .even td {
+	background:#222 !important;
+}
+
+a {
+	color:#b9543c;
+}
+a:hover {
+	color:#b9543c;
+}
+
+#footer {
+	background-color: #b9543c !important;
+}
+#footer .copyright {
+	color: #000;
+}
+
+.popover {
+	background: #000;
+	padding:0px;
+	border-radius: 0px !important;
+}
+.popover .arrow {
+	border-bottom-color:#000 !important;
+}
+.popover .popover-title {
+	background:#000 !important;
+	border-radius: 0px !important;
+}
+.popover .popover-content {
+	background:#053b44 !important;
+	border: none !important;
+}

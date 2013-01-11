@@ -1,0 +1,8 @@
+ErrorDocument   404     /error.php
+
+RewriteEngine On
+RewriteRule /dyncol(.*)$ /html/img/dynamicolor.php?$1 [PT]
+RewriteRule /0$  /html/img/_.gif [PT]
+RewriteRule ^0$  /html/img/_.gif [PT]
+RewriteCond %{HTTP_HOST} ^staff.* [OR]
+RewriteRule ^$ /staff/engine.php [L]
