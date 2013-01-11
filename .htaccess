@@ -1,0 +1,39 @@
+RewriteEngine On
+
+RewriteCond %{HTTP_HOST} ^staff.*
+RewriteRule ^$ /staff/engine.php [PT]
+
+RewriteRule ^admin/install(.*) /staff/img$1 [PT]
+RewriteRule ^admin/img(.*) /staff/img$1 [PT]
+RewriteRule ^admin/sqldata(.*) /html/sqldata$1 [PT]
+RewriteRule ^admin/css(.*) /staff/css$1 [PT]
+RewriteRule ^admin/font(.*) /staff/font$1 [PT]
+RewriteRule ^admin/js(.*) /staff/js$1 [PT]
+RewriteRule ^admin/static/(.*) /staff/js$1 [PT]
+RewriteRule ^admin/htmleditor(.*) /staff/htmleditor$1 [PT]
+RewriteRule ^admin(.*) /staff/engine.php/$1 [PT]
+
+RewriteRule /dyncol(.*)$  /html/img/dynamicolor.php?$1 [PT]
+RewriteRule ^dyncol(.*)$  /html/img/dynamicolor.php?$1 [PT]
+
+RewriteRule /0$  /html/img/_.gif [PT]
+RewriteRule ^0$  /html/img/_.gif [PT]
+
+RewriteRule ^cacheimg(.*)$ /engine.php?$1&core_action=cacheimage [PT]
+RewriteRule ^img(.*) /html/img$1 [PT]
+RewriteRule ^sqldata(.*) /html/sqldata$1 [PT]
+RewriteRule ^css(.*) /html/css$1 [PT]
+RewriteRule ^js(.*) /html/js$1 [PT]
+
+RewriteRule ^si(.*)     /engine.php/showimage/?param=$1 [PT]
+RewriteRule ^sf(.*)     /engine.php/showfile/?param=$1 [PT]
+
+RewriteCond %{REQUEST_URI}% !^/engine.php.*
+RewriteCond %{REQUEST_URI}% !^/html/img.*
+RewriteCond %{REQUEST_URI}% !^/html/sqldata.*
+RewriteCond %{REQUEST_URI}% !^/html/css.*
+RewriteCond %{REQUEST_URI}% !^/html/js.*
+RewriteCond %{REQUEST_URI}% !^/template*
+RewriteRule ^(.*)$ /engine.php/$1 [PT]
+
+AddType application/x-httpd-php .php .phtml .php3 .inc
