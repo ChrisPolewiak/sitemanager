@@ -61,11 +61,11 @@ if(!$table_cols) {
 //				echo "$k -> ".$row[$v]."|";
 				
 			}
-			$string .= "\"size\"=>\""   . sizeof(unserialize(stripslashes($row[$db."__path"]))) . "\",";
+			$string .= "\"size\"=>\""   . sizeof(json_decode( $row[$db."__path"], $assoc=true)) . "\",";
 			$string .= "\"path\"=>\"" . ereg_replace("(\")", "\\\"", $row[$db."__path"])."\");";
 
 			fputs($fp, $string);
-			$path = UnSerialize(StripSlashes($row[$db."__path"]));
+			$path = json_decode( $row[$db."__path"], $assoc=true);
 			$nazwa = "";
 			if (is_array($path)) {
 				foreach($path AS $key=>$val) { 
@@ -90,8 +90,8 @@ function filearray_generator( $db ) {
 	global $html_spec;
 
 	$html_spec = "";
-	$fp = fopen($ROOT_DIR."/include/genfiles/".$db."_tmp.inc","w") or error("nie moge otworzyc - ".$ROOT_DIR."/include/genfiles/".$db."_tmp.inc");
-	fputs($fp, "<?\n# include file\n");
+	$fp = fopen($ROOT_DIR."/cache/".$db."_tmp.php","w") or error("nie moge otworzyc - ".$ROOT_DIR."/cache/".$db."_tmp.php");
+	fputs($fp, "<"."?php\n# include file\n");
 	fputs($fp, "# DON'T EDIT\n");
 	fputs($fp, "#\n");
 	fputs($fp, "# ".$db."\n");
@@ -103,10 +103,10 @@ function filearray_generator( $db ) {
 	fputs($fp, "\n");
 	fputs($fp, "?".">");
 	fclose($fp);
-	if (file_exists($ROOT_DIR."/include/genfiles/".$db.".inc")){
-		unlink($ROOT_DIR."/include/genfiles/".$db.".inc");
+	if (file_exists($ROOT_DIR."/cache/".$db.".php")){
+		unlink($ROOT_DIR."/cache/".$db.".php");
 	}
-	rename($ROOT_DIR."/include/genfiles/".$db."_tmp.inc", $ROOT_DIR."/include/genfiles/".$db.".inc"); 
+	rename($ROOT_DIR."/cache/".$db."_tmp.php", $ROOT_DIR."/cache/".$db.".php"); 
 	return 1;
 }
 
@@ -118,16 +118,16 @@ function filearray_generator( $db ) {
 function xmlarray_generator( $db ) {
 	global $ROOT_DIR;
 
-	$fp = fopen($ROOT_DIR."/include/genfiles/".$db."_tmp.xml","w") or error("nie moge otworzyc - ".$ROOT_DIR."/include/genfiles/".$db."_tmp.xml");
+	$fp = fopen($ROOT_DIR."/cache/".$db."_tmp.xml","w") or error("nie moge otworzyc - ".$ROOT_DIR."/cache/".$db."_tmp.xml");
 	fputs($fp, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 	fputs($fp, "<".$db.">\n");
 	fputs($fp, xmlarray_generator_recurent(0, $db) );
 	fputs($fp, "</".$db.">\n");
 	fclose($fp);
-	if (file_exists($ROOT_DIR."/include/genfiles/".$db.".xml")){
-		unlink($ROOT_DIR."/include/genfiles/".$db.".xml");
+	if (file_exists($ROOT_DIR."/cache/".$db.".xml")){
+		unlink($ROOT_DIR."/cache/".$db.".xml");
 	}
-	rename($ROOT_DIR."/include/genfiles/".$db."_tmp.xml", $ROOT_DIR."/include/genfiles/".$db.".xml");
+	rename($ROOT_DIR."/cache/".$db."_tmp.xml", $ROOT_DIR."/cache/".$db.".xml");
 	return 1;
 }
 
@@ -156,7 +156,7 @@ if(!$table_cols) {
 	}
 }
 
-			$path = unserialize(stripslashes($row[$db."_path"]));
+			$path = json_decode($row[$db."_path"], $assoc=true);
 			$xml .= str_repeat("  ", sizeof($path));
 			$xml .= "<item size=\"".sizeof($path)."\" ";
 			$add_childs=false;
@@ -211,7 +211,7 @@ if(!$table_cols) {
 /**
  * @category	mail
  * @package		core
- * @version		5.0.0
+ * @version		5.0.1
 */
 function sm_serialize_array_generator_recurent( $id, $db ) {
 	global $html_spec;
@@ -239,11 +239,11 @@ function sm_serialize_array_generator_recurent( $id, $db ) {
 				"top"=>      $row[$db."__idtop"],
 				"stat1"=>    $ilosc,
 				"stat2"=>    $ilosc_by_cat,
-				"size"=>     sizeof(json_decode(stripslashes($row[$db."__path"]))),
+				"size"=>     sizeof(json_decode( $row[$db."__path"], $assoc=true)),
 				"name"=>     ereg_replace("(\")", "\\\"", $row[$db."__name"]),
 				"namelong"=> ereg_replace("(\")", "\\\"", $row[$db."__namelong"]),
 				"url"=>      ereg_replace("(\")", "\\\"", $row[$db."__url"]),
-				"path"=>     json_decode(stripslashes($row[$db."__path"])),
+				"path"=>     json_decode( $row[$db."__path"], $assoc=true),
 			);
 			if($row[$db."_params"]) {
 				$SERIALIZE_ARRAY[$row[$db."__id"]]["field_content_page__params"] = ereg_replace("(\")", "\\\"", $row[$db."__params"]);
@@ -262,7 +262,7 @@ function sm_serialize_array_generator( $db ) {
 	global $CACHE_DIR;
 	global $SERIALIZE_ARRAY;
 
-	$cache_file = $CACHE_DIR."/json-".$db.".cache";
+	$cache_file = $CACHE_DIR."/cache-".$db.".json";
 	
 	$fp = fopen($cache_file.".tmp","w") or trigger_error(__("core", "Nie mogę otworzyć").": ".$cache_file.".tmp", E_USER_ERROR);
 	sm_serialize_array_generator_recurent(0, $db);

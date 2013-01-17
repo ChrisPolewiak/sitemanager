@@ -63,7 +63,6 @@ function mail_html_default( $sender_name, $sender_email, $recipient_name, $recip
 	$xmailer .= " (plugin: ".$PLUGIN_CONFIG["shop"]["name"]." v.".$PLUGIN_CONFIG["shop"]["version"].")";
 
 	$return_to = $sender_email;
-	$arrSmtpConfig = array ( "sendmail_args" => "-f".$return_to );
 	$recipients = array($to);
 
 	// naglowki
@@ -72,6 +71,11 @@ function mail_html_default( $sender_name, $sender_email, $recipient_name, $recip
 		"Return-Path"		=> $return_to,
 		"Subject"		=> $subject,
 		"X-Mailer"		=> $xmailer,
+	);
+
+	$arrSmtpConfig = array (
+		"sendmail_args" => "-f".$return_to,
+		"From"			=> $sender_email,
 	);
 
 	$objMail = Mail::factory ( "mail", $arrSmtpConfig );
@@ -118,7 +122,7 @@ function mail_html_default( $sender_name, $sender_email, $recipient_name, $recip
 /**
  * sitemanager_mail
  *
- * @param	$contentmailtemplate_sysname  string     nazwa systemowa szablonu (contentmailtemplate)
+ * @param	$content_mailtemplate__sysname  string     nazwa systemowa szablonu (content_mailtemplate)
  * @param	$variables                    array   zmienne do podstawienia
  *	$variables = array(
  *		"imie" => "Jan",
@@ -145,13 +149,13 @@ function mail_html_default( $sender_name, $sender_email, $recipient_name, $recip
  * @package		core
  * @version		5.0.0
 */
-function sitemanager_mail( $contentmailtemplate_sysname, $variables, $sender_name, $sender_email, $recipient_name, $recipient_email, $subject, $cc, $bcc, $files) {
+function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_name, $sender_email, $recipient_name, $recipient_email, $subject, $cc, $bcc, $files) {
 	global $ROOT_DIR;
 
-	if( ! $contentmailtemplate = contentmailtemplate_get_by_sysname( $contentmailtemplate_sysname )) {
+	if( ! $content_mailtemplate = content_mailtemplate_get_by_sysname( $content_mailtemplate__sysname )) {
 		return 0;
 	}
-	$subject = $subject ? $subject : $contentmailtemplate["contentmailtemplate_name"];
+	$subject = $subject ? $subject : $content_mailtemplate["content_mailtemplate__name"];
 
 	require_once(SMARTY_DIR."/Smarty.class.php");
 	$smarty_mail =& new Smarty();
@@ -159,9 +163,10 @@ function sitemanager_mail( $contentmailtemplate_sysname, $variables, $sender_nam
 	$smarty_mail->compile_dir   = SMARTY_SITEMANAGER_DIR."/templates_c/";
 	$smarty_mail->setCaching(Smarty::CACHING_OFF);
 	$smarty_mail->assign("template", $variables);
-	$textbody = $smarty_mail->fetch("string:".$contentmailtemplate["contentmailtemplate_textbody"]);
+
+	$textbody = $smarty_mail->fetch("string:".$content_mailtemplate["content_mailtemplate__textbody"]);
 	$textbody = strip_tags($textbody);
-	$htmlbody = $smarty_mail->fetch("string:".$contentmailtemplate["contentmailtemplate_htmlbody"]);
+	$htmlbody = $smarty_mail->fetch("string:".$content_mailtemplate["content_mailtemplate__htmlbody"]);
 
 	// fetch inline images from template
 	$regexp = "<img\s[^>]*src=(\"??)([^\" >]*?)\\1[^>]*>";
@@ -173,19 +178,20 @@ function sitemanager_mail( $contentmailtemplate_sysname, $variables, $sender_nam
 		}
 	}
 
-	$senderaddr_from_template = $contentmailtemplate["contentmailtemplate_sender_email"];
+	$senderaddr_from_template = $content_mailtemplate["content_mailtemplate__sender_email"];
 	if( preg_match("/{\\\$template\.(.+)}/i", $senderaddr_from_template, $tmp) ) {
 		$senderaddr_from_template = $variables["mailform"][$tmp[1]];
 	}
 	$sender_email = $senderaddr_from_template ? $senderaddr_from_template : $sender_email;
 
-	$sendername_from_template = $contentmailtemplate["contentmailtemplate_sender_name"];
+
+	$sendername_from_template = $content_mailtemplate["content_mailtemplate__sender_name"];
 	if( preg_match("/{\\\$template\.(.+)}/i", $sendername_from_template, $tmp) ) {
 		$sendername_from_template = $variables["mailform"][$tmp[1]];
 	}
 	$sender_name = $sendername_from_template ? $sendername_from_template : $sender_name;
 
-	$subject_from_template = $contentmailtemplate["contentmailtemplate_subject"];
+	$subject_from_template = $content_mailtemplate["content_mailtemplate__subject"];
 	if( preg_match("/{\\\$template\.(.+)}/i", $subject_from_template, $tmp) ) {
 		$subject_from_template = $variables["mailform"][$tmp[1]];
 	}
@@ -193,8 +199,10 @@ function sitemanager_mail( $contentmailtemplate_sysname, $variables, $sender_nam
 
 	$subject   = "=?UTF-8?B?". base64_encode( $subject )."?=";
 
-	$from      = "\"=?UTF-8?B?". base64_encode( $sender_name )."?=\"";
-	$from     .= " <". $sender_email .">";
+	$from      = "=?UTF-8?B?". base64_encode( $sender_name ) ."?=";
+	$from     .= "<". $sender_email .">";
+
+	$from      = "<". $sender_email .">";
 
 	$arrMailEncoding = array (
 		"html_charset" => "UTF-8",
@@ -206,12 +214,25 @@ function sitemanager_mail( $contentmailtemplate_sysname, $variables, $sender_nam
 	$xmailer .= " v. ".$SOFTWARE_INFORMATION["version"];
 
 	$return_to = $sender_email;
-	$arrSmtpConfig = array ( "sendmail_args" => "-f".$return_to );
+
+echo "<xmp>";
+echo "from:'$from' <br>\n";
+echo "sender_email:'$sender_email' <br>\n";
+echo "return_to:'$return_to' <br>\n";
+echo "</xmp>";
+
+	$arrSmtpConfig = array (
+		"sendmail_args" => "-f ".$return_to
+	);
+
+
+//=?iso-8859-1?B?Q1dKb2JzLmNvLnVr?=<cwjobs@newsletter.cwjobsmail.co.uk>
+
 
 	// naglowki
 	$arrHeaders = array(
 		"From"			=> $from,
-		"Return-Path"		=> $return_to,
+		"Return-Path"	=> $return_to,
 		"Subject"		=> $subject,
 		"X-Mailer"		=> $xmailer,
 	);
@@ -245,41 +266,37 @@ function sitemanager_mail( $contentmailtemplate_sysname, $variables, $sender_nam
 		$htmlbody = preg_replace($html_image_search, $html_image_replace, $htmlbody);
 	}
 	
-	if (isset($_FILES['mailform_files']))
-	{
+	if (isset($_FILES["mailform_files"])) {
 		
 		global $MIME_TYPES;
-		$filesArray = $_FILES['mailform_files'];
+		$filesArray = $_FILES["mailform_files"];
 		$filesCounter2 = 0;
-		foreach ($filesArray as $key => $value)
-		{
-			foreach ($value as $val)
-			{
+		foreach ($filesArray as $key => $value) {
+			foreach ($value as $val) {
 				$tempFiles[$filesCounter2][$key] = $val;
 				$filesCounter2++;
 			}
 			$filesCounter2 = 0;
 		}
-		$tempDir = $ROOT_DIR.'/temp';
+		$tempDir = $ROOT_DIR."/temp";
 		
 		rmdir($tempDir);
 		mkdir($tempDir, 0777);
-		foreach ($tempFiles as $key => $value)
-		{
-			$filesToDelete[] = $tempDir.'/'.$tempFiles[$key]['name'];
-			move_uploaded_file($tempFiles[$key]['tmp_name'], $filesToDelete[$key]);
+		foreach ($tempFiles as $key => $value) {
+			$filesToDelete[] = $tempDir."/".$tempFiles[$key]["name"];
+			move_uploaded_file($tempFiles[$key]["tmp_name"], $filesToDelete[$key]);
 			
-			$files[$key]['disposition'] = 'attachment';
-			$files[$key]['filepath'] = $filesToDelete[$key];
-			$files[$key]['contenttype'] = $tempFiles[$key]['type'];
-			$files[$key]['filename'] = $tempFiles[$key]['name'];
+			$files[$key]["disposition"] = "attachment";
+			$files[$key]["filepath"] = $filesToDelete[$key];
+			$files[$key]["contenttype"] = $tempFiles[$key]["type"];
+			$files[$key]["filename"] = $tempFiles[$key]["name"];
 		}
 		
 	}
 	
-	if(is_array($files)){
+	if(is_array($files)) {
 		foreach ($files AS $fileid=>$file) {
-			if($file["disposition"] == "attachment"){
+			if($file["disposition"] == "attachment") {
 				$objMime->addAttachment(
 					$file["filepath"],
 					$file["contenttype"],
@@ -305,24 +322,24 @@ function sitemanager_mail( $contentmailtemplate_sysname, $variables, $sender_nam
 		$objMime->setHTMLBody ($htmlbody);
 	}
 
-	if($result = contentmailtemplate2contentuser_fetch_by_contentmailtemplate($contentmailtemplate["id_contentmailtemplate"])) {
+	if($result = content_mailtemplate2content_user_fetch_by_content_mailtemplate($content_mailtemplate["content_mailtemplate__id"])) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 			$recipients_from_template[] = array(
-				"name" => $row["contentuser_firstname"]." ".$row["contentuser_surname"],
-				"addr" => $row["contentuser_email"],
+				"name" => $row["content_user__firstname"]." ".$row["content_user__surname"],
+				"addr" => $row["content_user__email"],
 			);
 		}
 	}
 	if(is_array($recipients_from_template)) {
 		foreach($recipients_from_template AS $recipient) {
-			$to  = "\"=?UTF-8?B?". base64_encode( $recipient["name"] ) ."?=\"";
-			$to .= " <". $recipient["addr"] .">";
+			$to  = "=?UTF-8?B?". base64_encode( $recipient["name"] ) ."?=";
+			$to .= "<". $recipient["addr"] .">";
 			$recipients[] = $to;
 		}
 	}
 	else {
-		$to  = "\"=?UTF-8?B?". base64_encode( $recipient_name )."?=\"";
-		$to .= " <". $recipient_email .">";
+		$to  = "=?UTF-8?B?". base64_encode( $recipient_name )."?=";
+		$to .= "<". $recipient_email .">";
 		$recipients = array($to);
 	}
 
@@ -332,8 +349,6 @@ function sitemanager_mail( $contentmailtemplate_sysname, $variables, $sender_nam
 		$arrHeaders = $objMime->headers ( $arrHeaders );
 		$objError = $objMail->send ( $recipient, $arrHeaders, $mailBody );
 	}
-	
-	
 
 	if(is_array($objError)){
 		return $objError;

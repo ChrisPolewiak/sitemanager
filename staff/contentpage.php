@@ -94,11 +94,16 @@ if(!$ERROR) {
 		unset($dane);
 		$action["generator"]=1;
 	}
+	elseif ( isset($action["refresh"]) ) {
+		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
+		$content_page__id = content_page_refresh();
+		$action["generator"]=1;
+	}
 
 	if( isset($action["generator"])) {
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 
-		set_time_limit(5);
+		set_time_limit(60);
 		filearray_generator( "content_page" );
 		xmlarray_generator( "content_page" );
 		header("Location: ".$ENGINE."/".$page."?content_page__id=$content_page__id&amp;MESSAGE=$MESSAGE");
@@ -208,7 +213,8 @@ echo "</pre>";
 <? sm_contentpage_treeview(); ?>
 
 							<div class="btn-toolbar">
-								<a class="btn btn-normal btn-info" id="action-edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "ZAPISZ UKŁAD")?></a>
+								<a class="btn btn-normal btn-info" id="action-edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__SAVE")?></a>
+								<a class="btn btn-normal btn-info" id="action-refresh"><i class="icon-refresh icon-white"></i>&nbsp;<?=__("core", "BUTTON__REFRESH")?></a>
 							</div>
 						</fieldset>
 					</form>	
@@ -251,6 +257,12 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	$('#action-refresh').click(function() {
+		$('#sm-form').append('<input type="hidden" name="action[refresh]" value=1>');
+		$('#sm-form').submit();
+	});
+
 });
 </script>
 <?
@@ -523,13 +535,14 @@ $(document).ready(
 <?	} ?>
 <script>
 $('#action-edit').click(function() {
-	$('#sm-form').append('<input type="text" name="action[edit]" value=1>');
+	$('#sm-form').append('<input type="hidden" name="action[edit]" value=1>');
 	$('#sm-form').submit();
 });
 $('#action-delete').click(function() {
 	$('#sm-form').append('<input type="hidden" name="action[delete]" value=1>');
 	$('#sm-form').submit();
 });
+
 $('#action-add').click(function() {
 	$('#sm-form').append('<input type="hidden" name="action[add]" value=1>');
 	$('#sm-form').submit();

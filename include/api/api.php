@@ -36,8 +36,10 @@ if(is_array( $API[$apiMethod] ) ) {
 	}
 	else {
 		if( $_api["acl"] && $_REQUEST[ "sessionid" ] ) {
-			$SESSION = sql_session_dane( $_REQUEST[ "sessionid" ] );
-			sm_core_auth__create_sessiondata( $_SESSION["content_user"]["content_user__id"] );
+			$tmp_session = core_session_dane( $_REQUEST[ "sessionid" ] );
+			$tmp_session = root_session_decode( $tmp_session );
+
+			sm_core_auth__create_sessiondata( $tmp_session["content_user"]["content_user__id"] );
 
 			if ( ! sm_core_content_user_accesscheck( $_api["acl"], $error=false ) ) {
 				$response = array( "error"=>"Access Denied. Required ACL '".$_api["acl"]."'.", );

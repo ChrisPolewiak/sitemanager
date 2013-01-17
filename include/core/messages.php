@@ -246,6 +246,7 @@ function sqlerr( $functioname ) {
 	$tmp = func_get_args();
 	$PDO_ERROR = $tmp[2];
 	trigger_error("SQL ERROR", E_USER_ERROR);
+	exit;
 }
 
 $ERROR_TYPES = array(

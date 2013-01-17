@@ -8,11 +8,11 @@
  * @category	content_page
  */
 
-if (is_file($ROOT_DIR."/include/genfiles/content_page.inc")) {
-	include $ROOT_DIR."/include/genfiles/content_page.inc";
+if (is_file($ROOT_DIR."/cache/content_page.php")) {
+	include $ROOT_DIR."/cache/content_page.php";
 }
-if (is_file($ROOT_DIR."/include/genfiles/content_page.xml")) {
-	$XML_CONTENT_PAGE = simplexml_load_file($ROOT_DIR."/include/genfiles/content_page.xml");
+if (is_file($ROOT_DIR."/cache/content_page.xml")) {
+	$XML_CONTENT_PAGE = simplexml_load_file($ROOT_DIR."/cache/content_page.xml");
 }
 
 /**
@@ -248,7 +248,7 @@ function content_page_reorder( $content_page__id, $content_page__idparent, $cont
 	$content_page = content_page_get( $content_page__id );
 	if( $content_page__idparent ) {
 		$content_page_parent = content_page_get( $content_page__idparent );
-		$_path = Unserialize($content_page_parent["content_page__path"]);
+		$_path = json_decode($content_page_parent["content_page__path"], $assoc=true);
 
 		foreach($_path AS $k=>$v) {
 			$content_page__path[] = array(
@@ -265,7 +265,7 @@ function content_page_reorder( $content_page__id, $content_page__idparent, $cont
 	$SQL_QUERY .= " content_page__idparent='" . sm_secure_string_sql( $content_page__idparent ). "', \n";
 	$SQL_QUERY .= " content_page__idtop='" . sm_secure_string_sql( $content_page__idtop ). "', \n";
 	$SQL_QUERY .= " content_page__order='" . sm_secure_string_sql( $content_page__order ). "', \n";
-	$SQL_QUERY .= " content_page__path='" . sm_secure_string_sql(Serialize($content_page__path)). "' \n";
+	$SQL_QUERY .= " content_page__path='" . sm_secure_string_sql(json_encode($content_page__path)). "' \n";
 	$SQL_QUERY .= "WHERE content_page__id = '". sm_secure_string_sql( $content_page__id ) ."' \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_page_reorder()",$SQL_QUERY,$e); }
@@ -313,7 +313,7 @@ function content_page_edit( $dane="" ) {
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_page__description"])."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_page__keywords"])."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_page__lang"])."', \n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( Serialize($content_page__path))."', \n";
+	$SQL_QUERY .= "'". sm_secure_string_sql( json_encode($content_page__path))."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_template__id"])."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_page__params"])."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_page__hostallow"])."', \n";
@@ -508,7 +508,7 @@ function content_page_unserialize($content_page__id) {
 		$content_page = content_page_get( $content_page__id );
 		$temp_ser_path = $content_page["content_page__path"];
 		if( isset( $temp_ser_path ) ) {
-			$temp_path = unserialize( $temp_ser_path );
+			$temp_path = json_decode($temp_ser_path, $assoc=true);
 			if( is_array( $temp_path ) ) {
 				$temp_full_path = "";
 				$cnt = sizeof( $temp_path );
@@ -651,4 +651,20 @@ function content_page_get_by_url( $content_page__url ) {
 		return $row["content_page__id"];
 	}
 }
+
+/**
+ * @category	content_page
+ * @package		sql
+ * @version		5.0.0
+*/
+function content_page_refresh() {
+	global $CONTENT_PAGE;
+
+	if($result = content_page_fetch_all() ) {
+		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+			content_page_reorder( $row["content_page__id"], $row["content_page__idparent"], $row["content_page__order"]);
+		}
+	}
+}
+	
 ?>

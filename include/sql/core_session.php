@@ -16,8 +16,10 @@
 function core_session_dane($core_session__sid) {
 	global $SESSION_LIFE;
 
-#	$SQL_QUERY  = "SELECT AES_DECRYPT(core_session__data,'".SM_DATA_ENCRYPTION_KEY."') AS core_session__data \n";
-	$SQL_QUERY  = "SELECT core_session__data \n";
+	core_session_delete_old();
+
+	$SQL_QUERY  = "SELECT AES_DECRYPT(core_session__data,'".SM_DATA_ENCRYPTION_KEY."') AS core_session__data \n";
+#	$SQL_QUERY  = "SELECT core_session__data \n";
 	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_core_session \n";
 	$SQL_QUERY .= "WHERE core_session__sid = '".$core_session__sid."' \n";
 	$SQL_QUERY .= "  AND UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(core_session__lastused) < ".$SESSION_LIFE." \n";
@@ -40,15 +42,22 @@ function core_session_dane($core_session__sid) {
 function core_session_edit($core_session__sid, $SESSION) {
 	global $DB_ENGINE,$DB_NAME,$DB_SERVER,$DB_USER,$DB_PASS;
 
-	$GLOBALS["SM_PDO"] = new PDO($DB_ENGINE .":dbname=". $DB_NAME .";host=". $DB_SERVER, $DB_USER, $DB_PASS);
+
+$fp = fopen("/tmp/session_log.txt","a");
+fputs($fp, date("Y-m-d H:i:s")."\n");
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_core_session VALUES ( \n";
 	$SQL_QUERY .= "'".$core_session__sid."', \n";
-#	$SQL_QUERY .= "AES_ENCRYPT('".AddSlashes($SESSION)."','".SM_DATA_ENCRYPTION_KEY."'), \n";
-	$SQL_QUERY .= "'".$SESSION."', \n";
+	$SQL_QUERY .= "AES_ENCRYPT('".$SESSION."','".SM_DATA_ENCRYPTION_KEY."'), \n";
+#	$SQL_QUERY .= "'".$SESSION."', \n";
 	$SQL_QUERY .= "'".$_SERVER["REMOTE_ADDR"]."', \n";
 	$SQL_QUERY .= "'".sm_secure_string_sql($_SERVER["HTTP_USER_AGENT"])."', \n";
 	$SQL_QUERY .= "NULL)\n";
+
+fputs($fp, "\n");
+fputs($fp, $SQL_QUERY);
+fputs($fp, "\n");
+fclose($fp);
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_tags_fetch_all()",$SQL_QUERY,$e); }
 

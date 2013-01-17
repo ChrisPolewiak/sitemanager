@@ -16,7 +16,7 @@
 function sm_core_serialize_data( $array_data, $name ) {
 	global $CACHE_DIR;
 
-	$cache_file = $CACHE_DIR."/json-".$name.".cache";
+	$cache_file = $CACHE_DIR."/cache-".$name.".json";
 	$fp = fopen($cache_file.".tmp","w") or trigger_error(__("core", "Nie mogę otworzyć").": ".$cache_file.".tmp", E_USER_ERROR);
 	fputs($fp, json_encode($array_data));
 	fclose($fp);
@@ -35,8 +35,8 @@ function sm_core_serialize_data( $array_data, $name ) {
 function sm_core_unserialize_data( $name ) {
 	global $CACHE_DIR;
 
-	if(is_file($CACHE_DIR."/json-".$name.".cache")) {
-		$file = file($CACHE_DIR."/json-".$name.".cache");
+	if(is_file($CACHE_DIR."/cache-".$name.".json")) {
+		$file = file($CACHE_DIR."/cache-".$name.".json");
 		return json_decode($file[0], $assoc=true);
 	}
 }

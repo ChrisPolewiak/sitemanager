@@ -121,13 +121,9 @@ elseif ($PAGES_ALLOW[$page]) {
 		switch($part["extension"]) {
 			case "tpl":
 
-				define("SMARTY_DIR", $INCLUDE_DIR."/smarty/");
-				define("SMARTY_SITEMANAGER_DIR", $ROOT_DIR."/include/smarty");
-				define("SMARTY_TEMPLATES", $ROOT_DIR."/html/pages");
-
 				$smarty = new Smarty();
 				$smarty->assign("CONTENT_PAGE__ID", $PAGES_ALLOW[$page]["content_page__id"] );
-				$smarty->assign("SITE_TITLE", $PAGES_ALLOW[$page]["content_page__title"] ? $SITE_TITLE . " - " . $PAGES_ALLOW[$page]["content_page__title"] : $SITE_TITLE );
+				$smarty->assign("SITE_TITLE", $SITE_TITLE );
 				$smarty->assign("SITE_DESCRIPTION", $PAGES_ALLOW[$page]["content_page__description"] ? $PAGES_ALLOW[$page]["content_page__description"] : $SITE_DESCRIPTION );
 				$smarty->assign("SITE_KEYWORDS", $PAGES_ALLOW[$page]["content_page__keywords"] ? $PAGES_ALLOW[$page]["content_page__keywords"] : $SITE_KEYWORD );
 				$smarty->assign("CONTENT_PAGE", $PAGES_ALLOW[$page] );
@@ -140,7 +136,6 @@ elseif ($PAGES_ALLOW[$page]) {
 				$TEMPLATE_PATH = $ROOT_DIR."/html/pages/".$SM_LANG;
 				$CONTENT_PAGE__ID = $PAGES_ALLOW[$page]["content_page__id"];
 				$content_page__params = $PAGES_ALLOW[$page]["params"];
-				$SITE_TITLE = $PAGES_ALLOW[$page]["content_page__title"] ? $SITE_TITLE . " - " . $PAGES_ALLOW[$page]["content_page__title"] : $SITE_TITLE;
 				$SITE_DESCRIPTION = $PAGES_ALLOW[$page]["content_page__description"] ? $PAGES_ALLOW[$page]["content_page__description"] : $SITE_DESCRIPTION;
 				$SITE_KEYWORDS = $PAGES_ALLOW[$page]["content_page__keywords"] ? $PAGES_ALLOW[$page]["content_page__keywords"] : $SITE_KEYWORD;
 				require $ROOT_DIR."/html/pages/".$SM_LANG."/".$PAGES_ALLOW[$page]["content_template__srcfile"];

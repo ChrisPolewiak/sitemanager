@@ -227,7 +227,7 @@ function content_category_edit( $dane="" ) {
 	$SQL_QUERY .= "'". sm_secure_string_sql( $parent["content_category__idparent"])."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_category__name"])."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_category__comment"])."', \n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( Serialize($content_category__path))."', \n";
+	$SQL_QUERY .= "'". sm_secure_string_sql( json_encode($content_category__path))."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $content_category__idtop)."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_category__order"])."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__id"])."', \n";
@@ -399,7 +399,7 @@ function content_category_unserialize($content_category__id) {
 		$content_category = content_category_get( $content_category__id );
 		$temp_ser_path = $content_category["content_category__path"];
 		if( isset( $temp_ser_path ) ) {
-			$temp_path = unserialize( $temp_ser_path );
+			$temp_path = json_decode($temp_ser_path, $assoc=true);
 			if( is_array( $temp_path ) ) {
 				$temp_full_path = "";
 				$cnt = sizeof( $temp_path );

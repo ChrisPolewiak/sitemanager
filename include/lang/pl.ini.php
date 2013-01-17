@@ -15,6 +15,7 @@ BUTTON__RESTORE = "odtwórz"
 BUTTON__ADD_NEW = "dodaj nowy rekord"
 BUTTON__ADD = "dodaj"
 BUTTON__LOGOUT = "wyloguj się"
+BUTTON__MARSHAL = "uporządkuj dane"
 
 [CORE_TRANSLATION]
 CORE_TRANSLATION__SECTION_CONFIG = "Definicja języka"

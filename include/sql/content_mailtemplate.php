@@ -27,6 +27,7 @@ function content_mailtemplate_edit( $dane ) {
 	$dane = trimall($dane);
 
 	if ($dane["content_mailtemplate__id"]) {
+
 		$tmp_dane = content_mailtemplate_dane( $dane["content_mailtemplate__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
@@ -37,8 +38,6 @@ function content_mailtemplate_edit( $dane ) {
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
 	}
 
-	$dane["record_create_date"] = $dane["content_mailtemplate__id"] ? $tmp_dane["record_create_date"] : time();
-	$dane["record_create_id"]   = $dane["content_mailtemplate__id"] ? $tmp_dane["record_create_id"]   : $_SESSION["content_user"]["content_user__id"];
 	$dane["record_modify_date"] = time();
 	$dane["record_modify_id"] = $_SESSION["content_user"]["content_user__id"];
 

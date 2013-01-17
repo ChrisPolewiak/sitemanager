@@ -11,13 +11,13 @@
 /**
  * @category	phpextended
  * @package		core
- * @version		5.0.0
+ * @version		5.0.1
 */
 function sm_secure_string_sql( $string ) {
 
 	// http://www.symantec.com/connect/articles/detection-sql-injection-and-cross-site-scripting-attacks
 	// Regex for detection of SQL meta-characters
-	$string = preg_replace( "/((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(;))/i", "", $string );
+	//	$string = preg_replace( "/((\%3D)|(=))[^\n]*((\%27)|(\')|(\-\-)|(\%3B)|(;))/i", "", $string );
 
 	// Regex for typical SQL Injection attack
 	$string = preg_replace( "/\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/ix", "", $string );
@@ -478,6 +478,11 @@ function getmicrotime(){
  *
  *	Autor: john tindell (http://www.mindlessant.co.uk/)
  *
+ *  1 - weak
+ *  2 - not weak
+ *  3 - acceptable
+ *  4 - strong
+ *
  * @category	phpextended
  * @package		core
  * @version		5.0.0
@@ -492,10 +497,6 @@ function CheckPasswordStrength($password) {
 	}
 	return $strength;
 
-	// 1 - weak
-	// 2 - not weak
-	// 3 - acceptable
-	// 4 - strong
 }
 
 /**

@@ -67,6 +67,11 @@ $SOFTWARE_INFORMATION = array(
 
 $BACKUP_DIR = $BACKUP_DIR ? $BACKUP_DIR : $ROOT_DIR."/backup";
 
+// Smarty
+define("SMARTY_DIR", $INCLUDE_DIR."/smarty/");
+define("SMARTY_SITEMANAGER_DIR", $ROOT_DIR."/include/smarty");
+define("SMARTY_TEMPLATES", $ROOT_DIR."/html/pages");
+
 $IMG_PATH = "/img";
 
 // init VARS
@@ -82,7 +87,8 @@ require $INCLUDE_DIR."/vars/init.php";
  * SQL CONNECT
  */
 try { $SM_PDO = new PDO($DB_ENGINE .":dbname=". $DB_NAME .";host=". $DB_SERVER, $DB_USER, $DB_PASS); } catch(PDOException $e) { error("Connection failed: " . $e->getMessage() ); }
-// $SM_PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// PDO Error handling
+$SM_PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $SM_PDO->query("SET NAMES 'utf8'");
 
 require $INCLUDE_DIR."/sql/init.php";
