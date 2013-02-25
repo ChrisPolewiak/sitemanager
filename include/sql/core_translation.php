@@ -14,9 +14,11 @@ function core_translation_edit( $dane ) {
 
 	if ($dane["core_translation__id"]) {
 		$tmp_dane = core_translation__dane( $dane["core_translation__id"] );
+		core_changed_add( $core_translation__id, "core_translation", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["core_translation__id"] = uuid();
+		core_changed_add( $core_translation__id, "core_translation", $tmp_dane="", "add" );
 	}
 
 	$dane["record_create_date"] = $dane["core_translation__id"] ? $tmp_dane["record_create_date"] : time();
@@ -48,7 +50,7 @@ function core_translation_edit( $dane ) {
 function core_translation_delete( $core_translation__id ) {
 
 	if ($deleted = core_translation_dane( $core_translation__id ) ) {
-		core_deleted_add( $core_translation__id, "core_translation", $deleted );
+		core_changed_add( $core_translation__id, "core_translation", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_core_translation \n";

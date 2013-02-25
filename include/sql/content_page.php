@@ -123,6 +123,8 @@ function content_page_add( $dane ) {
 		$ERROR[] = "Brak nazwy ";
 	}
 
+	core_changed_add( $dane["content_page__id"], "content_page", $tmp_dane="", "add" );
+
 	if( is_array( $ERROR ) ) return false;
 
 	$dane["record_create_date"] = time();
@@ -174,7 +176,7 @@ function content_page_add( $dane ) {
 /**
  * @category	content_page
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_page_change( $dane ) {
 
@@ -182,6 +184,7 @@ function content_page_change( $dane ) {
 		$tmp_content_page = content_page_get($dane["content_page__id"]);
 		$dane["content_page__idtop"] = $tmp_content_page["content_page__idtop"];
 		$dane["content_page__path"] = $tmp_content_page["content_page__path"];
+		core_changed_add( $dane["content_page__id"], "content_page", $tmp_dane, "edit" );
 	}
 
 	$dane["content_page__order"] = isset($dane["content_page__order"]) ? $dane["content_page__order"] : $tmp_content_page["content_page__order"];
@@ -232,7 +235,7 @@ function content_page_change( $dane ) {
 /**
  * @category	content_page
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_page_reorder( $content_page__id, $content_page__idparent, $content_page__order) {
 
@@ -276,7 +279,7 @@ function content_page_reorder( $content_page__id, $content_page__idparent, $cont
 /**
  * @category	content_page
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_page_edit( $dane="" ) {
 	global $KAT_COUNT, $KAT_CURRENT, $KAT_TOP, $KAT_REST_COUNT, $KAT_REST, $KAT_ALL, $ERROR;
@@ -360,7 +363,7 @@ function content_page_delete( $content_page__id ) {
 		return false;
 
 	if ($deleted = content_page_get( $content_page__id ) ) {
-		core_deleted_add( $content_page__id, "content_page", $deleted );
+		core_changed_addadd( $content_page__id, "content_page", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_page \n";
@@ -498,7 +501,7 @@ function content_page_show_all_parent( $id_parent ) {
 /**
  * @category	content_page
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_page_unserialize($content_page__id) {
 
@@ -636,7 +639,7 @@ function content_page_get_by_name( $content_page__name ) {
 /**
  * @category	content_page
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_page_get_by_url( $content_page__url ) {
 
@@ -655,7 +658,7 @@ function content_page_get_by_url( $content_page__url ) {
 /**
  * @category	content_page
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_page_refresh() {
 	global $CONTENT_PAGE;

@@ -310,7 +310,7 @@ $('#tabs').ready(function() {
 										<div class="span2">
 <?
 	$inputfield_options=array();
-	foreach($SITE_LANG AS $k=>$v) {
+	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
 		$inputfield_options[ $k ]=$v;
 	}
 ?>

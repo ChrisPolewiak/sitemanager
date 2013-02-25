@@ -20,7 +20,7 @@ require "_header.php";
 							<?=__("core", "Język")?>:
 							<select name="admin_lang" OnChange="submit()" style="width:50px">
 <?
-	foreach($SITE_LANG AS $k=>$v) {
+	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
 		echo "<option value=\"$k\"".($k==$admin_lang?" selected":"")."> $k </option>";
 	}
 ?>

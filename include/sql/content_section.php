@@ -30,11 +30,13 @@ function content_section_edit( $dane ) {
 		$tmp_dane = content_section_dane( $dane["content_section__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_section__id"], "content_section", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_section__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_section__id"], "content_section", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -64,7 +66,7 @@ function content_section_edit( $dane ) {
 function content_section_delete( $content_section__id ) {
 
 	if ($deleted = content_section_dane( $content_section__id ) ) {
-		core_deleted_add( $content_section__id, "content_section", $deleted );
+		core_changed_add( $content_section__id, "content_section", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_section \n";

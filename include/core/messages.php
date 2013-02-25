@@ -239,7 +239,7 @@ function syserr( $text ) {
 /**
  * @category	messages
  * @package		core
- * @version		5.0.0
+ * @version		5.0.1
 */
 function sqlerr( $functioname ) {
 	global $PDO_ERROR;

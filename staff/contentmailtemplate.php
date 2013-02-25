@@ -222,7 +222,7 @@ $('#mail2content_user_name').autocomplete({
 </script>
 												</td>
 												<td>
-													<a href="#" OnClick="window.location='?content_mailtemplate__id=<?=$content_mailtemplate__id?>&content_user__id=' + document.getElementById('Mail2content_userId').value + '&action[mail2user_add]=1'"><?=__("core", "dodaj")?></a>
+													<a href="#" OnClick="window.location='?content_mailtemplate__id=<?=$content_mailtemplate__id?>&content_user__id=' + document.getElementById('Mail2content_userId').value + '&action[mail2user_add]=1'"><?=__("CORE", "BUTTON__SAVE")?></a>
 												</td>
 											</tr>
 										</tfoot>

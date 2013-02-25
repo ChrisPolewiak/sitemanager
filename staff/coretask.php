@@ -77,7 +77,7 @@ if (!$core_task__id && $core_task__id!="0") {
 						</tfoot>
 							<tr>
 								<td colspan=5>
-									<a class="admin-button" href="?core_task__id=0"><span><?=__("core", "Nowy rekord")?></span></a>
+									<a class="admin-button" href="?core_task__id=0"><span><?=__("CORE", "BUTTON__ADD_NEW")?></span></a>
 								</td>
 							</tr>
 						</tfoot>
@@ -89,7 +89,7 @@ else {
 					<div class="btn-toolbar">
 						<div class="btn-group">
 							<a class="btn btn-small btn-info" href="?"><i class="icon-list icon-white"></i>&nbsp;<?=__("core", "BUTTON__BACK_TO_LIST")?></a>
-							<a class="btn btn-small btn-info" href="?core_task__id=0"><i class="icon-plus-sign icon-white"></i>&nbsp;<?=__("core", "Nowy rekord")?></a>
+							<a class="btn btn-small btn-info" href="?core_task__id=0"><i class="icon-plus-sign icon-white"></i>&nbsp;<?=__("CORE", "BUTTON__ADD_NEW")?></a>
 						</div>
 					</div>
 
@@ -106,7 +106,7 @@ else {
 							<a class="btn btn-normal btn-info" id="action-edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__SAVE")?></a>
 							<a class="btn btn-normal btn-danger" id="action-delete"><i class="icon-remove icon-white" onclick="return confDelete()"></i>&nbsp;<?=__("core", "BUTTON__DELETE")?></a>
 <?		} else {?>
-							<a class="btn btn-normal btn-info" id="action-add"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "DODAJ")?></a>
+							<a class="btn btn-normal btn-info" id="action-add"><i class="icon-ok icon-white"></i>&nbsp;<?=__("CORE", "BUTTON__SAVE")?></a>
 <?		}?>
 						</div>
 <?	} ?>

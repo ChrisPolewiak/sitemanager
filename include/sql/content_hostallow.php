@@ -21,7 +21,7 @@ function content_hostallow_add( $dane ) {
 /**
  * @category	content_hostallow
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_hostallow_edit( $dane ) {
 
@@ -31,11 +31,13 @@ function content_hostallow_edit( $dane ) {
 		$tmp_dane = content_hostallow_dane( $dane["content_hostallow__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_hostallow__id"], "content_hostallow", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_hostallow__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_hostallow__id"], "content_hostallow", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -67,7 +69,7 @@ function content_hostallow_edit( $dane ) {
 function content_hostallow_delete( $content_hostallow__id ) {
 
 	if ($deleted = content_hostallow_dane( $content_hostallow__id ) ) {
-		core_deleted_add( $content_hostallow__id, "content_hostallow", $deleted );
+		core_changed_add( $content_hostallow__id, "content_hostallow", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_hostallow \n";

@@ -17,10 +17,12 @@ function core_task_edit( $dane ) {
 		$tmp_dane = core_task_dane( $dane["core_task__id"] );
 		$dane["core_task__status"] = $tmp_dane["core_task__status"];
 		$dane["core_task__result"] = $tmp_dane["core_task__result"];
+		core_changed_add( $core_task__id, "core_task", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["core_task__id"] = uuid();
-		$dane["core_task__params"] = serialize($dane["core_task__params"]);	
+		$dane["core_task__params"] = serialize($dane["core_task__params"]);
+		core_changed_add( $core_task__id, "core_task", $tmp_dane="", "add" );
 	}
 	
 	$dane["core_task__status"] = $dane["core_task__status"] ? 1 : 0;
@@ -57,7 +59,7 @@ function core_task_edit( $dane ) {
 function core_task_delete( $core_task__id ) {
 
 	if ($deleted = core_task_dane( $core_task__id ) ) {
-		core_deleted_add( $core_task__id, "core_task", $deleted );
+		core_changed_add( $core_task__id, "core_task", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_core_task \n";

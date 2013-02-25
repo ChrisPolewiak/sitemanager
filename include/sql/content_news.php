@@ -24,7 +24,7 @@ function content_news_add( $dane ) {
 /**
  * @category	content_news
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_news_edit( $dane ) {
 	$dane = trimall($dane);
@@ -33,11 +33,13 @@ function content_news_edit( $dane ) {
 		$tmp_dane = content_news_dane( $dane["content_news__id"] );
 		$dane["record_create_date"] = $tmp_dane["content_news__id"];
 		$dane["record_create_id"]   = $tmp_dane["content_news__id"];
+		core_changed_add( $dane["content_news__id"], "content_news", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_news__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_news__id"], "content_news", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -72,7 +74,7 @@ function content_news_edit( $dane ) {
 function content_news_delete( $content_news__id ) {
 
 	if ($deleted = content_news_dane( $content_news__id ) ) {
-		core_deleted_add( $content_news__id, "content_news", $deleted );
+		core_changed_add( $content_news__id, "content_news", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_news \n";

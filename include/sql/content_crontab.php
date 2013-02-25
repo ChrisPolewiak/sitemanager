@@ -34,6 +34,7 @@ function content_crontab_edit( $dane ) {
 		$dane["content_crontab__lastmessage"] = $tmp_dane["content_crontab__lastmessage"];
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_crontab__id"], "content_crontab", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_crontab__id"] = uuid();
@@ -41,6 +42,7 @@ function content_crontab_edit( $dane ) {
 		$dane["content_crontab__laststatus"] = "0";
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_crontab__id"], "content_crontab", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -76,7 +78,7 @@ function content_crontab_edit( $dane ) {
 function content_crontab_delete( $content_crontab__id ) {
 
 	if ($deleted = content_crontab_dane( $content_crontab__id ) ) {
-		core_deleted_add( $content_crontab__id, "content_crontab", $deleted );
+		core_changed_add( $content_crontab__id, "content_crontab", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_crontab \n";

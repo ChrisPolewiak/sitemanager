@@ -1,9 +1,9 @@
 <?
-
 sm_core_content_user_accesscheck($access_type_id."_READ",1);
 
 $dane = $_REQUEST["dane"];
 $content_usergroup__id = $_REQUEST["content_usergroup__id"];
+$set = $_REQUEST["set"];
 
 if( isset($action["add"]) || isset($action["edit"]) ){
 	$dane=trimall($dane);

@@ -12,7 +12,9 @@
 	<link rel="stylesheet" href="/admin/css/sitemanager.css" type="text/css" media="screen">
 	<link rel="stylesheet" href="/admin/css/bootstrap.min.css" type="text/css" media="screen">
 	<link rel="stylesheet" href="/admin/css/jquery-ui-1.9.2.custom.min.css" type="text/css" media="screen">
-	<link rel="stylesheet" href="x/admin/css/jquery.dataTables.css" type="text/css" media="screen">
+<?/*
+	<link rel="stylesheet" href="/admin/css/jquery.dataTables.css" type="text/css" media="screen">
+*/?>
 	<link rel="stylesheet" href="/admin/css/jquery.dataTables_bootstrap.css" type="text/css" media="screen">
 <? if ( isset($_REQUEST["sm_theme"]) && $_REQUEST["sm_theme"]) { ?>
 	<link rel="stylesheet" href="/admin/css/theme-<?=$_REQUEST["sm_theme"]?>.css" type="text/css" media="screen">

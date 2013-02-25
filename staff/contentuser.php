@@ -4,6 +4,8 @@ sm_core_content_user_accesscheck($access_type_id."_READ",1);
 
 $dane = $_REQUEST["dane"];
 $content_user__id = $_REQUEST["content_user__id"];
+$dane_content_usergroup = $_REQUEST["dane_content_usergroup"];
+$set = $_REQUEST["set"];
 
 if( isset($action["add"]) || isset($action["edit"]) ){
 	$dane=trimall($dane);
@@ -51,6 +53,7 @@ if(!is_array($ERROR)) {
 
 	if( isset($action["add"]) || isset($action["edit"]) ){
 		if (is_array($dane_content_usergroup)) {
+
 			content_user2content_usergroup_delete_by_content_user($content_user__id);
 			foreach($dane_content_usergroup AS $k=>$v){
 				content_user2content_usergroup_edit( $content_user__id, $k );
@@ -64,6 +67,7 @@ else {
 
 if( $content_user__id ) {
 	$dane = content_user_dane( $content_user__id );
+	unset($dane_content_usergroup);
 	if($result = content_user2content_usergroup_fetch_by_content_user( $content_user__id )){
 		while($row=$result->fetch(PDO::FETCH_ASSOC)){
 			$dane_content_usergroup[$row["content_usergroup__id"]]=1;
@@ -147,28 +151,28 @@ $('#tabs').ready(function() {
 													<?=sm_inputfield( "text", "Adres e-mail", "", "dane_content_user__email", "dane[content_user__email]", $dane["content_user__email"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 												</div>
 												<div class="span6">
-													<?=sm_inputfield( "text", "Telefon", "", "dane_content_user_phone", "dane[content_user_phone]", $dane["content_user_phone"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield( "text", "Telefon", "", "dane_content_user__phone", "dane[content_user__phone]", $dane["content_user__phone"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 												</div>
 											</div>
 											
-											<?=sm_inputfield( "checkbox", "Czy adres ukryć przed innymi użytkownikami?", "", "dane_content_user_hide_email", "dane[content_user_hide_email]", $dane["content_user__email"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield( "checkbox", "Czy adres ukryć przed innymi użytkownikami?", "", "dane_content_user__hide_email", "dane[content_user_hide_email]", $dane["content_user__email"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 
-											<?=sm_inputfield( "text", "Firma", "", "dane_content_user_company", "dane[content_user_company]", $dane["content_user_company"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield( "text", "Firma", "", "dane_content_user__company", "dane[content_user__company]", $dane["content_user__company"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 										
 											<div class="row-fluid">
 												<div class="span2">
-													<?=sm_inputfield( "text", "Kod poczt.", "", "dane_content_user_postcode", "dane[content_user_postcode]", $dane["content_user_postcode"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield( "text", "Kod poczt.", "", "dane_content_user__postcode", "dane[content_user__postcode]", $dane["content_user__postcode"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 												</div>
 												<div class="span5">
-													<?=sm_inputfield( "text", "Miasto", "", "dane_content_user_city", "dane[content_user_city]", $dane["content_user_city"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield( "text", "Miasto", "", "dane_content_user__city", "dane[content_user__city]", $dane["content_user__city"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 												</div>
 												<div class="span5">
-													<?=sm_inputfield( "text", "Państwo", "", "dane_content_user_country", "dane[content_user_country]", $dane["content_user_country"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield( "text", "Państwo", "", "dane_content_user__country", "dane[content_user__country]", $dane["content_user__country"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 												</div>
 											</div>
 
-											<?=sm_inputfield( "text", "Ulica", "", "dane_content_user_street", "dane[content_user_street]", $dane["content_user_street"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-											<?=sm_inputfield( "textarea", "Komentarz administratora", "", "dane_content_user_comment", "dane[content_user_comment]", $dane["content_user_comment"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=2);?>
+											<?=sm_inputfield( "text", "Ulica", "", "dane_content_user__street", "dane[content_user__street]", $dane["content_user__street"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield( "textarea", "Komentarz administratora", "", "dane_content_user__comment", "dane[content_user__comment]", $dane["content_user__comment"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=2);?>
 
 										</fieldset>
 
@@ -180,9 +184,9 @@ $('#tabs').ready(function() {
 											<div>Zgody</div>
 										</div>
 										<fieldset class="no-legend">
-											<?=sm_inputfield( "checkbox", "Potwierdził regulamin", "", "dane_content_user_confirm_regulation", "dane[content_user_confirm_regulation]", $dane["content_user_confirm_regulation"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-											<?=sm_inputfield( "checkbox", "Zgoda na przetwarzanie danych osobowych", "", "dane_content_user_confirm_userdata", "dane[content_user_confirm_userdata]", $dane["content_user_confirm_userdata"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-											<?=sm_inputfield( "checkbox", "Zgoda na reklamy", "", "dane_content_user_confirm_marketing", "dane[content_user_confirm_marketing]", $dane["content_user_confirm_marketing"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield( "checkbox", "Potwierdził regulamin", "", "dane_content_user__confirm_regulation", "dane[content_user__confirm_regulation]", $dane["content_user__confirm_regulation"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield( "checkbox", "Zgoda na przetwarzanie danych osobowych", "", "dane_content_user__confirm_userdata", "dane[content_user__confirm_userdata]", $dane["content_user__confirm_userdata"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield( "checkbox", "Zgoda na reklamy", "", "dane_content_user__confirm_marketing", "dane[content_user__confirm_marketing]", $dane["content_user__confirm_marketing"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 										</fieldset>
 
 									</div>

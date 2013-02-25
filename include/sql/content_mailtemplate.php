@@ -21,21 +21,22 @@ function content_mailtemplate_add( $dane ) {
 /**
  * @category	content_mailtemplate
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.2
 */
 function content_mailtemplate_edit( $dane ) {
 	$dane = trimall($dane);
 
 	if ($dane["content_mailtemplate__id"]) {
-
 		$tmp_dane = content_mailtemplate_dane( $dane["content_mailtemplate__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_mailtemplate__id"], "content_mailtemplate", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_mailtemplate__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_mailtemplate__id"], "content_mailtemplate", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -69,7 +70,7 @@ function content_mailtemplate_edit( $dane ) {
 function content_mailtemplate_delete( $content_mailtemplate__id ) {
 
 	if ($deleted = content_mailtemplate_dane( $content_mailtemplate__id ) ) {
-		core_deleted_add( $content_mailtemplate__id, "content_mailtemplate", $deleted );
+		core_changed_add( $content_mailtemplate__id, "content_mailtemplate", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_mailtemplate \n";

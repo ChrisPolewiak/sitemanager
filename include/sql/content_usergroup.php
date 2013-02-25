@@ -21,7 +21,7 @@ function content_usergroup_add( $dane ) {
 /**
  * @category	content_usergroup
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_usergroup_edit( $dane ) {
 	$dane = trimall($dane);
@@ -30,11 +30,13 @@ function content_usergroup_edit( $dane ) {
 		$tmp_dane = content_usergroup_dane( $dane["content_usergroup__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_usergroup__id"], "content_usergroup", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_usergroup__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_usergroup__id"], "content_usergroup", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -62,7 +64,7 @@ function content_usergroup_edit( $dane ) {
 function content_usergroup_delete( $content_usergroup__id ) {
 
 	if ($deleted = content_usergroup_dane( $content_usergroup__id ) ) {
-		core_deleted_add( $content_usergroup__id, "content_usergroup", $deleted );
+		core_changed_add( $content_usergroup__id, "content_usergroup", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_usergroup \n";

@@ -165,7 +165,7 @@ $('#tabs').ready(function() {
 									<?=sm_inputfield( "calendar", "Data publikacji", "", "dane_content_news__datetime", "dane[content_news__datetime]", $dane["content_news__datetime"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 <?
 	$inputfield_options=array();
-	foreach($SITE_LANG AS $k=>$v) {
+	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
 		$inputfield_options[ $k ]=$v;
 	}
 ?>

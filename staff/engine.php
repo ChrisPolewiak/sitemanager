@@ -85,7 +85,7 @@ if( $_SESSION["ADMIN_SESSION"]["content_user__admin_hostallow"] && !checkaccess_
 	exit;
 }
 
-if (isset($logout)) {
+if (isset($_REQUEST["logout"])) {
 	unset($ADMIN_SESSION);
 	session_unregister("content_user");
 	session_unregister("content_useracl");

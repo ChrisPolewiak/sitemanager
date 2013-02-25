@@ -34,6 +34,7 @@ RewriteCond %{REQUEST_URI}% !^/html/sqldata.*
 RewriteCond %{REQUEST_URI}% !^/html/css.*
 RewriteCond %{REQUEST_URI}% !^/html/js.*
 RewriteCond %{REQUEST_URI}% !^/template*
+RewriteCond %{REQUEST_URI}% !^/favicon.ico*
 RewriteRule ^(.*)$ /engine.php/$1 [PT]
 
 AddType application/x-httpd-php .php .phtml .php3 .inc

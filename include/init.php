@@ -16,6 +16,7 @@ if(is_array($SM_CONFIG)) {
 		define("DB_TABLEPREFIX", $SM_CONFIG["database"]["dbprefix"]);
 	}
 
+/*
 	$SITE_LANG=array();
 	if ($SM_CONFIG["language"]["lang"]) {
 		foreach($SM_CONFIG["language"]["lang"] AS $k=>$v){
@@ -25,6 +26,7 @@ if(is_array($SM_CONFIG)) {
 	else {
 		$SITE_LANG["pl"]="Polski";
 	}
+*/
 
 	define("TEST_MODE", false);
 	if ($SM_CONFIG["engine"]["test_mode"]) {
@@ -37,6 +39,7 @@ if(is_array($SM_CONFIG)) {
 	}
 
 	define("SM_DATA_ENCRYPTION_KEY", $SM_CONFIG["engine"]["data_encryption_key"]);
+	define("SM_DATA_ENCRYPTION_CIPHER", MCRYPT_RIJNDAEL_256);
 
 	if ($SM_CONFIG["site"]) {
 		$SERVER_NAME		= $SM_CONFIG["site"]["server_name"];

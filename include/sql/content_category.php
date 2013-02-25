@@ -128,6 +128,7 @@ function content_category_add( $dane ) {
 	$dane["content_category__order"]   = $dane["content_category__order"] ? $dane["content_category__order"] : 0;
 
 	$dane["content_category__id"] = uuid();
+	core_changed_add( $dane["content_category__id"], "content_category", $tmp_content_category="", "add" );
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_category VALUES ( \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_category__id"])."', \n";
@@ -171,6 +172,7 @@ function content_category_change( $dane ) {
 	$dane["record_create_id"]   = $dane["content_category__id"] ? $tmp_content_category["record_create_id"]   : $_SESSION["content_user"]["content_user__id"];
 	$dane["record_modify_date"] = time();
 	$dane["record_modify_id"]   = $_SESSION["content_user"]["content_user__id"];
+	core_changed_add( $dane["content_category__id"], "content_category", $tmp_content_category, "edit" );
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_category VALUES ( \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_category__id"])."', \n";
@@ -196,7 +198,7 @@ function content_category_change( $dane ) {
 /**
  * @category	content_category
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_category_edit( $dane="" ) {
 	global $KAT_COUNT, $KAT_CURRENT, $KAT_TOP, $KAT_REST_COUNT, $KAT_REST, $KAT_ALL;
@@ -271,7 +273,7 @@ function content_category_delete( $content_category__id ) {
 		return false;
 
 	if ($deleted = content_category_dane( $content_category__id ) ) {
-		core_deleted_add( $content_category__id, "content_category", $deleted );
+		core_changed_add( $content_category__id, "content_category", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_category \n";
@@ -390,7 +392,7 @@ function content_category_show_all_parent( $id_parent ) {
 /**
  * @category	content_category
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_category_unserialize($content_category__id) {
 	$content_category__id = ( $content_category__id ? $content_category__id : 0 );

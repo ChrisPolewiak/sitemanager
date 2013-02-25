@@ -47,6 +47,7 @@ function content_file_import( $dane ) {
 			$dane["record_modify_id"] = $_SESSION["content_user"]["content_user__id"];
 
 			$dane["content_file__id"] = uuid();
+			core_changed_add( $dane["content_file__id"], "content_file", $tmp_content_filecategory="", "add" );
 
 			$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_file VALUES (\n";
 			$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_file__id"])."',\n";
@@ -87,11 +88,13 @@ function content_file_edit( $dane ) {
 		$tmp_dane = content_file_dane( $dane["content_file__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_file__id"], "content_file", $tmp_dane="", "edit" );
 	}
 	else {
 		$dane["content_file__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_file__id"], "content_file", $tmp_content_filecategory="", "add" );
 	}
 
 	/*
@@ -168,6 +171,8 @@ function content_file_edit( $dane ) {
  * @version		5.0.0
 */
 function content_file_delete( $content_file__id ) {
+
+	core_changed_add( $content_access__id, "content_access", $deleted="", "del" );
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_file \n";
 	$SQL_QUERY .= "WHERE content_file__id='". sm_secure_string_sql( $content_file__id)."'";

@@ -21,7 +21,7 @@ function core_configadminviewcolumn_add( $dane ) {
 /**
  * @category	core_configadminviewcolumn
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function core_configadminviewcolumn_edit( $dane ) {
 	$dane = trimall($dane);
@@ -30,11 +30,13 @@ function core_configadminviewcolumn_edit( $dane ) {
 		$tmp_dane = core_configadminviewcolumn_dane( $dane["core_configadminviewcolumn__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["core_configadminviewcolumn__id"], "core_configadminviewcolumn", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["core_configadminviewcolumn__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["core_configadminviewcolumn__id"], "core_configadminviewcolumn", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();

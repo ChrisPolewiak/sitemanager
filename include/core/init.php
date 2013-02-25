@@ -7,6 +7,7 @@ require $INCLUDE_DIR."/core/conversions.php";
 require $INCLUDE_DIR."/core/cronfunction.php";
 require $INCLUDE_DIR."/core/cronparser.php";
 require $INCLUDE_DIR."/core/download.php";
+require $INCLUDE_DIR."/core/encrypt.php";
 require $INCLUDE_DIR."/core/generator.php";
 require $INCLUDE_DIR."/core/mail.php";
 require $INCLUDE_DIR."/core/menu.php";

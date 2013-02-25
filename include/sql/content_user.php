@@ -21,7 +21,7 @@ function content_user_add( $dane ) {
 /**
  * @category	content_user
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_user_edit( $dane ) {
 
@@ -34,6 +34,7 @@ function content_user_edit( $dane ) {
 		$dane["content_user__login_falsecount"] = $tmp_dane["content_user__login_falsecount"];
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_user__id"], "content_user", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_user__id"] = uuid();
@@ -42,6 +43,7 @@ function content_user_edit( $dane ) {
 		$dane["content_user__login_falsecount"] = 0;
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_user__id"], "content_user", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();

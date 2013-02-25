@@ -24,7 +24,7 @@ function content_text_add( $dane ) {
 /**
  * @category	content_text
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_text_edit( $dane ) {
 	$dane = trimall($dane);
@@ -35,11 +35,13 @@ function content_text_edit( $dane ) {
 		$dane["content_text__table"] = $tmp_dane["content_text__table"];
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_text__id"], "content_text", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_text__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_text__id"], "content_text", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -80,7 +82,7 @@ function content_text_edit( $dane ) {
 function content_text_delete( $content_text__id ) {
 
 	if ($deleted = content_text_dane( $content_text__id ) ) {
-		core_deleted_add( $content_text__id, "content_text", $deleted );
+		core_changed_add( $content_text__id, "content_text", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_text \n";

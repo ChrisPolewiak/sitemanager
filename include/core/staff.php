@@ -187,11 +187,11 @@ if ( sm_core_content_user_accesscheck("CORE_ADMINPANEL_READ") ) {
 			"info-short" => "Modyfikacja wyglądu panelu zarządzania.",
 			"info-long" => "Umożliwa dostosowanie wyglądu różnych elementów serwisu.",
 		);
-		$menu["9admin0coredeleted"] = array(
+		$menu["9admin0corechanged"] = array(
 			"access_type_id" => "CORE_SETUP",
-			"level" => "9admin0", "name"  => __("core", "MENU__CORE_DELETED"), "file"  => "coredeleted.php",
-			"info-short" => "Bufor zawierający usunięte rekordy.",
-			"info-long" => "Umożliwia przeglądanie usuniętych rekordów i ich przywracanie.",
+			"level" => "9admin0", "name"  => __("core", "MENU__CORE_CHANGED"), "file"  => "corechanged.php",
+			"info-short" => "Bufor zawierający zmienione rekordy.",
+			"info-long" => "Umożliwia przeglądanie zmienionych rekordów i ich przywracanie.",
 		);
 	}
 }

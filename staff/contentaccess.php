@@ -3,6 +3,7 @@ sm_core_content_user_accesscheck($access_type_id."_READ",1);
 
 $dane = $_REQUEST["dane"];
 $content_access__id = $_REQUEST["content_access__id"];
+$daneaccess = $_REQUEST["daneaccess"];
 
 if ( isset($action["add"]) || isset($action["edit"]) ) {
 	$dane=trimall($dane);

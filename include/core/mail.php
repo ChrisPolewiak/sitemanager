@@ -9,8 +9,8 @@
  */
 
 
-require "Pear/Mail.php";
-require "Pear/Mail/mime.php";
+require "Mail.php";
+require "Mail/mime.php";
 
 /**
  * @category	mail
@@ -40,7 +40,7 @@ function mail_default( $to, $subj, $body, $from, $bcc="", $header="", $footer=""
 /**
  * @category	mail
  * @package		core
- * @version		5.0.0
+ * @version		5.0.1
 */
 function mail_html_default( $sender_name, $sender_email, $recipient_name, $recipient_email, $subject, $htmlbody, $txtbody, $cc, $bcc, $files) {
 
@@ -147,7 +147,7 @@ function mail_html_default( $sender_name, $sender_email, $recipient_name, $recip
  *  
  * @category	mail
  * @package		core
- * @version		5.0.0
+ * @version		5.0.2
 */
 function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_name, $sender_email, $recipient_name, $recipient_email, $subject, $cc, $bcc, $files) {
 	global $ROOT_DIR;
@@ -214,12 +214,6 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 	$xmailer .= " v. ".$SOFTWARE_INFORMATION["version"];
 
 	$return_to = $sender_email;
-
-echo "<xmp>";
-echo "from:'$from' <br>\n";
-echo "sender_email:'$sender_email' <br>\n";
-echo "return_to:'$return_to' <br>\n";
-echo "</xmp>";
 
 	$arrSmtpConfig = array (
 		"sendmail_args" => "-f ".$return_to
@@ -354,7 +348,7 @@ echo "</xmp>";
 		return $objError;
 	}
 	else {
-		return 0;
+		return 1;
 	}
 }
 

@@ -31,11 +31,13 @@ function content_extralist_edit( $dane ) {
 		$tmp_dane = content_extralist_dane( $dane["content_extralist__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_extralist__id"], "content_extralist", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_extralist__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_extralist__id"], "content_extralist", $tmp_dane="", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -65,7 +67,7 @@ function content_extralist_edit( $dane ) {
 function content_extralist_delete( $content_extralist__id ) {
 
 	if ($deleted = content_extralist_dane( $content_extralist__id ) ) {
-		core_deleted_add( $content_extralist__id, "content_extralist", $deleted );
+		core_changed_add( $content_extralist__id, "content_extralist", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_extralist \n";

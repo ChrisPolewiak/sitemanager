@@ -11,7 +11,7 @@
 /**
  * @category	serialize
  * @package		core
- * @version		5.0.0
+ * @version		5.0.1
 */
 function sm_core_serialize_data( $array_data, $name ) {
 	global $CACHE_DIR;
@@ -30,7 +30,7 @@ function sm_core_serialize_data( $array_data, $name ) {
 /**
  * @category	serialize
  * @package		core
- * @version		5.0.0
+ * @version		5.0.1
 */
 function sm_core_unserialize_data( $name ) {
 	global $CACHE_DIR;

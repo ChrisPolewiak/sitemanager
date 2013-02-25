@@ -56,7 +56,7 @@ if(isset($_POST["action"]["next"])) {
 					exit;
 				}
 				$SQL = "SELECT * FROM ".$dane["database_dbprefix"]."_core_session LIMIT 1";
-				if ( $PDO->query( $SQL ) ) {
+				if ( $SM_PDO->query( $SQL ) ) {
 					$ERROR[] = "W bazie znajduje się już instancja SiteManager. Zmień prefix dla tabel, by nie nadpisać istniejących danych.";
 				}
 				else {
@@ -116,7 +116,6 @@ if(isset($_POST["action"]["next"])) {
 					echo $e->getMessage();
 					exit;
 				}
-
 				$sqlfile = file("../init.sql") or die("Missing init.sql file");
 				
 				$sqlquery = "";
@@ -126,7 +125,7 @@ if(isset($_POST["action"]["next"])) {
 				if(preg_match( "/;$/", $line)) {
 # echo "<pre>$sqlquery</pre>";
 						$sqlquery = preg_replace("/(%prefix%)/is", $_SESSION["config"]["db"]["database_dbprefix"], $sqlquery);
-						$PDO->query( $sqlquery );
+						$SM_PDO->query( $sqlquery );
 						$sqlquery = "";
 					}
 				}
@@ -160,12 +159,11 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery );
+				$SM_PDO->query( $sqlquery );
 
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_user_extra VALUES ('".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
-
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:1()",$sqlquery,$e); }
 				$content_access__id1 = uuid();
 				
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_access VALUES ( \n";
@@ -179,7 +177,7 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:2()",$sqlquery,$e); }
 
 				$content_access__id2 = uuid();
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_access VALUES ( \n";
@@ -193,7 +191,7 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:3()",$sqlquery,$e); }
 
 				$content_usergroup__id1 = uuid();
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroup VALUES ( \n";
@@ -204,7 +202,7 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:4()",$sqlquery,$e); }
 
 				$content_usergroup__id2 = uuid();
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroup VALUES ( \n";
@@ -215,7 +213,7 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:5()",$sqlquery,$e); }
 				
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroupacl VALUES ( \n";
 				$sqlquery .= " '".$content_access__id1."', \n";
@@ -224,7 +222,7 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:6()",$sqlquery,$e); }
 
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroupacl VALUES ( \n";
 				$sqlquery .= " '".$content_access__id2."', \n";
@@ -233,7 +231,7 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:7()",$sqlquery,$e); }
 				
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_user2content_usergroup VALUES ( \n";
 				$sqlquery .= " '".$content_user__id."', \n";
@@ -241,7 +239,7 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:8()",$sqlquery,$e); }
 
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_user2content_usergroup VALUES ( \n";
 				$sqlquery .= " '".$content_user__id."', \n";
@@ -249,7 +247,7 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
 # echo "<pre>$sqlquery</pre>";
-				$PDO->query( $sqlquery ) or sqlerr("", $sqlquery);
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:9()",$sqlquery,$e); }
 
 				$fp = fopen("../config.ini.php","w");
 				fputs($fp, "<"."?"."/"."*"."\n\n");
@@ -261,11 +259,13 @@ if(isset($_POST["action"]["next"])) {
 				fputs($fp, "dbname = ".$_SESSION["config"]["db"]["database_dbname"]."\n");
 				fputs($fp, "dbprefix = ".$_SESSION["config"]["db"]["database_dbprefix"]."\n");
 				fputs($fp, "\n");
+/*
 				fputs($fp, "[language]\n");
-				foreach($_SESSION["config"]["app"]["site_lang"] AS $k=>$v) {
+				foreach($_SESSION["config"]["app"]["SM_TRANSLATION_LANGUAGES"] AS $k=>$v) {
 					fputs($fp, "lang[".$k."] = ".$SM_TRANSLAGE_LANGUAGES[$k]."\n");
 				}
 				fputs($fp, "\n");
+*/
 				fputs($fp, "[engine]\n");
 				fputs($fp, "test_mode = false\n");
 				fputs($fp, "cache_image_timeout = ".($_SESSION["config"]["app"]["engine_cacheimagetimeout"] * 86400)."\n");
@@ -371,7 +371,7 @@ require "_install_header.php";
 							</div>
 						</div>
 <?
-	$dane["database_dbprefix"] = $dane["database_dbprefix"] ? $dane["database_dbprefix"] : "sm_";
+	$dane["database_dbprefix"] = $dane["database_dbprefix"] ? $dane["database_dbprefix"] : "sm";
 ?>
 						<?=sm_inputfield( "text", "Prefix dla tabel", "Wprowadź kilku znakowy ciąg, który będzie podany przed każdą tabelą. Umożliwi Ci to instalację kilku edycji SiteManager jednocześnie na tej samej bazie danych", "database_dbprefix", "dane[database_dbprefix]", $dane["database_dbprefix"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 					</fieldset>
@@ -415,13 +415,18 @@ $dane["site_servername"] = $dane["site_servername"] ? $dane["site_servername"] :
 						<?=sm_inputfield( "textarea", "Słowa kluczowe", "Podaj słowa kluczowe dla uruchamianej witruny (pojawią się w nagłówkach stron)", "dane_site_keywords", "dane[site_keywords]", $dane["site_keywords"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 
 <?
+/*
+
 	$inputfield_options=array();
-	foreach($LANGUAGES AS $k=>$v) {
+	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
 		$inputfield_options[ $k ] = $v;
 	}
-	$dane["site_lang"] = $dane["site_lang"] ? $dane["site_lang"] : array("pl"=>1);
+	$dane["SM_TRANSLATION_LANGUAGES"] = $dane["SM_TRANSLATION_LANGUAGES"] ? $dane["SM_TRANSLATION_LANGUAGES"] : array("pl"=>1);
 ?>
-						<?=sm_inputfield( "checkbox-multi", "Dostępne języki dla danych", "", "dane_site_lang", "dane[site_lang]", $dane["site_lang"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+						<?=sm_inputfield( "checkbox-multi", "Dostępne języki dla danych", "", "dane_SM_TRANSLATION_LANGUAGES", "dane[SM_TRANSLATION_LANGUAGES]", $dane["SM_TRANSLATION_LANGUAGES"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+<?
+*/
+?>
 					</fieldset>
 
 					<div class="btn-toolbar">
@@ -509,17 +514,18 @@ $dane["access_username"] = $dane["access_username"] ? $dane["access_username"] :
 									<td>Słowa kluczowe dla serwisu (META)</td>
 									<td><?=$_SESSION["config"]["app"]["site_keywords"]?></td>
 								</tr>
+<?/*
 								<tr>
 									<td>Języki dla treści</td>
 									<td>
 										<ul>
-<? foreach($_SESSION["config"]["app"]["site_lang"] AS $k=>$v) { ?>
+<? foreach($_SESSION["config"]["app"]["SM_TRANSLATION_LANGUAGES"] AS $k=>$v) { ?>
 											<li><?=$LANGUAGES[$k]?></li>
 <? } ?>
 										<ul>
 									</td>
 								</tr>
-
+*/?>
 								<tr>
 									<td>Identyfikator administratora</td>
 									<td><?=$_SESSION["config"]["access"]["access_username"]?></td>

@@ -21,7 +21,7 @@ function content_fileshowtypeitem_add( $dane ) {
 /**
  * @category	content_fileshowtypeitem
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_fileshowtypeitem_edit( $dane ) {
 
@@ -31,11 +31,13 @@ function content_fileshowtypeitem_edit( $dane ) {
 		$tmp_dane = content_fileshowtypeitem_dane( $dane["content_fileshowtypeitem__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
+		core_changed_add( $dane["content_fileshowtypeitem__id"], "content_fileshowtypeitem", $tmp_dane, "edit" );
 	}
 	else {
 		$dane["content_fileshowtypeitem__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+		core_changed_add( $dane["content_fileshowtypeitem__id"], "content_fileshowtypeitem", $tmp_dane="", "add" );
 	}
 
 	$dane["content_fileshowtypeitem__default"] = $dane["content_fileshowtypeitem__default"] ? 1 : 0;
@@ -68,7 +70,7 @@ function content_fileshowtypeitem_edit( $dane ) {
 function content_fileshowtypeitem_delete( $content_fileshowtypeitem__id ) {
 
 	if ($deleted = content_fileshowtypeitem_dane( $content_fileshowtypeitem__id ) ) {
-		core_deleted_add( $content_fileshowtypeitem__id, "content_fileshowtypeitem", $deleted );
+		core_changed_add( $content_fileshowtypeitem__id, "content_fileshowtypeitem", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_fileshowtypeitem \n";

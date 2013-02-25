@@ -127,6 +127,7 @@ function content_filecategory_add( $dane ) {
 	$dane["content_user__id"] = $_SESSION["content_user"]["content_user__id"];
 
 	$dane["content_filecategory__id"] = uuid();
+	core_changed_add( $dane["content_filecategory__id"], "content_filecategory", $tmp_content_filecategory="", "add" );
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_filecategory VALUES ( \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_filecategory__id"])."', \n";
@@ -172,6 +173,7 @@ function content_filecategory_change( $dane ) {
 	$dane["record_create_id"]   = $dane["content_filecategory__id"] ? $tmp_content_filecategory["record_create_id"]   : $_SESSION["content_user"]["content_user__id"];
 	$dane["record_modify_date"] = time();
 	$dane["record_modify_id"] = $_SESSION["content_user"]["content_user__id"];
+	core_changed_add( $dane["content_filecategory__id"], "content_filecategory", $tmp_content_filecategory, "edit" );
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_filecategory VALUES ( \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_filecategory__id"])."', \n";
@@ -196,7 +198,7 @@ function content_filecategory_change( $dane ) {
 /**
  * @category	content_filecategory
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_filecategory_edit( $dane="" ) {
 	global $KAT_COUNT, $KAT_CURRENT, $KAT_TOP, $KAT_REST_COUNT, $KAT_REST, $KAT_ALL;
@@ -267,7 +269,7 @@ function content_filecategory_delete( $content_filecategory__id ) {
 		return false;
 
 	if ($deleted = content_filecategory_dane( $content_filecategory__id ) ) {
-		core_deleted_add( $content_filecategory__id, "content_filecategory", $deleted );
+		core_changed_add( $content_filecategory__id, "content_filecategory", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_filecategory \n";
@@ -384,7 +386,7 @@ function content_filecategory_show_all_parent( $id_parent ) {
 /**
  * @category	content_filecategory
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_filecategory_unserialize($content_filecategory__id) {
 
