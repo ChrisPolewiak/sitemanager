@@ -8,21 +8,59 @@
  * @category	translation
  */
 
-$SM_TRANSLATION_LANGUAGES = array(
-	"en" => "English",
-	"pl" => "Polski",
-);
+$SM_TRANSLATION_LANGUAGES = $SITE_LANG;
 
-$LANG = "pl";
+/**
+ * @category	translation
+ * @package		core
+ * @version		5.0.0
+*/
+function core_language_load() {
+	global $SM_TRANSLATION_LANGUAGES, $SM_TRANSLATION, $INCLUDE_DIR, $SM_PLUGINS, $LANG;
 
-$data = parse_ini_file($INCLUDE_DIR."/lang/".$LANG.".ini.php") or die("parse lang error");
-foreach($data AS $k=>$v) {
-	$k = strtoupper($k);
-	if ($k!="_DEFINE_") {
-		$SM_TRANSLATION["CORE"][$k] = $v;
+	unset($LANG);
+	if(isset($_REQUEST["lang"])) {
+		if ( isset($SM_TRANSLATION_LANGUAGES[ $_REQUEST["lang"] ]) ) {
+			$LANG = $_REQUEST["lang"];
+			$_SESSION["lang"] = $_REQUEST["lang"];
+		}
 	}
+	else {
+		$LANG = isset($_SESSION["lang"]) ? $_SESSION["lang"] : "pl";
+	}
+
+	if (is_file($INCLUDE_DIR."/lang/".$LANG.".ini.php")) {
+		$data = parse_ini_file($INCLUDE_DIR."/lang/".$LANG.".ini.php") or die("parse lang error");
+	}
+	else {
+		$data = parse_ini_file($INCLUDE_DIR."/lang/pl.ini.php") or die("parse lang error");
+	}
+	foreach($data AS $k=>$v) {
+		$k = strtoupper($k);
+		if ($k!="_DEFINE_") {
+			$SM_TRANSLATION["CORE"][$k] = $v;
+		}
+	}
+
+	// lang from plugins
+	foreach($SM_PLUGINS AS $plugin_name=>$plugin_data) {
+		if (is_file($plugin_data["dir"]."/lang/".$LANG.".ini.php")) {
+			$data = parse_ini_file($plugin_data["dir"]."/lang/".$LANG.".ini.php") or die("parse lang error");
+		}
+		else {
+			$data = parse_ini_file($plugin_data["dir"]."/lang/pl.ini.php") or die("parse lang error");
+		}
+		foreach($data AS $k=>$v) {
+			$k = strtoupper($k);
+			if ($k!="_DEFINE_") {
+				$SM_TRANSLATION[ $plugin_name ][$k] = $v;
+			}
+		}
+		unset($data);
+	}
+	
+	return $LANG;
 }
-unset($data);
 
 /**
  * @category	translation

@@ -23,12 +23,22 @@ if($page == "api" || preg_match("/^api\//", $page)) {
 	require $INCLUDE_DIR."/api/api.php";
 	exit;
 }
+
 /*
  * CacheImg
  */
 if($page == "cacheimg" || preg_match("/^cacheimg\//", $page)) {
 	require $INCLUDE_DIR."/init.php";
 	require $INCLUDE_DIR."/core/cacheimg.php";
+	exit;
+}
+
+/*
+ * Captcha
+ */
+if($page == "captcha" || preg_match("/^captcha\//", $page)) {
+	require $INCLUDE_DIR."/init.php";
+	require $INCLUDE_DIR."/core/captcha.php";
 	exit;
 }
 
@@ -48,7 +58,7 @@ foreach($_GET AS $k=>$v) {
 	$_GET[$k] = sm_secure_string_xss( $v );
 }
 
-$SM_LANG = "pl";
+$SM_LANG = $LANG;
 
 checkaccss_to_site_by_hostallowlist();
 
@@ -116,7 +126,15 @@ elseif ($PAGES_ALLOW[$page]) {
 		exit;
 	}
 
-	if (is_file( $ROOT_DIR."/html/pages/".$SM_LANG."/".$PAGES_ALLOW[$page]["content_template__srcfile"] )) {
+	$content_template__srcfile = "";
+	if ( is_file( $ROOT_DIR."/html/pages/".$SM_LANG."/".$PAGES_ALLOW[$page]["content_template__srcfile"] )) {
+		$content_template__srcfile = $ROOT_DIR."/html/pages/".$SM_LANG."/".$PAGES_ALLOW[$page]["content_template__srcfile"];
+	}
+	else {
+		$content_template__srcfile = $ROOT_DIR."/html/pages/".$PAGES_ALLOW[$page]["content_template__srcfile"];
+	}	
+
+	if ( $content_template__srcfile ) {
 		$part = pathinfo($PAGES_ALLOW[$page]["content_template__srcfile"]);
 		switch($part["extension"]) {
 			case "tpl":
@@ -138,7 +156,7 @@ elseif ($PAGES_ALLOW[$page]) {
 				$content_page__params = $PAGES_ALLOW[$page]["params"];
 				$SITE_DESCRIPTION = $PAGES_ALLOW[$page]["content_page__description"] ? $PAGES_ALLOW[$page]["content_page__description"] : $SITE_DESCRIPTION;
 				$SITE_KEYWORDS = $PAGES_ALLOW[$page]["content_page__keywords"] ? $PAGES_ALLOW[$page]["content_page__keywords"] : $SITE_KEYWORD;
-				require $ROOT_DIR."/html/pages/".$SM_LANG."/".$PAGES_ALLOW[$page]["content_template__srcfile"];
+				require $content_template__srcfile;
 				break;
 		}
 	}
@@ -147,7 +165,9 @@ elseif ($PAGES_ALLOW[$page]) {
 			include $ROOT_DIR."/html/pages/".$SM_LANG."/error_503.tpl";
 		}
 		else {
-		//	sitemanager_error503();
+			header("HTTP/1.0 503 Service unavailable");
+			echo "Service unavailable";
+			exit;
 		}
 	}
 }
@@ -156,7 +176,9 @@ else {
 		include $ROOT_DIR."/html/pages/".$SM_LANG."/error_404.html";
 	}
 	else {
-		//sitemanager_error404();
+		header("HTTP/1.0 404 Not Found");
+		echo "Document Not Found";
+		exit;
 	}
 }
 

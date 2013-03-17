@@ -172,6 +172,7 @@ else {
 								<fieldset class="no-legend">
 <?
 	$inputfield_options=array();
+	$inputfield_options[""]="dowolny";
 	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
 		$inputfield_options[ $k ]=$v;
 	}

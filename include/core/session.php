@@ -106,7 +106,9 @@ if ( isset($_COOKIE[ SessionID ]) && $_COOKIE[ SessionID ] )
 elseif ( isset($_REQUEST[ SessionID ]) && $_REQUEST[ SessionID ] )
 	$core_session__sid = $_REQUEST[ SessionID ];
 
-if(!isset($core_session__sid)) {
+$core_session__sid = sm_secure_string_xss( $core_session__sid );
+
+if(!$core_session__sid) {
 	$core_session__sid = date("YmdHis").substr(md5(uniqid(time())),-10);
 }
 

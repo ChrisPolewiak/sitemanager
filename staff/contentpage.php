@@ -58,9 +58,6 @@ if( isset($action["add"]) || isset($action["edit"]) ){
 			$ERROR[] = __("core", "W systemie jest już strona o takim samym adresie url");
 		}
 	}
-	if(!$dane["content_page__lang"]){
-		$ERROR[] = __("core", "Wybierz język");
-	}
 	if(!$dane["content_template__id"]){
 		$ERROR[] = __("core", "Wybierz szablon");
 	}
@@ -310,6 +307,7 @@ $('#tabs').ready(function() {
 										<div class="span2">
 <?
 	$inputfield_options=array();
+	$inputfield_options[""]="dowolny";
 	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
 		$inputfield_options[ $k ]=$v;
 	}

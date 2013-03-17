@@ -24,7 +24,7 @@ if( $_xpar = core_configadminview_get_by_adminview($menu_id) ) {
 $params["actions"]["edit"]   = $params["actions"]["edit"] ? $params["actions"]["edit"] : array( "display" => true );
 $params["actions"]["delete"] = $params["actions"]["delete"] ? $params["actions"]["delete"] : array("display" => true );
 $params["action-doubleclick"] = isset($params["action-doubleclick"]) ? $params["action-doubleclick"] : true;
-
+$params["datatype"] = $params["datatype"] ? $params["datatype"] : "sql";
 
 $param["row_per_page_default"] = $param["row_per_page_default"] ? $param["row_per_page_default"] : 25;
 eval(" \$result = ".$params["function_fetch"]."; ");
@@ -91,6 +91,14 @@ eval(" \$result = ".$params["function_fetch"]."; ");
 				"0"=>"_VALUE_"
 			),
 		),
+		"substr"=>array(
+			"function"=>"substr",
+			"params"=>array(
+				"0"=>"_VALUE_",
+				"1"=>"0",
+				"2"=>"_ARGS_",
+			),
+		),
 	);
 
 	function sm_datatable_image( $id ) {
@@ -99,7 +107,16 @@ eval(" \$result = ".$params["function_fetch"]."; ");
 
 
 	if($result) {
-		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
+		if ( $params["datatype"]=="sql" ) {
+			while($row=$result->fetch(PDO::FETCH_ASSOC)) {
+				$datatable_data[] = $row;
+			}
+		}
+		elseif( $params["datatype"]=="array" ) {
+			$datatable_data = $result;
+		}
+		
+		foreach($datatable_data AS $row) {
 			if($subidk && $subidv) {
 				if($row[$subidk]!=$subidv) {
 					continue;
@@ -117,7 +134,7 @@ eval(" \$result = ".$params["function_fetch"]."; ");
 					foreach($tmp[1] AS $_print_string) {
 						$_print_elements = preg_replace("/%%(.+)%%/", "\\1", $_print_string);
 						$_print_string = preg_replace("/(\/)/s", "\/", $_print_string);
-						if(preg_match("/\[(.+)=*(.*)\](.*)%%/", $_print_string, $tmp)) {
+						if(preg_match("/\[(\w+)=*(.*)\](.*)%%/", $_print_string, $tmp)) {
 							$_print_elements = $tmp[3];
 							$_function = $tmp[1];
 							$_args = $tmp[2];
@@ -133,6 +150,7 @@ eval(" \$result = ".$params["function_fetch"]."; ");
 						}
 						$_print_elements_fill = preg_replace($_find, $_repl, $_print_elements);
 						if($_function && $FUNCTION_ALLOW[$_function]) {
+
 							$str = $FUNCTION_ALLOW[$_function]["function"]."(";
 							$_str = "";
 							foreach($FUNCTION_ALLOW[$_function]["params"] AS $param) {
@@ -140,7 +158,7 @@ eval(" \$result = ".$params["function_fetch"]."; ");
 								if($param=="_VALUE_")
 									$_str .= "\"".$_print_elements_fill."\"";
 								elseif($param=="_ARGS_")
-									$_str .= "\"".$args."\"";
+									$_str .= "\"".$_args."\"";
 								else
 									$_str .= "\"$param\"";
 							}

@@ -141,6 +141,7 @@ $('#tabs').ready(function() {
 										<div class="span6">
 <?
 	$inputfield_options=array();
+	$inputfield_options[""]="dowolny";
 	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
 		$inputfield_options[ $k ]=$v;
 	}

@@ -16,9 +16,8 @@ if(is_array($SM_CONFIG)) {
 		define("DB_TABLEPREFIX", $SM_CONFIG["database"]["dbprefix"]);
 	}
 
-/*
 	$SITE_LANG=array();
-	if ($SM_CONFIG["language"]["lang"]) {
+	if (isset($SM_CONFIG["language"]["lang"])) {
 		foreach($SM_CONFIG["language"]["lang"] AS $k=>$v){
 			$SITE_LANG[$k]=$v;
 		}
@@ -26,7 +25,6 @@ if(is_array($SM_CONFIG)) {
 	else {
 		$SITE_LANG["pl"]="Polski";
 	}
-*/
 
 	define("TEST_MODE", false);
 	if ($SM_CONFIG["engine"]["test_mode"]) {
@@ -41,12 +39,17 @@ if(is_array($SM_CONFIG)) {
 	define("SM_DATA_ENCRYPTION_KEY", $SM_CONFIG["engine"]["data_encryption_key"]);
 	define("SM_DATA_ENCRYPTION_CIPHER", MCRYPT_RIJNDAEL_256);
 
+	if ($SM_CONFIG["mail"]) {
+		$SM_MAIL_ADDR_ADMIN	= $SM_CONFIG["mail"]["mail_addr_admin"];
+		$SM_MAIL_BACKEND	= $SM_CONFIG["mail"]["mail_backend"];
+		$SM_SMTP_HOST		= $SM_CONFIG["mail"]["smtp_host"];
+	}
+
 	if ($SM_CONFIG["site"]) {
 		$SERVER_NAME		= $SM_CONFIG["site"]["server_name"];
 		$SITE_TITLE			= $SM_CONFIG["site"]["site_title"];
 		$SITE_DESCRIPTION	= $SM_CONFIG["site"]["site_description"];
 		$SITE_KEYWORDS		= $SM_CONFIG["site"]["site_keywords"];
-		$MAIL_ADDR_ADMIN	= $SM_CONFIG["site"]["mail_addr_admin"];
 	}
 
 	if ($SM_CONFIG["support"]) {
@@ -62,10 +65,10 @@ else {
 $BACKUP_DIR="";
 
 $SOFTWARE_INFORMATION = array(
-	"version"     => "5.00",
+	"version"     => "5.02",
 	"author"      => "Krzysztof Polewiak",
 	"application" => "SiteManager Engine",
-	"date"        => "2013-01-10",
+	"date"        => "2013-03-04",
 );
 
 $BACKUP_DIR = $BACKUP_DIR ? $BACKUP_DIR : $ROOT_DIR."/backup";
@@ -103,5 +106,7 @@ require $ROOT_DIR."/plugin/plugin.php";
 
 // SESSION
 require $INCLUDE_DIR."/core/session.php";
+
+$LANG = core_language_load();
 
 ?>

@@ -401,7 +401,7 @@ function content_page_fetch_by_lang($lang) {
 	$SQL_QUERY  = "SELECT * \n";
 	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_content_page AS cp, ".DB_TABLEPREFIX."_content_template AS ct \n";
 	$SQL_QUERY .= "WHERE ct.content_template__id=cp.content_template__id \n";
-	$SQL_QUERY .= "  AND cp.content_page__lang='". sm_secure_string_sql( $lang)."' \n";
+	$SQL_QUERY .= "  AND ( cp.content_page__lang='". sm_secure_string_sql( $lang)."' OR cp.content_page__lang='' ) \n";
 	$SQL_QUERY .= "ORDER BY content_page__idtop, content_page__order\n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_page_fetch_by_lang()",$SQL_QUERY,$e); }

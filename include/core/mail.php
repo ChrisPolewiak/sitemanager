@@ -68,17 +68,25 @@ function mail_html_default( $sender_name, $sender_email, $recipient_name, $recip
 	// naglowki
 	$arrHeaders = array(
 		"From"			=> $from,
-		"Return-Path"		=> $return_to,
+		"Return-Path"	=> $return_to,
 		"Subject"		=> $subject,
 		"X-Mailer"		=> $xmailer,
 	);
 
-	$arrSmtpConfig = array (
-		"sendmail_args" => "-f".$return_to,
-		"From"			=> $sender_email,
-	);
+	$mail_backend = $GLOBALS["SM_MAIL_BACKEND"] ? $GLOBALS["SM_MAIL_BACKEND"] : "mail";
+	if($mail_backend == "smtp") {
+		$arrSmtpConfig = array (
+			"From"		=> $sender_email,
+			"host"		=> $GLOBALS["SM_SMTP_HOST"]
+		);
+	}
+	else {
+		$arrSmtpConfig = array (
+			"sendmail_args" => "-f".$return_to,
+		);
+	}
 
-	$objMail = Mail::factory ( "mail", $arrSmtpConfig );
+	$objMail = Mail::factory ( $mail_backend, $arrSmtpConfig );
 	$objMime = new Mail_mime ( "\n" );
 
 	if(is_array($files)){
@@ -215,13 +223,18 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 
 	$return_to = $sender_email;
 
-	$arrSmtpConfig = array (
-		"sendmail_args" => "-f ".$return_to
-	);
-
-
-//=?iso-8859-1?B?Q1dKb2JzLmNvLnVr?=<cwjobs@newsletter.cwjobsmail.co.uk>
-
+	$mail_backend = $GLOBALS["SM_MAIL_BACKEND"] ? $GLOBALS["SM_MAIL_BACKEND"] : "mail";
+	if($mail_backend == "smtp") {
+		$arrSmtpConfig = array (
+			"From"		=> $sender_email,
+			"host"		=> $GLOBALS["SM_SMTP_HOST"]
+		);
+	}
+	else {
+		$arrSmtpConfig = array (
+			"sendmail_args" => "-f".$return_to,
+		);
+	}
 
 	// naglowki
 	$arrHeaders = array(
@@ -238,7 +251,7 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 		$arrHeaders["BCC"] = $bcc;
 	}
 
-	$objMail = Mail::factory ( "mail", $arrSmtpConfig );
+	$objMail = Mail::factory ( $mail_backend, $arrSmtpConfig );
 	$objMime = new Mail_mime ( "\n" );
 
 	// add images to mail
