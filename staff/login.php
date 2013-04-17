@@ -86,7 +86,7 @@ if( isset($action["login"])) {
 										header("Location: ".base64_decode($backto));
 									}
 									else {
-										header("Location: /admin?admin_lang=$admin_lang");
+										header("Location: /".$SM_ADMIN_PANEL."?admin_lang=$admin_lang");
 									}
 									exit;
 								}
@@ -103,7 +103,7 @@ include "_header5.php";
 ?>
 <style>
 body {
-	background: url("/admin/img/login-bg.png") repeat-x !important;
+	background: url("/staff/img/login-bg.png") repeat-x !important;
 }
 .login-form-wrapper {
 	width:100%;
@@ -131,7 +131,7 @@ body {
 	font-size: 10px;
 }
 .login-body {
-	background: url("/admin/img/login-body.jpg") no-repeat;
+	background: url("/staff/img/login-body.jpg") no-repeat;
 	overflow: hidden;
 	width: 100%;
 	height:221px;
@@ -166,7 +166,7 @@ form {
 				<?=__("core", "LOGIN__BOX_TITLE")?>
 			</div>
 			<div class="login-brand">
-				<a href="/admin"><img src="/admin/img/sitemanager-logo-white.png" alt="sitemanager" border=0 style="position:absolute;margin-top:-5px"></a>
+				<a href="/<?=$SM_ADMIN_PANEL?>"><img src="/staff/img/sitemanager-logo-white.png" alt="sitemanager" border=0 style="position:absolute;margin-top:-5px"></a>
 			</div>
 			<div class="login-version">
 				version: <?=$SOFTWARE_INFORMATION["version"]?></b>
@@ -182,7 +182,7 @@ form {
 <? } ?>
 
 <?/*
-			<form name=login action="<?=preg_match("/logout.*$/", $_SERVER["REQUEST_URI"]) ? "/admin/" : $_SERVER["REQUEST_URI"]?>" method=post>
+			<form name=login action="<?=preg_match("/logout.*$/", $_SERVER["REQUEST_URI"]) ? "/".$SM_ADMIN_PANEL."/" : $_SERVER["REQUEST_URI"]?>" method=post>
 */?>
 			<form name=login action="" method=post>
 

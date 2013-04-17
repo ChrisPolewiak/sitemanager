@@ -705,7 +705,7 @@ span.disabled {
  * login form
  */
 body.sm-admin-login {
-	background:url("/admin/img/login-bg.png") repeat-x;
+	background:url("/staff/img/login-bg.png") repeat-x;
 }
 
 .sm-admin-login-page {
@@ -719,7 +719,7 @@ body.sm-admin-login {
 	margin:98px auto;
 }
 .sm-admin-login-form-header {
-	background:url("/admin/img/login-head.png") no-repeat;
+	background:url("/staff/img/login-head.png") no-repeat;
 	width:500px;
 	height:66px;
 }
@@ -739,7 +739,7 @@ body.sm-admin-login {
 	font-family:'trebuchet ms';
 }
 .sm-admin-login-form-body {
-	background:url("/admin/img/login-body.jpg") no-repeat;
+	background:url("/staff/img/login-body.jpg") no-repeat;
 	overflow:hidden;
 	width:100%;
 }
@@ -757,7 +757,7 @@ body.sm-admin-login {
 	padding:15px;
 }
 .sm-admin-login-form-footer {
-	background:url("/admin/img/login-foot.png") no-repeat;
+	background:url("/staff/img/login-foot.png") no-repeat;
 	padding:2px;
 	color:#777;
 	font-size:9px;

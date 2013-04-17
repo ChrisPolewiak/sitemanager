@@ -31,6 +31,10 @@ if(is_array($SM_CONFIG)) {
 		define("TEST_MODE", true);
 	}
 
+	if ($SM_CONFIG["engine"]["site_adminpanel"]) {
+		$SM_ADMIN_PANEL = $SM_CONFIG["engine"]["site_adminpanel"];
+	}
+
 	$CACHE_IMAGE_TIMEOUT=86400;
 	if ($SM_CONFIG["engine"]["cache_image_timeout"]) {
 		$CACHE_IMAGE_TIMEOUT = $SM_CONFIG["engine"]["cache_image_timeout"];
@@ -59,7 +63,7 @@ if(is_array($SM_CONFIG)) {
 
 }
 else {
-	header("Location: /admin/install");
+	header("Location: /install");
 }
 
 $BACKUP_DIR="";

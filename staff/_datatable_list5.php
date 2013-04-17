@@ -102,7 +102,7 @@ eval(" \$result = ".$params["function_fetch"]."; ");
 	);
 
 	function sm_datatable_image( $id ) {
-		return "<img src=\"/admin/__contentfile_image_resize.php?id=".$id."&w=40\">";
+		return "<img src=\"/staff/__contentfile_image_resize.php?id=".$id."&w=40\">";
 	}
 
 

@@ -1,10 +1,12 @@
 <?
 
-ob_start();
+//ob_start();
 
 $pathinfo = pathinfo( dirname(__FILE__) );
 $ROOT_DIR = $pathinfo["dirname"];
 $INCLUDE_DIR = $ROOT_DIR."/include";
+
+set_include_path(get_include_path() . PATH_SEPARATOR . $ROOT_DIR."/staff");
 
 // Action for FORMS
 $action = isset($_REQUEST["action"]) ? $_REQUEST["action"] : "";
@@ -26,9 +28,9 @@ $page = $page ? $page : "index.php";
 $url = str_replace("/","&",$url);
 parse_str($url);
 
-$ENGINE = "/admin";
+$ENGINE = "/".$SM_ADMIN_PANEL;
 
-require "../include/init.php";
+// require "../include/init.php";
 
 /*
  * language
@@ -76,7 +78,7 @@ if(is_array($_SESSION["content_user"])) {
 }
 elseif($page!="login.php") {
 	$backto = base64_encode($REQUEST_URI);
-	header("Location: /admin/login.php?backto=$backto");
+	header("Location: /".$SM_ADMIN_PANEL."/login.php?backto=$backto");
 	exit;
 }
 
@@ -90,7 +92,7 @@ if (isset($_REQUEST["logout"])) {
 	session_unregister("content_user");
 	session_unregister("content_useracl");
 	session_unregister("content_usergroup");
-	header("Location: /admin/login.php");
+	header("Location: /".$SM_ADMIN_PANEL."/login.php");
 	exit;
 }
 

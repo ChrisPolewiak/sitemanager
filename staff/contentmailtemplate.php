@@ -198,7 +198,7 @@ $('#tabs').ready(function() {
 $('#mail2content_user_name').autocomplete({
 	source: function( request, response ) {
 		$.ajax({
-			url: "/admin/search-ajax.php?resulttype=json&object=content_user",
+			url: "/<?=$SM_ADMIN_PANEL?>/search-ajax.php?resulttype=json&object=content_user",
 			dataType: "json",
 			data: {q: request.term},
 			success: function(data) {

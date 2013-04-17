@@ -7,7 +7,7 @@ require "_header.php";
 	<div class="sm-admin">
 		<div class="sm-admin-header">
 			<div class="sm-admin-header-logo">
-				<a href="/admin"><img src="/admin/img/sitemanager-logo-white.png" alt="sitemanager" border=0></a>
+				<a href="/<?=$SM_ADMIN_PANEL?>"><img src="/staff/img/sitemanager-logo-white.png" alt="sitemanager" border=0></a>
 			</div>
 			<div class="sm-admin-header-user">
 				<?=__("core", "Zalogowany użytkownik")?>: <b><?=$_SESSION["content_user"]["content_user__firstname"]?> <?=$_SESSION["content_user"]["content_user__surname"]?></b><br>

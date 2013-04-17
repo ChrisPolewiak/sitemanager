@@ -1,6 +1,7 @@
 <?
+
 if(!isset($_SERVER["PATH_INFO"])){
-	$_SERVER["PATH_INFO"] = '/index';
+	$_SERVER["PATH_INFO"] = "/index";
 }
 ob_start();
 
@@ -43,6 +44,15 @@ if($page == "captcha" || preg_match("/^captcha\//", $page)) {
 }
 
 require_once "include/init.php";
+
+
+/*
+ * Admin
+ */
+if($page == $SM_ADMIN_PANEL || preg_match("/^".$SM_ADMIN_PANEL."\//", $page)) {
+	require "staff/engine.php";
+	exit;
+}
 
 /*
  * CLEAN VARIABLES

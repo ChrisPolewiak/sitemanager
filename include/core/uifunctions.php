@@ -37,6 +37,7 @@ function header_gzip_end() {
  * @version		5.0.0
 */
 function sm_inputfield( $type, $title, $help, $id, $name, $value, $size, $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3, $options="", $xss_secured=1 ) {
+	global $SM_ADMIN_PANEL;
 
 	if($xss_secured) {
 		$value = sm_secure_string_xss($value);
@@ -66,14 +67,14 @@ function sm_inputfield( $type, $title, $help, $id, $name, $value, $size, $disabl
 			$html  = "<div class=\"control-group\">";
 			$html .= "<label class=\"control-label\" for=\"".$id."\">".$title."</label>";
 			$html .= "<span class=\"help-block\">".$help."</span>";
-			$html .= "<script src=\"/admin/htmleditor/ckeditor.js\"></script>";
+			$html .= "<script src=\"/staff/htmleditor/ckeditor.js\"></script>";
 			$html .= "<div id=\"".$id."\" contenteditable=\"true\" style=\"height:200px;padding:10px;border:1px solid #ccc;\">";
 			$html .= $value;
 			$html .= "</div>";
 			$html .= "<script>";
 			$html .= "CKEDITOR.replace( '".$id."', {\n";
-			$html .= "	filebrowserBrowseUrl: '/admin/contentfile_popup.php',\n";
-			$html .= "	filebrowserUploadUrl: '/admin/contentfile_popup.php',\n";
+			$html .= "	filebrowserBrowseUrl: '/".$SM_ADMIN_PANEL."/contentfile_popup.php',\n";
+			$html .= "	filebrowserUploadUrl: '/".$SM_ADMIN_PANEL."/contentfile_popup.php',\n";
 			$html .= "	filebrowserWindowWidth: '90%',\n";
 			$html .= "	filebrowserWindowHeight: '70%'\n";
 			$html .= "});\n";

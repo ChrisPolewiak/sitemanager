@@ -175,7 +175,7 @@ else {
 <?
 	if ($content_file__id && preg_match("/^image/", $dane["content_file__filetype"])) {
 ?>
-									<img src="/admin/__contentfile_image_resize.php?id=<?=$content_file__id?>&w=250" class="img-polaroid">
+									<img src="/staff/__contentfile_image_resize.php?id=<?=$content_file__id?>&w=250" class="img-polaroid">
 <?
 	}
 ?>
@@ -205,7 +205,7 @@ else {
 $('#dane_content_user').autocomplete({
 	source: function( request, response ) {
 		$.ajax({
-			url: "/admin/search-ajax.php?resulttype=json&object=content_user",
+			url: "/<?=$SM_ADMIN_PANEL?>/search-ajax.php?resulttype=json&object=content_user",
 			dataType: "json",
 			data: {q: request.term},
 			success: function(data) {

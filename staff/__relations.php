@@ -27,7 +27,7 @@
 
 <script>
 jQuery(document).ready(function() {
-	jQuery("#RelationSearch").autocomplete("/admin/search-ajax.php?resulttype=pipe", {
+	jQuery("#RelationSearch").autocomplete("/<?=$SM_ADMIN_PANEL?>/search-ajax.php?resulttype=pipe", {
 		extraParams: {
 			object: function() { return $("#relationDsttable").val(); }
 		},

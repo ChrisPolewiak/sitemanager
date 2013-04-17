@@ -3,15 +3,7 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^staff.*
 RewriteRule ^$ /staff/engine.php [PT]
 
-RewriteRule ^admin/install(.*) /staff/img$1 [PT]
-RewriteRule ^admin/img(.*) /staff/img$1 [PT]
-RewriteRule ^admin/sqldata(.*) /html/sqldata$1 [PT]
-RewriteRule ^admin/css(.*) /staff/css$1 [PT]
-RewriteRule ^admin/font(.*) /staff/font$1 [PT]
-RewriteRule ^admin/js(.*) /staff/js$1 [PT]
-RewriteRule ^admin/static/(.*) /staff/js$1 [PT]
-RewriteRule ^admin/htmleditor(.*) /staff/htmleditor$1 [PT]
-RewriteRule ^admin(.*) /staff/engine.php/$1 [PT]
+RewriteRule ^install(.*) /staff/install.php$1 [PT]
 
 RewriteRule /dyncol(.*)$  /html/img/dynamicolor.php?$1 [PT]
 RewriteRule ^dyncol(.*)$  /html/img/dynamicolor.php?$1 [PT]

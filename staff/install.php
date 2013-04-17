@@ -1,5 +1,10 @@
 <?
 
+if( is_file("../config.ini.php" ) ) {
+	header("Location: /");
+	exit;
+}
+
 session_start();
 
 $INSTALL_STEPS = array(
@@ -22,7 +27,7 @@ if(isset($_POST["action"]["next"])) {
 		case "index":
 			$next_step = "db";
 			$_SESSION["step"][$next_step] = 1;
-			header("Location: /admin/install/".$next_step);
+			header("Location: /install/".$next_step);
 			exit;
 			break;
 
@@ -47,24 +52,26 @@ if(isset($_POST["action"]["next"])) {
 			elseif( !preg_match("/^([a-z]{1})([a-z\d]{1,4})$/", strtolower($dane["database_dbprefix"]), $tmp) ) {
 				$ERROR[] = "prefix może składać się wyłacznie z liter i cyfr mi mieć od 2 do 5 znaków";
 			}
+
 			if( $dane["database_dbserver"] && $dane["database_dbuser"] && $dane["database_dbpass"] ) {
 				try {
 					$SM_PDO = new PDO($dane["database_engine"] .":dbname=". $dane["database_dbname"] .";host=". $dane["database_dbserver"], $dane["database_dbuser"], $dane["database_dbpass"]);
 				}
 				catch(PDOException $e) {
 					$ERROR[] = $e->getMessage();
-					exit;
 				}
-				$SQL = "SELECT * FROM ".$dane["database_dbprefix"]."_core_session LIMIT 1";
-				if ( $SM_PDO->query( $SQL ) ) {
-					$ERROR[] = "W bazie znajduje się już instancja SiteManager. Zmień prefix dla tabel, by nie nadpisać istniejących danych.";
-				}
-				else {
-					$_SESSION["config"][ $_POST["dane"]["step"] ] = $dane;
-					$next_step = "app";
-					$_SESSION["step"][$next_step] = 1;
-					header("Location: /admin/install/".$next_step);
-					exit;
+				if( !is_array($ERROR)) {
+					$SQL = "SELECT * FROM ".$dane["database_dbprefix"]."_core_session LIMIT 1";
+					if ( $SM_PDO->query( $SQL ) ) {
+						$ERROR[] = "W bazie znajduje się już instancja SiteManager. Zmień prefix dla tabel, by nie nadpisać istniejących danych.";
+					}
+					else {
+						$_SESSION["config"][ $_POST["dane"]["step"] ] = $dane;
+						$next_step = "app";
+						$_SESSION["step"][$next_step] = 1;
+						header("Location: /install/".$next_step);
+						exit;
+					}
 				}
 
 			}
@@ -76,12 +83,17 @@ if(isset($_POST["action"]["next"])) {
 			if( ! $dane["engine_cacheimagetimeout"]) {
 				$ERROR[] = "Podaj domyślny czas przechowywania zdjęć w cache";
 			}
+			if( strlen($dane["site_adminpanel"])<5 ) {
+				$ERROR[] = "Za krótki adres panelu zarządzania";
+				$dane["site_adminpanel"]="";
+			}
+			
 
 			if(!is_array($ERROR)) {
 				$_SESSION["config"][ $_POST["dane"]["step"] ] = $dane;
 				$next_step = "access";
 				$_SESSION["step"][$next_step] = 1;
-				header("Location: /admin/install/".$next_step);
+				header("Location: /install/".$next_step);
 				exit;
 			}				
 			break;
@@ -101,7 +113,7 @@ if(isset($_POST["action"]["next"])) {
 				$_SESSION["config"][ $_POST["dane"]["step"] ] = $dane;
 				$next_step = "confirm";
 				$_SESSION["step"][$next_step] = 1;
-				header("Location: /admin/install/".$next_step);
+				header("Location: /install/".$next_step);
 				exit;
 			}				
 			break;
@@ -270,6 +282,7 @@ if(isset($_POST["action"]["next"])) {
 				fputs($fp, "test_mode = false\n");
 				fputs($fp, "cache_image_timeout = ".($_SESSION["config"]["app"]["engine_cacheimagetimeout"] * 86400)."\n");
 				fputs($fp, "data_encryption_key = ".md5(microtime())."\n");
+				fputs($fp, "site_adminpanel = ".$_SESSION["config"]["app"]["site_adminpanel"]."\n");
 				fputs($fp, "\n");
 				fputs($fp, "[site]\n");
 				fputs($fp, "server_name = ".$_SESSION["config"]["app"]["site_servername"]."\n");
@@ -277,27 +290,29 @@ if(isset($_POST["action"]["next"])) {
 				fputs($fp, "site_description = ".$_SESSION["config"]["app"]["site_description"]."\n");
 				fputs($fp, "site_keywords = ".$_SESSION["config"]["app"]["site_keywords"]."\n");
 				fputs($fp, "mail_addr_admin = ".$_SESSION["config"]["app"]["site_mailaddradmin"]."\n");
+				fputs($fp, "server_name = ".$_SESSION["config"]["app"]["site_servername"]."\n");
 				fputs($fp, "\n");
 				fputs($fp, "[support]\n");
 				fputs($fp, "customercode = \n");
 				fputs($fp, "serialnumber = \n");
 				fputs($fp, "*"."/"."?".">");
-				header("Location: /admin");
+				header("Location: /".$_SESSION["config"]["app"]["site_adminpanel"]);
 				exit;
-			}				
+			}
 			break;
 	}
 }
 
 $step = "index";
-if ( preg_match("/^\/([^\/]+)\/*([^\?]*)/", $_SERVER["REQUEST_URI"], $tmp)) {
-        $url = $tmp[2];
+if ( preg_match("/^\/*([^\?]*)/", $_SERVER["REQUEST_URI"], $tmp)) {
+	$url = $tmp[1];
 }
+
 if (ereg("\/", $url))
 	$step = substr($url,strpos($url,"/")+1);
 
 if( ! $_SESSION["step"][$step]) {
-	header("Location: /admin/install");
+	header("Location: /install");
 	exit;
 }
 
@@ -328,7 +343,7 @@ require "_install_header.php";
 							<br>
 							<i>zespół SiteManager</i><br>
 							<br>
-							<a href="/admin/install/db">Zaczynamy</a><br>
+							<a href="/install/db">Zaczynamy</a><br>
 						</p>
 					</fieldset>
 
@@ -410,6 +425,18 @@ $dane["site_servername"] = $dane["site_servername"] ? $dane["site_servername"] :
 								<?=sm_inputfield( "text", "Adres e-mail administratora", "Adres e-mail używany w przypadku problemów z witryną", "dane_site_mailaddradmin", "dane[site_mailaddradmin]", $dane["site_mailaddradmin"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 							</div>
 						</div>
+
+<?
+$chars = "abcdefghijklmnopqrstuwvzyz1234567890";
+if( strlen($dane["site_adminpanel"]<5) ) {
+	$dane["site_adminpanel"] = "";
+	for($i=1;$i<=8;$i++) {
+		$dane["site_adminpanel"] .= $chars[intval(rand(0,36))];
+	}
+}
+?>
+
+						<?=sm_inputfield( "text", "Adres panelu zarządzania", "Podaj adres panelu zarządzania. Minimum 5 znaków", "dane_site_adminpanel", "dane[site_adminpanel]", $dane["site_adminpanel"], "small", $disabled=false, $validation=false, $prepend="https://adres_serwera/", $append=false, $rows=1);?>
 
 						<?=sm_inputfield( "textarea", "Opis serwisu", "Podaj opis uruchamianej witruny (treść pojawi się w nagłówkach stron)", "dane_site_description", "dane[site_description]", $dane["site_description"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 						<?=sm_inputfield( "textarea", "Słowa kluczowe", "Podaj słowa kluczowe dla uruchamianej witruny (pojawią się w nagłówkach stron)", "dane_site_keywords", "dane[site_keywords]", $dane["site_keywords"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>

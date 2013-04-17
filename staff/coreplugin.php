@@ -18,7 +18,7 @@ if ( $action=="enable" ) {
 	}
 	$plugin_to_save[$plugin] = $SM_PLUGINS[$plugin];
 	sm_core_serialize_data( $plugin_to_save, "plugin" );
-	header("Location: /admin/coreplugin.php");
+	header("Location: /".$SM_ADMIN_PANEL."/coreplugin.php");
 	exit;
 }
 
@@ -32,7 +32,7 @@ if ( $action=="disable" ) {
 		}
 	}
 	sm_core_serialize_data( $plugin_to_save, "plugin" );
-	header("Location: /admin/coreplugin.php");
+	header("Location: /".$SM_ADMIN_PANEL."/coreplugin.php");
 	exit;
 }
 

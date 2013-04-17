@@ -22,7 +22,7 @@ window.resizeTo(1200,800);
 
 	<div class="navbar navbar-static-top">
 		<div class="navbar-inner">
-			<a href="#" class="brand"><img src="/admin/img/sitemanager-logo-white.png" alt="sitemanager" border=0> Przeglądarka zasobów</a>
+			<a href="#" class="brand"><img src="/staff/img/sitemanager-logo-white.png" alt="sitemanager" border=0> Przeglądarka zasobów</a>
 			<ul class="nav">
 				<li id="btn-action-viewtype-thumbs" <?=($sm_viewtype=="thumbs"?"class=\"active\"":"")?>><a id="action-viewtype-thumbs" href="#"><i class="icon-th"></i>&nbsp;Widok miniatur</a></li>
 				<li id="btn-action-viewtype-table" <?=($sm_viewtype=="table"?"class=\"active\"":"")?>><a id="action-viewtype-table" href="#"><i class="icon-th-list"></i>&nbsp;Widok tabeli</a></li>
