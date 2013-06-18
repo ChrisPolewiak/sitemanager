@@ -59,7 +59,22 @@ $dane = htmlentitiesall($dane);
 		$inputfield_options[ $k ] = $v;
 	}
 ?>
-									<?=sm_inputfield( "select", __("CORE", "CORE_TRANSLATION__FIELD_CONFIG_NAME"), "", "language", "language", $translation_data["_DEFINE_"]["LANGUAGE_CODE"], "block-level", $disabled=false, $validation=true, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+									<?=sm_inputfield(array(
+										"type"=>"select",
+										"title"=>__("CORE", "CORE_TRANSLATION__FIELD_CONFIG_NAME"),
+										"help"=>"",
+										"id"=>"language",
+										"name"=>"language",
+										"value"=>$translation_data["_DEFINE_"]["LANGUAGE_CODE"],
+										"size"=>"block-level",
+										"disabled"=>false,
+										"validation"=>true,
+										"prepend"=>false,
+										"append"=>false,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
 								</div>
 								<div class="span2">
 									<div class="btn-group">
@@ -80,10 +95,40 @@ $dane = htmlentitiesall($dane);
 ?>
 							<div class="row-float">
 								<div class="span4">
-									<?=sm_inputfield( "text", __("CORE", "CORE_TRANSLATION__FIELD_NAME"), "", "", "", $k, "block-level", $disabled=true, $validation=true, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>__("CORE", "CORE_TRANSLATION__FIELD_NAME"),
+										"help"=>"",
+										"id"=>"language",
+										"name"=>"language",
+										"value"=>$k,
+										"size"=>"block-level",
+										"disabled"=>true,
+										"validation"=>true,
+										"prepend"=>false,
+										"append"=>false,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 								</div>
 								<div class="span8">
-									<?=sm_inputfield( "text", __("CORE", "CORE_TRANSLATION__FIELD_VALUE"), "", "dane_".$translation_section."_".$k, "dane[".$translation_section."][".$k."]", $v, "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>__("CORE", "CORE_TRANSLATION__FIELD_VALUE"),
+										"help"=>"",
+										"id"=>"dane_".$translation_section."_".$k,
+										"name"=>"dane[".$translation_section."][".$k."]",
+										"value"=>$v,
+										"size"=>"block-level",
+										"disabled"=>false,
+										"validation"=>false,
+										"prepend"=>false,
+										"append"=>false,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 								</div>
 							</div>
 <?

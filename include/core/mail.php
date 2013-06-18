@@ -166,7 +166,7 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 	$subject = $subject ? $subject : $content_mailtemplate["content_mailtemplate__name"];
 
 	require_once(SMARTY_DIR."/Smarty.class.php");
-	$smarty_mail =& new Smarty();
+	$smarty_mail = new Smarty();
 	$smarty_mail->template_dir  = SMARTY_TEMPLATES."/".$SITESELECTED."/template";
 	$smarty_mail->compile_dir   = SMARTY_SITEMANAGER_DIR."/templates_c/";
 	$smarty_mail->setCaching(Smarty::CACHING_OFF);
@@ -239,9 +239,12 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 	// naglowki
 	$arrHeaders = array(
 		"From"			=> $from,
+		"To"			=> $recipient_email,
+		"Date"			=> date("r"),
 		"Return-Path"	=> $return_to,
 		"Subject"		=> $subject,
 		"X-Mailer"		=> $xmailer,
+		"Message-ID"	=> "<" . $_SERVER["REQUEST_TIME"] . md5($_SERVER["REQUEST_TIME"]) . "@" . $_SERVER["HOSTNAME"] . ">",
 	);
 
 	if($cc) {

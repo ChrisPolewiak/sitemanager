@@ -7,7 +7,7 @@ require "_header5.php";
 
 <script>
 function confDelete() {
-	str = '<?=_("CORE", "TXT__RECORD_DELETE_CONFIRM")?>';
+	str = '<?=__("CORE", "TXT__RECORD_DELETE_CONFIRM")?>';
 	return confirm(str);
 }
 </script>

@@ -294,13 +294,58 @@ $('#tabs').ready(function() {
 							<div id="tabs-1" class="tab-pane active">
 
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "Tytuł", "wyświetlany na stronie", "dane_content_page__title", "dane[content_page__title]", $dane["content_page__title"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Tytuł",
+										"help"	=> "wyświetlany na stronie",
+										"id"	=> "dane_content_page__title",
+										"name"	=> "dane[content_page__title]",
+										"value"	=> $dane["content_page__title"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 									<div class="row-fluid">
 										<div class="span6">
-											<?=sm_inputfield( "text", "Nazwa wewnętrzna", "", "dane_content_page__name", "dane[content_page__name]", $dane["content_page__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "text",
+												"title"	=> "Nazwa wewnętrzna",
+												"help"	=> "",
+												"id"	=> "dane_content_page__name",
+												"name"	=> "dane[content_page__name]",
+												"value"	=> $dane["content_page__name"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span6">
-											<?=sm_inputfield( "text", "Adres strony", "pod jakim adresem będzie strona widziana", "dane_content_page__url", "dane[content_page__url]", $dane["content_page__url"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "text",
+												"title"	=> "Adres strony",
+												"help"	=> "pod jakim adresem będzie strona widziana",
+												"id"	=> "dane_content_page__url",
+												"name"	=> "dane[content_page__url]",
+												"value"	=> $dane["content_page__url"],
+												"size"	=> "large",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => "/",
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 									<div class="row-fluid">
@@ -312,7 +357,22 @@ $('#tabs').ready(function() {
 		$inputfield_options[ $k ]=$v;
 	}
 ?>
-											<?=sm_inputfield( "select", "Język", "", "dane_content_page__lang", "dane[content_page__lang]", $dane["content_page__lang"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Język",
+												"help"	=> "",
+												"id"	=> "dane_content_page__lang",
+												"name"	=> "dane[content_page__lang]",
+												"value"	=> $dane["content_page__lang"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span10">
 <?
@@ -323,17 +383,62 @@ $('#tabs').ready(function() {
 		}
 	}
 ?>
-											<?=sm_inputfield( "select", "Szablon", "wybrany szablon podstrony - <a href=\"content_template.php?content_template__id=0\">".__("core", "dodaj szablon")."</a>", "dane_content_template__id", "dane[content_template__id]", $dane["content_template__id"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Szablon",
+												"help"	=> "wybrany szablon podstrony - <a href=\"content_template.php?content_template__id=0\">".__("core", "dodaj szablon")."</a>",
+												"id"	=> "dane_content_template__id",
+												"name"	=> "dane[content_template__id]",
+												"value"	=> $dane["content_template__id"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 
 
 									<div class="row-fluid">
 										<div class="span6">
-											<?=sm_inputfield( "textarea", "Opis strony", "pojawi się w nagłówkach strony", "dane_content_page__description", "dane[content_page__description]", $dane["content_page__description"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3);?>
+											<?=sm_inputfield(array(
+												"type"	=> "textarea",
+												"title"	=> "Opis strony",
+												"help"	=> "pojawi się w nagłówkach strony",
+												"id"	=> "dane_content_page__description",
+												"name"	=> "dane[content_page__description]",
+												"value"	=> $dane["content_page__description"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span6">
-											<?=sm_inputfield( "textarea", "Słowa kluczowe", "pojawi się w nagłówkach strony", "dane_content_page__keywords", "dane[content_page__keywords]", $dane["content_page__keywords"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3);?>
+											<?=sm_inputfield(array(
+												"type"	=> "textarea",
+												"title"	=> "Słowa kluczowe",
+												"help"	=> "pojawi się w nagłówkach strony",
+												"id"	=> "dane_content_page__keywords",
+												"name"	=> "dane[content_page__keywords]",
+												"value"	=> $dane["content_page__keywords"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 
@@ -361,7 +466,22 @@ $('#tabs').ready(function() {
 		}
 	}
 ?>
-									<?=sm_inputfield( "select", "Kategoria nadrzędna", "", "dane_content_page__idparent", "dane[content_page__idparent]", $dane["content_page__idparent"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+									<?=sm_inputfield(array(
+										"type"	=> "select",
+										"title"	=> "Kategoria nadrzędna",
+										"help"	=> "",
+										"id"	=> "dane_content_page__idparent",
+										"name"	=> "dane[content_page__idparent]",
+										"value"	=> $dane["content_page__idparent"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => $inputfield_options,
+										"xss_secured" => true
+									));?>
 								</fieldset>
 
 							</div>
@@ -378,10 +498,40 @@ $('#tabs').ready(function() {
 		}
 	}
 ?>
-											<?=sm_inputfield( "select", "Wymagany poziom dostępu", "jeśli nie wybierzesz - dostęp będzie dla wszystkich", "dane_content_page__requiredaccess", "dane[content_page__requiredaccess]", $dane["content_page__requiredaccess"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Wymagany poziom dostępu",
+												"help"	=> "jeśli nie wybierzesz - dostęp będzie dla wszystkich",
+												"id"	=> "dane_content_page__requiredaccess",
+												"name"	=> "dane[content_page__requiredaccess]",
+												"value"	=> $dane["content_page__requiredaccess"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span6">
-											<?=sm_inputfield( "textarea", "Dostęp z adresów IP", "Lista adresów ip z których możliwy jest dostęp", "dane_content_page__hostallow", "dane[content_page__hostallow]", $dane["content_page__hostallow"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3);?>
+											<?=sm_inputfield(array(
+												"type"	=> "textarea",
+												"title"	=> "Dostęp z adresów IP",
+												"help"	=> "Lista adresów ip z których możliwy jest dostęp",
+												"id"	=> "dane_content_page__hostallow",
+												"name"	=> "dane[content_page__hostallow]",
+												"value"	=> $dane["content_page__hostallow"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 3,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 								</fieldset>
@@ -392,19 +542,79 @@ $('#tabs').ready(function() {
 
 									<div class="row-fluid">
 										<div class="span4">
-											<?=sm_inputfield( "checkbox", "Widoczna w menu", "Czy strona będzie widoczna w menu podstron", "dane_content_page__menu_visible", "dane[content_page__menu_visible]", $dane["content_page__menu_visible"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "checkbox",
+												"title"	=> "Widoczna w menu",
+												"help"	=> "Czy strona będzie widoczna w menu podstron",
+												"id"	=> "dane_content_page__menu_visible",
+												"name"	=> "dane[content_page__menu_visible]",
+												"value"	=> $dane["content_page__menu_visible"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span4">
-											<?=sm_inputfield( "checkbox", "Widoczna w sitemap.xml", "Czy strona będzie widoczna w mapie serwisu. Pobierana m.in. przez Google", "dane_content_page__sitemap_visible", "dane[content_page__sitemap_visible]", $dane["content_page__sitemap_visible"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "checkbox",
+												"title"	=> "Widoczna w sitemap.xml",
+												"help"	=> "Czy strona będzie widoczna w mapie serwisu. Pobierana m.in. przez Google",
+												"id"	=> "dane_content_page__sitemap_visible",
+												"name"	=> "dane[content_page__sitemap_visible]",
+												"value"	=> $dane["content_page__sitemap_visible"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span4">
-											<?=sm_inputfield( "checkbox", "Strona aktywna", "Można zablokować całkowity dostęp do strony", "dane_content_page__enabled", "dane[content_page__enabled]", $dane["content_page__enabled"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "checkbox",
+												"title"	=> "Strona aktywna",
+												"help"	=> "Można zablokować całkowity dostęp do strony",
+												"id"	=> "dane_content_page__enabled",
+												"name"	=> "dane[content_page__enabled]",
+												"value"	=> $dane["content_page__enabled"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 
 									<div class="row-fluid">
 										<div class="span8">
-											<?=sm_inputfield( "text", "Przekierowanie na URL", "Automatycznie przekieruj na podany adres url (dodaj przedrostek: http://, https://, mailto:, ftp://)", "dane_content_page__redirect_url", "dane[content_page__redirect_url]", $dane["content_page__redirect_url"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "text",
+												"title"	=> "Przekierowanie na URL",
+												"help"	=> "Automatycznie przekieruj na podany adres url (dodaj przedrostek: http://, https://, mailto:, ftp://)",
+												"id"	=> "dane_content_page__redirect_url",
+												"name"	=> "dane[content_page__redirect_url]",
+												"value"	=> $dane["content_page__redirect_url"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 <?
 	$inputfield_options=array();
@@ -420,13 +630,43 @@ $('#tabs').ready(function() {
 	}
 ?>
 										<div class="span4">
-											<?=sm_inputfield( "select", "Przekierowanie na podstronę", "Automatycznie przekieruj na inną podstronę", "dane_content_page__redirect_page", "dane[content_page__redirect_page]", $dane["content_page__redirect_page"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Przekierowanie na podstronę",
+												"help"	=> "Automatycznie przekieruj na inną podstronę",
+												"id"	=> "dane_content_page__redirect_page",
+												"name"	=> "dane[content_page__redirect_page]",
+												"value"	=> $dane["content_page__redirect_page"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 
 									<div class="row-fluid">
 										<div class="span6">
-											<?=sm_inputfield( "textarea", "Dodatkowe parametry", "dodatkowa konfiguracja strony", "dane_content_page__params", "dane[content_page__params]", $dane["content_page__params"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=6);?>
+											<?=sm_inputfield(array(
+												"type"	=> "textarea",
+												"title"	=> "Dodatkowe parametry",
+												"help"	=> "dodatkowa konfiguracja strony",
+												"id"	=> "dane_content_page__params",
+												"name"	=> "dane[content_page__params]",
+												"value"	=> $dane["content_page__params"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 6,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span6">
 											<h6><?=__("core", "Dopuszczalne znaczniki:")?></h6>
@@ -457,7 +697,22 @@ $('#tabs').ready(function() {
 		}
 	}
 ?>
-											<?=sm_inputfield( "select-multi", "", "", "content_page__id", "content_page__id", $content_page__id, "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=25, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "select-multi",
+												"title"	=> "",
+												"help"	=> "",
+												"id"	=> "content_page__id",
+												"name"	=> "content_page__id",
+												"value"	=> $content_page__id,
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 25,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 <script>
 $('#content_page__id').click(function(){
 	window.location = '?content_page__id='+this.value;

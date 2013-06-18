@@ -57,7 +57,7 @@ if(isset($action["clone"])){
 	$dane["content_mailtemplate__id"]=0;
 }
 
-if( $content_mailtemplate__id > 0 ) {
+if( $content_mailtemplate__id ) {
 	$dane = content_mailtemplate_dane( $content_mailtemplate__id );
 	if( isset($action["duplicate"] ) ) {
 		$content_mailtemplate__id = "0";
@@ -111,13 +111,43 @@ $('#tabs').ready(function() {
 
 									<div class="tab-content">
 										<div id="tabs-text" class="tab-pane">
-											<?=sm_inputfield( "textarea", "", "", "dane_content_mailtemplate__textbody", "dane[content_mailtemplate__textbody]", $dane["content_mailtemplate__textbody"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=10);?>
+											<?=sm_inputfield(array(
+												"type"	=> "textarea",
+												"title"	=> "",
+												"help"	=> "",
+												"id"	=> "dane_content_mailtemplate__textbody",
+												"name"	=> "dane[content_mailtemplate__textbody]",
+												"value"	=> $dane["content_mailtemplate__textbody"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 10,
+												"options" => "",
+												"xss_secured" => false
+											));?>
 										</div>
 										<div id="tabs-html" class="tab-pane active">
 <?
 	$sm_input_htmleditor["height"] = 300;
 ?>
-											<?=sm_inputfield( "htmleditor", "", "", "dane_content_mailtemplate__htmlbody", "dane[content_mailtemplate__htmlbody]", $dane["content_mailtemplate__htmlbody"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=5, "", $xss_secured=0);?>
+											<?=sm_inputfield(array(
+												"type"	=> "htmleditor",
+												"title"	=> "",
+												"help"	=> "",
+												"id"	=> "dane_content_mailtemplate__htmlbody",
+												"name"	=> "dane[content_mailtemplate__htmlbody]",
+												"value"	=> $dane["content_mailtemplate__htmlbody"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 10,
+												"options" => "",
+												"xss_secured" => false
+											));?>
 										</div>
 									</div>
 								</fieldset>
@@ -145,11 +175,86 @@ $('#tabs').ready(function() {
 									<div>Parametry szablonu</div><i class="icon-minus"></i>
 								</div>
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "Nazwa szablonu", "", "dane_content_mailtemplate__name", "dane[content_mailtemplate__name]", $dane["content_mailtemplate__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Nazwa wewnętrzna", "używana w kodzie", "dane_content_mailtemplate__sysname", "dane[content_mailtemplate__sysname]", $dane["content_mailtemplate__sysname"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Tytuł wiadomości e-mail", "", "dane_content_mailtemplate__subject", "dane[content_mailtemplate__subject]", $dane["content_mailtemplate__subject"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Nazwa nadawcy", "", "dane_content_mailtemplate_sender_name", "dane[content_mailtemplate__sender_name]", $dane["content_mailtemplate__sender_name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Adres E-mail nadawcy", "", "dane_content_mailtemplate_sender_email", "dane[content_mailtemplate__sender_email]", $dane["content_mailtemplate__sender_email"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Nazwa szablonu",
+										"help"	=> "",
+										"id"	=> "dane_content_mailtemplate__name",
+										"name"	=> "dane[content_mailtemplate__name]",
+										"value"	=> $dane["content_mailtemplate__name"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Nazwa wewnętrzna",
+										"help"	=> "używana w kodzie",
+										"id"	=> "dane_content_mailtemplate__sysname",
+										"name"	=> "dane[content_mailtemplate__sysname]",
+										"value"	=> $dane["content_mailtemplate__sysname"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Tytuł wiadomości e-mail",
+										"help"	=> "",
+										"id"	=> "dane_content_mailtemplate__subject",
+										"name"	=> "dane[content_mailtemplate__subject]",
+										"value"	=> $dane["content_mailtemplate__subject"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Nazwa nadawcy",
+										"help"	=> "",
+										"id"	=> "dane_content_mailtemplate_sender_name",
+										"name"	=> "dane[content_mailtemplate__sender_name]",
+										"value"	=> $dane["content_mailtemplate__sender_name"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Adres E-mail nadawcy",
+										"help"	=> "",
+										"id"	=> "dane_content_mailtemplate_sender_email",
+										"name"	=> "dane[content_mailtemplate__sender_email]",
+										"value"	=> $dane["content_mailtemplate__sender_email"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 								</fieldset>
 <?
 	if ($content_mailtemplate__id) {
@@ -192,8 +297,22 @@ $('#tabs').ready(function() {
 										<tfoot>
 											<tr>
 												<td>
-													<?=sm_inputfield( "text", "Wyszukaj użytkownika", "", "mail2content_user_name", "mail2content_user[name]", $mail2content_user["name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-													<input type="hidden" name="mail2content_user[id]" value="" id="mail2content_userid">
+													<?=sm_inputfield(array(
+														"type"	=> "text",
+														"title"	=> "Wyszukaj użytkownika",
+														"help"	=> "",
+														"id"	=> "mail2content_user_name",
+														"name"	=> "mail2content_user[name]", $mail2content_user["name"],
+														"value"	=> $mail2content_user["name"],
+														"size"	=> "block-level",
+														"disabled" => 0,
+														"validation" => 0,
+														"prepend" => 0,
+														"append" => 0,
+														"rows" => 1,
+														"options" => "",
+														"xss_secured" => true
+													));?>
 <script>
 $('#mail2content_user_name').autocomplete({
 	source: function( request, response ) {

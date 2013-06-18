@@ -109,7 +109,22 @@ else {
 		$inputfield_options[ $v["sysname"] ] = $v["name"];
 	}
 ?>
-									<?=sm_inputfield( "select", "Objekt z bazy danych", "objekt, do którego przypisane będą zdjęcia", "dane_content_fileshowtype__sysname", "dane[content_fileshowtype__sysname]", $dane["content_fileshowtype__sysname"], "block-level", $disabled=($content_fileshowtype__id ? "1" : "0"), $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+									<?=sm_inputfield(array(
+										"type"	=> "select",
+										"title"	=> "Obiekt z bazy danych",
+										"help"	=> "obiekt, do którego przypisane będą zdjęcia",
+										"id"	=> "dane_content_fileshowtype__sysname",
+										"name"	=> "dane[content_fileshowtype__sysname]",
+										"value"	=> $dane["content_fileshowtype__sysname"],
+										"size"	=> "block-level",
+										"disabled" => $disabled=($content_fileshowtype__id ? "1" : "0"),
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => $inputfield_options,
+										"xss_secured" => true
+									));?>
 								</fieldset>
 
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
@@ -174,10 +189,54 @@ else {
 <?
 		if ($danecontent_fileshowtypeitem || isset($content_fileshowtypeitem__id)) {
 ?>
-									<?=sm_inputfield( "text", "Nazwa", "", "danecontent_fileshowtypeitem_content_fileshowtypeitem__name", "danecontent_fileshowtypeitem[content_fileshowtypeitem__name]", $danecontent_fileshowtypeitem["content_fileshowtypeitem__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Nazwa wewnętrzna", "używana w kodzie", "danecontent_fileshowtypeitem_content_fileshowtypeitem__sysname", "danecontent_fileshowtypeitem[content_fileshowtypeitem__sysname]", $danecontent_fileshowtypeitem["content_fileshowtypeitem__sysname"], "large", $disabled=false, $validation=false, $prepend=strtoupper($dane["content_fileshowtype__sysname"])."_", $append=false, $rows=1);?>
-									<?=sm_inputfield( "checkbox", "Wartość domyślna", "będzie się automatycznie ustawiać na nowo dodanych plikach", "danecontent_fileshowtypeitem_content_fileshowtypeitem__default", "danecontent_fileshowtypeitem[content_fileshowtypeitem__default]", $danecontent_fileshowtypeitem["content_fileshowtypeitem__default"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Nazwa",
+										"help"	=> "",
+										"id"	=> "danecontent_fileshowtypeitem_content_fileshowtypeitem__name",
+										"name"	=> "danecontent_fileshowtypeitem[content_fileshowtypeitem__name]",
+										"value"	=> $danecontent_fileshowtypeitem["content_fileshowtypeitem__name"],
+										"size"	=> "block-level",
+										"disabled" => ($content_fileshowtypeitem__id ? "1" : "0"),
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Nazwa wewnętrzna",
+										"help"	=> "używana w kodzie",
+										"id"	=> "danecontent_fileshowtypeitem_content_fileshowtypeitem__sysname",
+										"name"	=> "danecontent_fileshowtypeitem[content_fileshowtypeitem__sysname]",
+										"value"	=> $danecontent_fileshowtypeitem["content_fileshowtypeitem__sysname"],
+										"size"	=> "large",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => strtoupper($dane["content_fileshowtype__sysname"])."_",
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "checkbox",
+										"title"	=> "Wartość domyślna",
+										"help"	=> "będzie się automatycznie ustawiać na nowo dodanych plikach",
+										"id"	=> "danecontent_fileshowtypeitem_content_fileshowtypeitem__default",
+										"name"	=> "danecontent_fileshowtypeitem[content_fileshowtypeitem__default]",
+										"value"	=> $danecontent_fileshowtypeitem["content_fileshowtypeitem__default"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 <?			if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
 									<div class="btn-toolbar">
 										<input type=hidden name="danecontent_fileshowtypeitem[content_fileshowtypeitem__id]" value="<?=$danecontent_fileshowtypeitem["content_fileshowtypeitem__id"]?>">

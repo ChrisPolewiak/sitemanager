@@ -2,7 +2,7 @@
 
 $menu = array();
 
-session_register("sitemanager_params");
+$_SESSION["sitemanager_params"] = $sitemanager_params;
 
 if ( sm_core_content_user_accesscheck("CORE_ADMINPANEL_READ") ) {
 	$menu["8content0"] = array(

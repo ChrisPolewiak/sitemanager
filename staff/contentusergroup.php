@@ -82,7 +82,22 @@ else {
 					<form action="<?=$page?>" method=post enctype="multipart/form-data" id="sm-form">
 
 						<fieldset class="no-legend">
-							<?=sm_inputfield( "text", "Nazwa grupy", "", "dane_content_usergroup__name", "dane[content_usergroup__name]", $dane["content_usergroup__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+							<?=sm_inputfield(array(
+								"type"=>"text",
+								"title"=>"Nazwa grupy",
+								"help"=>"",
+								"id"=>"dane_content_usergroup__name",
+								"name"=>"dane[content_usergroup__name]",
+								"value"=>$dane["content_usergroup__name"],
+								"size"=>"block-level",
+								"disabled"=>0,
+								"validation"=>0,
+								"prepend"=>0,
+								"append"=>0,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+							));?>
 						</fieldset>
 
 						<div class="fieldset-title">

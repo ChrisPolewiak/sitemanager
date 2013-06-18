@@ -45,16 +45,16 @@ header_gzip_start();
 
 if(is_array($_SESSION["content_user"])) {
 	unset($content_usergroup);
-	session_unregister("content_usergroup");
+	$_SESSION["content_usergroup"];
 	// lista grup uzytkownika
 	if($result = content_user2content_usergroup_fetch_by_content_user( $_SESSION["content_user"]["content_user__id"] )) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 			$content_usergroup[$row["content_usergroup__id"]] = 1;
 		}
-		session_register("content_usergroup");
+		$_SESSION["content_usergroup"] = $content_usergroup;
 	}
 	unset($content_useracl);
-	session_unregister("content_useracl");
+	$_SESSION["content_useracl"];
 	// lista dostępów dla użytkownika
 	if($result = content_useracl_fetch_by_user( $_SESSION["content_user"]["content_user__id"] ) ) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
@@ -74,7 +74,6 @@ if(is_array($_SESSION["content_user"])) {
 	}
 	ksort($content_useracl);
 	$_SESSION["content_useracl"] = $content_useracl;
-	session_register("content_useracl");
 }
 elseif($page!="login.php") {
 	$backto = base64_encode($REQUEST_URI);
@@ -89,9 +88,9 @@ if( $_SESSION["ADMIN_SESSION"]["content_user__admin_hostallow"] && !checkaccess_
 
 if (isset($_REQUEST["logout"])) {
 	unset($ADMIN_SESSION);
-	session_unregister("content_user");
-	session_unregister("content_useracl");
-	session_unregister("content_usergroup");
+	$_SESSION["content_user"];
+	$_SESSION["content_useracl"];
+	$_SESSION["content_usergroup"];
 	header("Location: /".$SM_ADMIN_PANEL."/login.php");
 	exit;
 }

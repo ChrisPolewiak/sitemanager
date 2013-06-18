@@ -77,7 +77,22 @@ else {
 						<div class="row-fluid">
 							<div class="span8">
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "Tytuł artykułu", "wyświetlany na stronie", "dane_content_text__title", "dane[content_text__title]", $dane["content_text__title"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Tytuł artykułu",
+										"help"=>"wyświetlany na stronie",
+										"id"=>"dane_content_text__title",
+										"name"=>"dane[content_text__title]",
+										"value"=>$dane["content_text__title"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 <script>
 $('#tabs').ready(function() {
 	$('#tabs a').click(function (e) {
@@ -94,13 +109,43 @@ $('#tabs').ready(function() {
 
 									<div class="tab-content">
 										<div id="tabs-text" class="tab-pane">
-											<?=sm_inputfield( "textarea", "", "", "dane_content_text__lead", "dane[content_text__lead]", $dane["content_text__lead"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=5, "", $xss_secured=0);?>
+											<?=sm_inputfield(array(
+												"type"=>"textarea",
+												"title"=>"",
+												"help"=>"",
+												"id"=>"dane_content_text__lead",
+												"name"=>"dane[content_text__lead]",
+												"value"=>$dane["content_text__lead"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>5,
+												"options"=>"",
+												"xss_secured"=>false
+											));?>
 										</div>
 										<div id="tabs-html" class="tab-pane active">
 <?
 	$sm_input_htmleditor["height"] = 300;
 ?>
-											<?=sm_inputfield( "htmleditor", "", "", "dane_content_text__body", "dane[content_text__body]", $dane["content_text__body"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=5, "", $xss_secured=0);?>
+											<?=sm_inputfield(array(
+												"type"=>"htmleditor",
+												"title"=>"",
+												"help"=>"",
+												"id"=>"dane_content_text__body",
+												"name"=>"dane[content_text__body]",
+												"value"=>$dane["content_text__body"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>5,
+												"options"=>"",
+												"xss_secured"=>false
+											));?>
 										</div>
 									</div>
 								</fieldset>
@@ -127,7 +172,22 @@ $('#tabs').ready(function() {
 									<div><?=__("core", "Parametry")?></div><i class="icon-minus"></i>
 								</div>
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "Nazwa wewnętrzna", "", "dane_content_text__name", "dane[content_text__name]", $dane["content_text__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Nazwa wewnętrzna",
+										"help"=>"",
+										"id"=>"dane_content_text__name",
+										"name"=>"dane[content_text__name]",
+										"value"=>$dane["content_text__name"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 									<div class="row-fluid">
 										<div class="span6">
 <?
@@ -136,7 +196,22 @@ $('#tabs').ready(function() {
 		$inputfield_options[ $i ]=$i;
 	}
 ?>
-											<?=sm_inputfield( "select", "Kolejność", "wyświetlania się artykułów", "dane_content_text__order", "dane[content_text__order]", $dane["content_text__order"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"=>"select",
+												"title"=>"Kolejność",
+												"help"=>"wyświetlania się artykułów",
+												"id"=>"dane_content_text__order",
+												"name"=>"dane[content_text__order]",
+												"value"=>$dane["content_text__order"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>$inputfield_options,
+												"xss_secured"=>true
+											));?>
 										</div>
 										<div class="span6">
 <?
@@ -146,7 +221,22 @@ $('#tabs').ready(function() {
 		$inputfield_options[ $k ]=$v;
 	}
 ?>
-											<?=sm_inputfield( "select", "Język", "", "dane_content_text__lang", "dane[content_text__lang]", $dane["content_text__lang"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"=>"select",
+												"title"=>"Język",
+												"help"=>"",
+												"id"=>"dane_content_text__lang",
+												"name"=>"dane[content_text__lang]",
+												"value"=>$dane["content_text__lang"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>$inputfield_options,
+												"xss_secured"=>true
+											));?>
 										</div>
 									</div>
 <?
@@ -161,7 +251,22 @@ $('#tabs').ready(function() {
 		$inputfield_options[ $k ] = $v;
 	}
 ?>
-									<?=sm_inputfield( "select", "Strona", "do której strony przypiać ten artykuł", "dane_content_page__id", "dane[content_page__id]", $dane["content_page__id"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+									<?=sm_inputfield(array(
+										"type"=>"select",
+										"title"=>"Strona",
+										"help"=>"do której strony przypiać ten artykuł",
+										"id"=>"dane_content_page__id",
+										"name"=>"dane[content_page__id]",
+										"value"=>$dane["content_page__id"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
 <?
 	$inputfield_options=array();
 	$inputfield_options[]="Brak powiązania";
@@ -171,7 +276,22 @@ $('#tabs').ready(function() {
 		}
 	}
 ?>
-									<?=sm_inputfield( "select", "Sekcja", "do której sekcji przypiać ten artykuł", "dane_content_section__id", "dane[content_section__id]", $dane["content_section__id"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+									<?=sm_inputfield(array(
+										"type"=>"select",
+										"title"=>"Sekcja",
+										"help"=>"do której strony przypiać ten artykuł",
+										"id"=>"dane_content_section__id",
+										"name"=>"dane[content_section__id]",
+										"value"=>$dane["content_section__id"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
 								</fieldset>
 
 <?

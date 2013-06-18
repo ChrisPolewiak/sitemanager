@@ -160,7 +160,26 @@ else {
 						<div class="row-float">
 							<div class="span8">
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "textarea", "Zawartość szablonu", "Kod szablonu", "dane_content_template__source", "dane[content_template__source]", $dane["content_template__source"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=30, $options="", $xss_secured=0 );?>
+									<?=sm_inputfield(array(
+										"type"=>"textarea",
+										"title"=>"Zawartość szablonu",
+										"help"=>"Kod szablonu",
+										"id"=>"dane_content_template__source",
+										"name"=>"dane[content_template__source]",
+										"value"=> $dane["content_template__source"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>30,
+										"options"=>"",
+										"xss_secured"=>false
+									));?>
+									<script>
+										// dane_content_template__source.config.protectedSource.push(/<\?[\s\S]*?\?>/g);
+									</script>
+									
 								</fieldset>
 
 							</div>
@@ -177,10 +196,54 @@ else {
 		$inputfield_options[ $k ]=$v;
 	}
 ?>
-									<?=sm_inputfield( "select", "Język", "", "dane_content_template__lang", "dane[content_template__lang]", $dane["content_template__lang"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
-
-									<?=sm_inputfield( "text", "Nazwa szablonu", "", "dane_content_template__name", "dane[content_template__name]", $dane["content_template__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Nazwa pliku szablonu", "", "dane_content_template__srcfile", "dane[content_template__srcfile]", $dane["content_template__srcfile"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"select",
+										"title"=>"Język",
+										"help"=>"",
+										"id"=>"dane_content_template__lang",
+										"name"=>"dane[content_template__lang]",
+										"value"=> $dane["content_template__lang"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Nazwa szablonu",
+										"help"=>"",
+										"id"=>"dane_content_template__name",
+										"name"=>"dane[content_template__name]",
+										"value"=> $dane["content_template__name"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Nazwa pliku szablonu",
+										"help"=>"",
+										"id"=>"dane_content_template__srcfile",
+										"name"=>"dane[content_template__srcfile]",
+										"value"=> $dane["content_template__srcfile"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 								</fieldset>
 							</div>
 						</div>

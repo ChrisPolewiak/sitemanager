@@ -139,40 +139,203 @@ $('#tabs').ready(function() {
 										<fieldset class="no-legend">
 											<div class="row-fluid">
 												<div class="span6">
-													<?=sm_inputfield( "text", "Nazwisko", "", "dane_content_user__surname", "dane[content_user__surname]", $dane["content_user__surname"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Nazwisko",
+														"help"=>"",
+														"id"=>"dane_content_user__surname",
+														"name"=>"dane[content_user__surname]",
+														"value"=>$dane["content_user__surname"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 												<div class="span6">
-													<?=sm_inputfield( "text", "Imię", "", "dane_content_user__firstname", "dane[content_user__firstname]", $dane["content_user__firstname"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Imię",
+														"help"=>"",
+														"id"=>"dane_content_user__firstname",
+														"name"=>"dane[content_user__firstname]",
+														"value"=>$dane["content_user__firstname"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 											</div>
 
 											<div class="row-fluid">
 												<div class="span6">
-													<?=sm_inputfield( "text", "Adres e-mail", "", "dane_content_user__email", "dane[content_user__email]", $dane["content_user__email"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Adres e-mail",
+														"help"=>"",
+														"id"=>"dane_content_user__email",
+														"name"=>"dane[content_user__email]",
+														"value"=>$dane["content_user__email"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 												<div class="span6">
-													<?=sm_inputfield( "text", "Telefon", "", "dane_content_user__phone", "dane[content_user__phone]", $dane["content_user__phone"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Telefon",
+														"help"=>"",
+														"id"=>"dane_content_user__phone",
+														"name"=>"dane[content_user__phone]",
+														"value"=>$dane["content_user__phone"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 											</div>
-											
-											<?=sm_inputfield( "checkbox", "Czy adres ukryć przed innymi użytkownikami?", "", "dane_content_user__hide_email", "dane[content_user_hide_email]", $dane["content_user__email"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
 
-											<?=sm_inputfield( "text", "Firma", "", "dane_content_user__company", "dane[content_user__company]", $dane["content_user__company"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"=>"checkbox",
+												"title"=>"Czy adres ukryć przed innymi użytkownikami?",
+												"help"=>"",
+												"id"=>"dane_content_user__hide_email",
+												"name"=>"dane[content_user_hide_email]",
+												"value"=>$dane["content_user_hide_email"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>"",
+												"xss_secured"=>true
+											));?>
+											<?=sm_inputfield(array(
+												"type"=>"text",
+												"title"=>"Firma",
+												"help"=>"",
+												"id"=>"dane_content_user__company",
+												"name"=>"dane[content_user__company]",
+												"value"=>$dane["content_user__company"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>"",
+												"xss_secured"=>true
+											));?>
 										
 											<div class="row-fluid">
 												<div class="span2">
-													<?=sm_inputfield( "text", "Kod poczt.", "", "dane_content_user__postcode", "dane[content_user__postcode]", $dane["content_user__postcode"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Kod poczt.",
+														"help"=>"",
+														"id"=>"dane_content_user__postcode",
+														"name"=>"dane[content_user__postcode]",
+														"value"=>$dane["content_user__postcode"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 												<div class="span5">
-													<?=sm_inputfield( "text", "Miasto", "", "dane_content_user__city", "dane[content_user__city]", $dane["content_user__city"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Miasto",
+														"help"=>"",
+														"id"=>"dane_content_user__city",
+														"name"=>"dane[content_user__city]",
+														"value"=>$dane["content_user__city"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 												<div class="span5">
-													<?=sm_inputfield( "text", "Państwo", "", "dane_content_user__country", "dane[content_user__country]", $dane["content_user__country"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Państwo",
+														"help"=>"",
+														"id"=>"dane_content_user__country",
+														"name"=>"dane[content_user__country]",
+														"value"=>$dane["content_user__country"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 											</div>
-
-											<?=sm_inputfield( "text", "Ulica", "", "dane_content_user__street", "dane[content_user__street]", $dane["content_user__street"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-											<?=sm_inputfield( "textarea", "Komentarz administratora", "", "dane_content_user__comment", "dane[content_user__comment]", $dane["content_user__comment"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=2);?>
+											<?=sm_inputfield(array(
+												"type"=>"text",
+												"title"=>"Ulica",
+												"help"=>"",
+												"id"=>"dane_content_user__street",
+												"name"=>"dane[content_user__street]",
+												"value"=>$dane["content_user__street"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>"",
+												"xss_secured"=>true
+											));?>
+											<?=sm_inputfield(array(
+												"type"=>"textarea",
+												"title"=>"Komentarz administratora",
+												"help"=>"",
+												"id"=>"dane_content_user__comment",
+												"name"=>"dane[content_user__comment]",
+												"value"=>$dane["content_user__comment"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>2,
+												"options"=>"",
+												"xss_secured"=>true
+											));?>
 
 										</fieldset>
 
@@ -184,9 +347,54 @@ $('#tabs').ready(function() {
 											<div>Zgody</div>
 										</div>
 										<fieldset class="no-legend">
-											<?=sm_inputfield( "checkbox", "Potwierdził regulamin", "", "dane_content_user__confirm_regulation", "dane[content_user__confirm_regulation]", $dane["content_user__confirm_regulation"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-											<?=sm_inputfield( "checkbox", "Zgoda na przetwarzanie danych osobowych", "", "dane_content_user__confirm_userdata", "dane[content_user__confirm_userdata]", $dane["content_user__confirm_userdata"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-											<?=sm_inputfield( "checkbox", "Zgoda na reklamy", "", "dane_content_user__confirm_marketing", "dane[content_user__confirm_marketing]", $dane["content_user__confirm_marketing"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"=>"checkbox",
+												"title"=>"Potwierdził regulamin",
+												"help"=>"",
+												"id"=>"dane_content_user__confirm_regulation",
+												"name"=>"dane[content_user__confirm_regulation]",
+												"value"=>$dane["content_user__confirm_regulation"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>"",
+												"xss_secured"=>true
+											));?>
+											<?=sm_inputfield(array(
+												"type"=>"checkbox",
+												"title"=>"Zgoda na przetwarzanie danych osobowych",
+												"help"=>"",
+												"id"=>"dane_content_user__confirm_userdata",
+												"name"=>"dane[content_user__confirm_userdata]",
+												"value"=>$dane["content_user__confirm_userdata"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>"",
+												"xss_secured"=>true
+											));?>
+											<?=sm_inputfield(array(
+												"type"=>"checkbox",
+												"title"=>"Zgoda na reklamy",
+												"help"=>"",
+												"id"=>"dane_content_user__confirm_marketing",
+												"name"=>"dane[content_user__confirm_marketing]",
+												"value"=>$dane["content_user__confirm_marketing"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>"",
+												"xss_secured"=>true
+											));?>
 										</fieldset>
 
 									</div>
@@ -214,7 +422,22 @@ $('#tabs').ready(function() {
 ?>
 													<tr valign=top class=<?=($even?"even":"odd")?>>
 														<td>
-															<?=sm_inputfield( "checkbox", "", "", "", "dane_content_usergroup[".$row["content_usergroup__id"]."]", $dane_content_usergroup[$row["content_usergroup__id"]], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+															<?=sm_inputfield(array(
+																"type"=>"checkbox",
+																"title"=>"",
+																"help"=>"",
+																"id"=>"",
+																"name"=>"dane_content_usergroup[".$row["content_usergroup__id"]."]",
+																"value"=>$dane_content_usergroup[$row["content_usergroup__id"]],
+																"size"=>"block-level",
+																"disabled"=>0,
+																"validation"=>0,
+																"prepend"=>0,
+																"append"=>0,
+																"rows"=>1,
+																"options"=>"",
+																"xss_secured"=>true
+															));?>
 														</div>
 														<td><a href="<?=$ENGINE?>/content_usergroup.php?content_usergroup__id=<?=$row["content_usergroup__id"]?>"><?=$row["content_usergroup__name"]?></a></td>
 													</tr>
@@ -240,13 +463,58 @@ $('#tabs').ready(function() {
 		$inputfield_options[$k] = $v["name"];
 	}
 ?>
-											<?=sm_inputfield( "select", "Status użytkownika", "", "dane_content_user__status", "dane[content_user__status]", $dane["content_user__status"], "normal", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"=>"select",
+												"title"=>"Status użytkownika",
+												"help"=>"",
+												"id"=>"dane_content_user__status",
+												"name"=>"dane[content_user__status]",
+												"value"=>$dane["content_user__status"],
+												"size"=>"normal",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>1,
+												"options"=>$inputfield_options,
+												"xss_secured"=>true
+											));?>
 											<div class="row-fluid">
 												<div class="span6">
-													<?=sm_inputfield( "text", "Identyfikator", "", "dane_content_user__username", "dane[content_user__username]", $dane["content_user__username"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Identyfikator",
+														"help"=>"",
+														"id"=>"dane_content_user__username",
+														"name"=>"dane[content_user__username]",
+														"value"=>$dane["content_user__username"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 												<div class="span6">
-													<?=sm_inputfield( "text", "Hasło", "", "dane_content_user__password", "dane[content_user__password]", "", "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"=>"text",
+														"title"=>"Hasło",
+														"help"=>"",
+														"id"=>"dane_content_user__password",
+														"name"=>"dane[content_user__password]",
+														"value"=>$dane["content_user__password"],
+														"size"=>"block-level",
+														"disabled"=>0,
+														"validation"=>0,
+														"prepend"=>0,
+														"append"=>0,
+														"rows"=>1,
+														"options"=>"",
+														"xss_secured"=>true
+													));?>
 												</div>
 											</div>
 											<dl>
@@ -261,7 +529,22 @@ $('#tabs').ready(function() {
 											<div>Dostęp z adresów IP</div>
 										</div>
 										<fieldset class="no-legend">
-											<?=sm_inputfield( "textarea", "Lista IP", "Lista adresów ip z których możliwy jest dostęp", "dane_content_user__admin_hostallow", "dane[content_user__admin_hostallow]", $dane["content_user__admin_hostallow"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3);?>
+											<?=sm_inputfield(array(
+												"type"=>"textarea",
+												"title"=>"Lista IP",
+												"help"=>"Lista adresów ip z których możliwy jest dostęp",
+												"id"=>"dane_content_user__admin_hostallow",
+												"name"=>"dane[content_user__admin_hostallow]",
+												"value"=>$dane["content_user__admin_hostallow"],
+												"size"=>"block-level",
+												"disabled"=>0,
+												"validation"=>0,
+												"prepend"=>0,
+												"append"=>0,
+												"rows"=>3,
+												"options"=>"",
+												"xss_secured"=>true
+											));?>
 										</fieldset>
 									</div>
 								</div>

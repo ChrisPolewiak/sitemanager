@@ -132,11 +132,56 @@ else {
 		}
 	}
 ?>
-									<?=sm_inputfield( "select", "Wybierz obiekt do modyfikacji", "", "dane_content_extra__object", "dane[content_extra__object]", $dane["content_extra__object"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
-									<?=sm_inputfield( "text", "Nazwa pola", "używana wewnętrznie", "dane_content_extra__name", "dane[content_extra__name]", $dane["content_extra__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"	=> "select",
+										"title"	=> "Wybierz obiekt do modyfikacji",
+										"help"	=> "",
+										"id"	=> "dane_content_extra__object",
+										"name"	=> "dane[content_extra__object]",
+										"value"	=> $dane["content_extra__object"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => $inputfield_options,
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Nazwa pola",
+										"help"	=> "używana wewnętrznie",
+										"id"	=> "dane_content_extra__name",
+										"name"	=> "dane[content_extra__name]",
+										"value"	=> $dane["content_extra__name"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 									<div class="row-float">
 										<div class="span8">
-											<?=sm_inputfield( "text", "Nazwa pola w bazie danych", "nazwa systemowa bazy danych - wyłącznie litery, cyfry i podkreślenie", "dane_content_extra__dbname", "dane[content_extra__dbname]", $dane["content_extra__dbname"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "text",
+												"title"	=> "Nazwa pola w bazie danych",
+												"help"	=> "nazwa systemowa bazy danych - wyłącznie litery, cyfry i podkreślenie",
+												"id"	=> "dane_content_extra__dbname",
+												"name"	=> "dane[content_extra__dbname]",
+												"value"	=> $dane["content_extra__dbname"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span4">
 <?
@@ -148,12 +193,42 @@ else {
 		}
 	}
 ?>
-											<?=sm_inputfield( "select", "Typ danych", "Sposób przechowywania danych", "dane_content_extra__dbtype", "dane[content_extra__dbtype]", $dane["content_extra__dbtype"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Typ danych",
+												"help"	=> "Sposób przechowywania danych",
+												"id"	=> "dane_content_extra__dbtype",
+												"name"	=> "dane[content_extra__dbtype]",
+												"value"	=> $dane["content_extra__dbtype"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 									<div class="row-float">
 										<div class="span8">
-											<?=sm_inputfield( "text", "Opis pola w formularzu", "", "dane_content_extra__info", "dane[content_extra__info]", $dane["content_extra__info"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "text",
+												"title"	=> "Opis pola w formularzu",
+												"help"	=> "",
+												"id"	=> "dane_content_extra__info",
+												"name"	=> "dane[content_extra__info]",
+												"value"	=> $dane["content_extra__info"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span4">
 <?
@@ -165,24 +240,114 @@ else {
 		}
 	}
 ?>
-											<?=sm_inputfield( "select", "Typ pola w formularzu", "Jak wygląda pole w formularzu", "dane_content_extra__input", "dane[content_extra__input]", $dane["content_extra__input"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Typ pola w formularzu",
+												"help"	=> "Jak wygląda pole w formularzu",
+												"id"	=> "dane_content_extra__input",
+												"name"	=> "dane[content_extra__input]",
+												"value"	=> $dane["content_extra__input"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 									<div class="row-float">
 										<div class="span6">
-											<?=sm_inputfield( "checkbox", "Pole wymagane", "Musi zostać wypełnione", "dane_content_extra__required", "dane[content_extra__required]", $dane["content_extra__required"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "checkbox",
+												"title"	=> "Pole wymagane",
+												"help"	=> "Musi zostać wypełnione",
+												"id"	=> "dane_content_extra__required",
+												"name"	=> "dane[content_extra__required]",
+												"value"	=> $dane["content_extra__required"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span6">
-											<?=sm_inputfield( "checkbox", "Pokazuj na liście", "Pojawi się na liście rekordów", "dane_content_extra__listview", "dane[content_extra__listview]", $dane["content_extra__listview"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+											<?=sm_inputfield(array(
+												"type"	=> "checkbox",
+												"title"	=> "Pokazuj na liście",
+												"help"	=> "Pojawi się na liście rekordów",
+												"id"	=> "dane_content_extra__listview",
+												"name"	=> "dane[content_extra__listview]",
+												"value"	=> $dane["content_extra__listview"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => "",
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
 
 <?
 	if ($content_extra__id && $dane["content_extra__input"]=="relation") {
 ?>
-									<?=sm_inputfield( "text", "Nazwa tabeli", "", "dane_content_extra__relationtable", "dane[content_extra__relationtable]", $dane["content_extra__relationtable"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Pole wyświetlane", "Nazwa kolumny z bazy wyświetlanej jako pozycja na liście", "dane_content_extra__relationname", "dane[content_extra__relationname]", $dane["content_extra__relationname"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Funkcja do pobierania danych", "", "dane_content_extra__relationfunction", "dane[content_extra__relationfunction]", $dane["content_extra__relationfunction"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Nazwa tabeli",
+										"help"	=> "",
+										"id"	=> "dane_content_extra__relationtable",
+										"name"	=> "dane[content_extra__relationtable]",
+										"value"	=> $dane["content_extra__relationtable"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Pole wyświetlane",
+										"help"	=> "Nazwa kolumny z bazy wyświetlanej jako pozycja na liście",
+										"id"	=> "dane_content_extra__relationname",
+										"name"	=> "dane[content_extra__relationname]",
+										"value"	=> $dane["content_extra__relationname"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Funkcja do pobierania danych",
+										"help"	=> "",
+										"id"	=> "dane_content_extra__relationfunction",
+										"name"	=> "dane[content_extra__relationfunction]",
+										"value"	=> $dane["content_extra__relationfunction"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 <?
 	}
 ?>
@@ -258,9 +423,38 @@ else {
 <?
 		if ($danecontent_extralist || isset($content_extralist__id)) {
 ?>
-<? $danecontent_extralist["content_extralist__value"] = isset($danecontent_extralist["content_extralist__value"]) ? $danecontent_extralist["content_extralist__value"] : $maxval+1;?>
-										<?=sm_inputfield( "text", "Nazwa wartości", "", "danecontent_extralist_content_extralist__name", "danecontent_extralist[content_extralist__name]", $danecontent_extralist["content_extralist__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-										<?=sm_inputfield( "text", "Wartość", "musi być unikalna w ramach całej listy", "danecontent_extralist_content_extralist__value", "danecontent_extralist[content_extralist__value]", $danecontent_extralist["content_extralist__value"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+										<?=sm_inputfield(array(
+											"type"	=> "text",
+											"title"	=> "Nazwa wartości",
+											"help"	=> "",
+											"id"	=> "danecontent_extralist_content_extralist__name",
+											"name"	=> "danecontent_extralist[content_extralist__name]",
+											"value"	=> isset($danecontent_extralist["content_extralist__value"]) ? $danecontent_extralist["content_extralist__value"] : $maxval+1,
+											"size"	=> "block-level",
+											"disabled" => 0,
+											"validation" => 0,
+											"prepend" => 0,
+											"append" => 0,
+											"rows" => 1,
+											"options" => "",
+											"xss_secured" => true
+										));?>
+										<?=sm_inputfield(array(
+											"type"	=> "text",
+											"title"	=> "Wartość",
+											"help"	=> "musi być unikalna w ramach całej listy",
+											"id"	=> "danecontent_extralist_content_extralist__value",
+											"name"	=> "danecontent_extralist[content_extralist__value]",
+											"value"	=> $danecontent_extralist["content_extralist__value"],
+											"size"	=> "block-level",
+											"disabled" => 0,
+											"validation" => 0,
+											"prepend" => 0,
+											"append" => 0,
+											"rows" => 1,
+											"options" => "",
+											"xss_secured" => true
+										));?>
 <?
 			if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) {
 ?>

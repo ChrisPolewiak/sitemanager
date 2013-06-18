@@ -78,9 +78,54 @@ else {
 					<form action="<?=$page?>" method=post enctype="multipart/form-data" id="sm-form">
 
 						<fieldset class="no-legend">
-							<?=sm_inputfield( "text", "Nazwa operacji", "używana wewnętrznie", "dane_content_crontab__name", "dane[content_crontab__name]", $dane["content_crontab__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-							<?=sm_inputfield( "checkbox", "Aktywny", "Czy dana operacja jest aktywna czy nie", "dane_content_crontab__active", "dane[content_crontab__active]", $dane["content_crontab__active"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-							<?=sm_inputfield( "textarea", "Konfiguracja", "(MHDMD)- zgodna z systemem CRON", "dane_content_crontab__mhdmd", "dane[content_crontab__mhdmd]", $dane["content_crontab__mhdmd"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+							<?=sm_inputfield(array(
+								"type"	=> "text",
+								"title"	=> "Nazwa operacji",
+								"help"	=> "używana wewnętrznie",
+								"id"	=> "dane_content_crontab__name",
+								"name"	=> "dane[content_crontab__name]",
+								"value"	=> $dane["content_crontab__name"],
+								"size"	=> "block-level",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 1,
+								"options" => "",
+								"xss_secured" => true
+							));?>
+							<?=sm_inputfield(array(
+								"type"	=> "checkbox",
+								"title"	=> "Aktywny",
+								"help"	=> "Czy dana operacja jest aktywna czy nie",
+								"id"	=> "dane_content_crontab__active",
+								"name"	=> "dane[content_crontab__active]",
+								"value"	=> $dane["content_crontab__active"],
+								"size"	=> "block-level",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 1,
+								"options" => "",
+								"xss_secured" => true
+							));?>
+							<?=sm_inputfield(array(
+								"type"	=> "textarea",
+								"title"	=> "Konfiguracja",
+								"help"	=> "(MHDMD)- zgodna z systemem CRON",
+								"id"	=> "dane_content_crontab__mhdmd",
+								"name"	=> "dane[content_crontab__mhdmd]",
+								"value"	=> $dane["content_crontab__mhdmd"],
+								"size"	=> "small",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 1,
+								"options" => "",
+								"xss_secured" => true
+							));?>
 <?
 	$inputfield_options=array();
 	$inputfield_options[] = "---";
@@ -88,7 +133,22 @@ else {
 		$inputfield_options[ $value["name"] ] = $value["name"]." - ".$value["info"];
 	}
 ?>
-							<?=sm_inputfield( "select", "Wybierz funkcję z listy", "Funkcje systemowe i z pluginów", "dane_content_crontab__exec", "dane[content_crontab__exec]", $dane["content_crontab__exec"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+							<?=sm_inputfield(array(
+								"type"	=> "select",
+								"title"	=> "Wybierz funkcję z listy",
+								"help"	=> "Funkcje systemowe i z pluginów",
+								"id"	=> "dane_content_crontab__exec",
+								"name"	=> "dane[content_crontab__exec]",
+								"value"	=> $dane["content_crontab__exec"],
+								"size"	=> "block-level",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 1,
+								"options" => $inputfield_options,
+								"xss_secured" => true
+							));?>
 						</fieldset>
 
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>

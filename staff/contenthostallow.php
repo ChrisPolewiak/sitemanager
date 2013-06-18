@@ -72,9 +72,54 @@ else {
 					<form action="<?=$page?>" method=post enctype="multipart/form-data" id="sm-form">
 
 						<fieldset class="no-legend">
-							<?=sm_inputfield( "text", "Nazwa adresu", "", "dane_content_hostallow__name", "dane[content_hostallow__name]", $dane["content_hostallow__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-							<?=sm_inputfield( "checkbox", "Aktywny", "", "dane_content_hostallow__active", "dane[content_hostallow__active]", $dane["content_hostallow__active"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-							<?=sm_inputfield( "textarea", "Lista hostów", "poszczególne adresy oddziel przecinkiem. Twój aktualny adres: <u>".$_SERVER["REMOTE_ADDR"]."</u>", "dane_content_hostallow__hosts", "dane[content_hostallow__hosts]", $dane["content_hostallow__hosts"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3);?>
+							<?=sm_inputfield(array(
+								"type"	=> "text",
+								"title"	=> "Nazwa adresu",
+								"help"	=> "",
+								"id"	=> "dane_content_hostallow__name",
+								"name"	=> "dane[content_hostallow__name]",
+								"value"	=> $dane["content_hostallow__name"],
+								"size"	=> "block-level",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 1,
+								"options" => "",
+								"xss_secured" => true
+							));?>
+							<?=sm_inputfield(array(
+								"type"	=> "checkbox",
+								"title"	=> "Aktywny",
+								"help"	=> "",
+								"id"	=> "dane_content_hostallow__active",
+								"name"	=> "dane[content_hostallow__active]",
+								"value"	=> $dane["content_hostallow__active"],
+								"size"	=> "block-level",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 1,
+								"options" => "",
+								"xss_secured" => true
+							));?>
+							<?=sm_inputfield(array(
+								"type"	=> "textarea",
+								"title"	=> "Lista hostów",
+								"help"	=> "poszczególne adresy oddziel przecinkiem. Twój aktualny adres: <u>".$_SERVER["REMOTE_ADDR"]."</u>",
+								"id"	=> "dane_content_hostallow__hosts",
+								"name"	=> "dane[content_hostallow__hosts]",
+								"value"	=> $dane["content_hostallow__hosts"],
+								"size"	=> "block-level",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 3,
+								"options" => "",
+								"xss_secured" => true
+							));?>
 						</fieldset>
 
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>

@@ -31,7 +31,7 @@ function content_news_edit( $dane ) {
 
 	if ($dane["content_news__id"]) {
 		$tmp_dane = content_news_dane( $dane["content_news__id"] );
-		$dane["record_create_date"] = $tmp_dane["content_news__id"];
+		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["content_news__id"];
 		core_changed_add( $dane["content_news__id"], "content_news", $tmp_dane, "edit" );
 	}

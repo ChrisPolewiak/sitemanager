@@ -90,7 +90,7 @@ function sm_content_user_access_prepare() {
 
 		// lista grup uzytkownika
 		unset($content_usergroup);
-		session_unregister("content_usergroup");
+		unset($_SESSION["content_usergroup"]);
 		if($smarty)
 			$smarty->assign("content_user", $_SESSION["content_user"]);
 
@@ -98,14 +98,12 @@ function sm_content_user_access_prepare() {
 			while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 				$content_usergroup[$row["content_usergroup__id"]] = 1;
 			}
-			session_register("content_usergroup");
+			$_SESSION["content_usergroup"] = $content_usergroup;
 		}
 
 		// lista dostępów dla użytkownika
 		unset($content_useracl);
 		unset($content_access);
-		session_unregister("content_useracl");
-		session_unregister("content_access");
 		if($result = content_useracl_fetch_by_user( $_SESSION["content_user"]["content_user__id"] ) ) {
 			while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 				$content_access[$row["id_content_access"]]=1;
@@ -126,9 +124,7 @@ function sm_content_user_access_prepare() {
 			}
 		}
 		$_SESSION["content_access"] = $content_access;
-		session_register("content_access");
 		$_SESSION["content_useracl"] = $content_useracl;
-		session_register("content_useracl");
 	}
 }
 

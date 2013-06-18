@@ -44,25 +44,160 @@ $('#tabs').ready(function() {
 						<div class="tab-content">
 							<div id="tabs-1" class="tab-pane active">
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "Nazwa aplikacji", "", "dane_SERVER_NAME", "dane[SERVER_NAME]", $dane["SERVER_NAME"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Nazwa grupy dla Apache", "", "dane_SET_FILES_GROUP", "dane[SET_FILES_GROUP]", $dane["SET_FILES_GROUP"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Adres administratora", "Na jaki adres wysyłać problemy w działaniu aplikacji", "dane_MAIL_ADDR_ADMIN", "dane[MAIL_ADDR_ADMIN]", $dane["MAIL_ADDR_ADMIN"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Nazwa aplikacji",
+										"help"=>"",
+										"id"=>"dane_SERVER_NAME",
+										"name"=>"dane[SERVER_NAME]",
+										"value"=>$dane["SERVER_NAME"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Nazwa grupy dla Apache",
+										"help"=>"",
+										"id"=>"dane_SET_FILES_GROUP",
+										"name"=>"dane[SET_FILES_GROUP]",
+										"value"=>$dane["SET_FILES_GROUP"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Adres administratora",
+										"help"=>"Na jaki adres wysyłać problemy w działaniu aplikacji",
+										"id"=>"dane_MAIL_ADDR_ADMIN",
+										"name"=>"dane[MAIL_ADDR_ADMIN]",
+										"value"=>$dane["MAIL_ADDR_ADMIN"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 								</fieldset>
 							</div>
 
 							<div id="tabs-2" class="tab-pane">
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "Długość cache dla obrazków", "Po jakim czasie miniatury obrazków są przeładowywane", "dane_CACHE_IMAGE_TIMEOUT", "dane[CACHE_IMAGE_TIMEOUT]", $dane["CACHE_IMAGE_TIMEOUT"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Nazwa witryny", "Pojawi się w tytule strony", "dane_SITE_TITLE", "dane[SITE_TITLE]", $dane["SITE_TITLE"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "textarea", "Opis witryny", "Pojawi się w polu Description w nagłówku strony", "dane_SITE_DESCRIPTION", "dane[SITE_DESCRIPTION]", $dane["SITE_DESCRIPTION"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3);?>
-									<?=sm_inputfield( "textarea", "Słowa kluczowe", "Pojawią się w polu Description w nagłówku strony", "dane_SITE_KEYWORDS", "dane[SITE_KEYWORDS]", $dane["SITE_KEYWORDS"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Długość cache dla obrazków",
+										"help"=>"Po jakim czasie miniatury obrazków są przeładowywane",
+										"id"=>"dane_CACHE_IMAGE_TIMEOUT",
+										"name"=>"dane[CACHE_IMAGE_TIMEOUT]",
+										"value"=>$dane["CACHE_IMAGE_TIMEOUT"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Nazwa witryny",
+										"help"=>"Pojawi się w tytule strony",
+										"id"=>"dane_SITE_TITLE",
+										"name"=>"dane[SITE_TITLE]",
+										"value"=>$dane["SITE_TITLE"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"textarea",
+										"title"=>"Opis witryny",
+										"help"=>"Pojawi się w polu Description w nagłówku strony",
+										"id"=>"dane_SITE_DESCRIPTION",
+										"name"=>"dane[SITE_DESCRIPTION]",
+										"value"=>$dane["SITE_DESCRIPTION"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>3,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"textarea",
+										"title"=>"Słowa kluczowe",
+										"help"=>"Pojawią się w polu Keywords w nagłówku strony",
+										"id"=>"dane_SITE_KEYWORDS",
+										"name"=>"dane[SITE_KEYWORDS]",
+										"value"=>$dane["SITE_KEYWORDS"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>3,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 								</fieldset>
 							</div>
 
 							<div id="tabs-3" class="tab-pane">
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "SiteManager Support ID Code", "Pojawi się w tytule strony", "dane_SM_SUPPORTIDCODE", "dane[SM_SUPPORTIDCODE]", $dane["SM_SUPPORTIDCODE"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "SiteManager Support Registration Code", "Pojawi się w tytule strony", "dane_SM_SUPPORTREGCODE", "dane[SM_SUPPORTREGCODE]", $dane["SM_SUPPORTREGCODE"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"SiteManager Support ID Code",
+										"help"=>"",
+										"id"=>"dane_SM_SUPPORTIDCODE",
+										"name"=>"dane[SM_SUPPORTIDCODE]",
+										"value"=>$dane["SM_SUPPORTIDCODE"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"SiteManager Support Registration Code",
+										"help"=>"",
+										"id"=>"dane_SM_SUPPORTREGCODE",
+										"name"=>"dane[SM_SUPPORTREGCODE]",
+										"value"=>$dane["SM_SUPPORTREGCODE"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 								</fieldset>
 							</div>
 						</div>

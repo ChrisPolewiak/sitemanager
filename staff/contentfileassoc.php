@@ -94,13 +94,43 @@ if($result=content_fileassoc_fetch_by_multiid( $content_file__tableid, $content_
 				}
 			}
 ?>
-											<?=sm_inputfield( "select", "", "", "", "dane_content_fileshowtypeitem__id[]", $row["content_fileshowtypeitem__id"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "",
+												"help"	=> "",
+												"id"	=> "",
+												"name"	=> "dane_content_fileshowtypeitem__id[]",
+												"value"	=> $row["content_fileshowtypeitem__id"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 <?
 		}
 ?>
 										</td>
 										<td>
-											<?=sm_inputfield( "text", "", "", "", "content_fileassoc__order[]", $row["content_fileassoc__order"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+											<?=sm_inputfield(array(
+												"type"	=> "text",
+												"title"	=> "",
+												"help"	=> "",
+												"id"	=> "",
+												"name"	=> "content_fileassoc__order[]",
+												"value"	=> $row["content_fileassoc__order"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</td>
 										<td>
 <?		if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>

@@ -35,6 +35,8 @@ if(!is_array($ERROR)) {
 	}
 }
 
+$multiadd_form = $_REQUEST["multiadd_form"];
+
 if( $content_file__id ) {
 	$dane = content_file_dane( $content_file__id );
 }
@@ -95,7 +97,22 @@ elseif( isset($multiadd_form)) {
 					</div>
 					<form action="<?=$page?>" method=post enctype="multipart/form-data" id="sm-form">
 						<fieldset class="no-legend">
-							<?=sm_inputfield( "file-multi", "Pliki", "", "dane_upload", "upload[]", "", "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=10);?>
+							<?=sm_inputfield(array(
+								"type"	=> "file-multi",
+								"title"	=> "Pliki",
+								"help"	=> "",
+								"id"	=> "dane_upload",
+								"name"	=> "upload[]",
+								"value"	=> "",
+								"size"	=> "block-level",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 10,
+								"options" => "",
+								"xss_secured" => true
+							));?>
 <?
 	$inputfield_options=array();
 	$inputfield_options[]="wybierz";
@@ -106,7 +123,22 @@ elseif( isset($multiadd_form)) {
 		}
 	}
 ?>	
-							<?=sm_inputfield( "select", "Kategoria", "", "dane_content_category__id", "dane[content_category__id]", $dane["content_category__id"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+							<?=sm_inputfield(array(
+								"type"	=> "select",
+								"title"	=> "Kategoria",
+								"help"	=> "",
+								"id"	=> "dane_content_category__id",
+								"name"	=> "dane[content_category__id]",
+								"value"	=> $dane["content_category__id"],
+								"size"	=> "block-level",
+								"disabled" => 0,
+								"validation" => 0,
+								"prepend" => 0,
+								"append" => 0,
+								"rows" => 1,
+								"options" => $inputfield_options,
+								"xss_secured" => true
+							));?>
 						</fieldset>
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
 						<div class="btn-toolbar">
@@ -137,7 +169,22 @@ else {
 						<div class="row-fluid">
 							<div class="span8">
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "file", "Plik", "", "dane_upload", "upload", "", "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=10);?>
+									<?=sm_inputfield(array(
+										"type"	=> "file",
+										"title"	=> "Plik",
+										"help"	=> "",
+										"id"	=> "dane_upload",
+										"name"	=> "upload",
+										"value"	=> "",
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 10,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 <?
 	$inputfield_options=array();
 	$inputfield_options[]="wybierz";
@@ -148,7 +195,22 @@ else {
 		}
 	}
 ?>	
-									<?=sm_inputfield( "select", "Kategoria", "", "dane_content_category__id", "dane[content_category__id]", $dane["content_category__id"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+									<?=sm_inputfield(array(
+										"type"	=> "select",
+										"title"	=> "Kategoria",
+										"help"	=> "",
+										"id"	=> "dane_content_category__id",
+										"name"	=> "dane[content_category__id]",
+										"value"	=> $dane["content_category__id"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => $inputfield_options,
+										"xss_secured" => true
+									));?>
 								</fieldset>
 
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
@@ -175,7 +237,7 @@ else {
 <?
 	if ($content_file__id && preg_match("/^image/", $dane["content_file__filetype"])) {
 ?>
-									<img src="/staff/__contentfile_image_resize.php?id=<?=$content_file__id?>&w=250" class="img-polaroid">
+									<img src="/cacheimg/id=<?=$content_file__id?>/w=250" class="img-polaroid">
 <?
 	}
 ?>
@@ -199,7 +261,22 @@ else {
 <?
 	$content_user__name = (is_array($content_user) ? $content_user["content_user__surname"]." ".$content_user["content_user__firstname"] : "");
 ?>
-													<?=sm_inputfield( "text", "", "", "dane_content_user", "dane[a]", $content_user__name, "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"	=> "text",
+														"title"	=> "",
+														"help"	=> "",
+														"id"	=> "dane_content_user",
+														"name"	=> "dane[a]",
+														"value"	=> $content_user__name,
+														"size"	=> "block-level",
+														"disabled" => 0,
+														"validation" => 0,
+														"prepend" => 0,
+														"append" => 0,
+														"rows" => 1,
+														"options" => "",
+														"xss_secured" => true
+													));?>
 													<input type="hidden" name="dane[content_user__id]" value="" id="dane_content_user__id">
 <script>
 $('#dane_content_user').autocomplete({

@@ -192,7 +192,22 @@ form {
 							<b><?=__("CORE","LOGIN__FIELD_USERNAME")?></b>
 						</div>
 						<div class="span8">
-							<?=sm_inputfield( "text", "", "", "user_login", "user_login", $_POST["user_login"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1 );?>
+							<?=sm_inputfield(array(
+								"type"=>"text",
+								"title"=>"",
+								"help"=>"",
+								"id"=>"user_login",
+								"name"=>"user_login",
+								"value"=>$_POST["user_login"],
+								"size"=>"block-level",
+								"disabled"=>false,
+								"validation"=>false,
+								"prepend"=>false,
+								"append"=>false,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+								))?>
 						</div>
 					</div>
 					<div class="row-fluid">
@@ -200,7 +215,22 @@ form {
 							<b><?=__("CORE","LOGIN__FIELD_PASSWORD")?></b>
 						</div>
 						<div class="span8">
-							<?=sm_inputfield( "password", "", "", "user_password", "user_password", $_POST["user_password"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1 );?>
+							<?=sm_inputfield(array(
+								"type"=>"password",
+								"title"=>"",
+								"help"=>"",
+								"id"=>"user_password",
+								"name"=>"user_password",
+								"value"=>$_POST["user_password"],
+								"size"=>"block-level",
+								"disabled"=>false,
+								"validation"=>false,
+								"prepend"=>false,
+								"append"=>false,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+								))?>
 						</div>
 					</div>
 

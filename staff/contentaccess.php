@@ -78,34 +78,38 @@ else {
 						<fieldset class="no-legend">
 							<div class="row-fluid">
 								<div class="span4">
-										<?=sm_inputfield(
-											"text",
-											"Nazwa roli",
-											"Nazwa wewnętrzna",
-											"dane_content_access__name",
-											"dane[content_access__name]",
-											$dane["content_access__name"],
-											"xlarge",
-											$disabled=false,
-											$validation=false,
-											$prepend=false,
-											$append=false,
-											$rows=1
-										);?>
-										<?=sm_inputfield(
-											"textarea",
-											"Treść komunikatu dla użytkownika",
-											"zostanie wyświetlony w przypadku napotkania braku dostępu",
-											"dane_content_access__message",
-											"dane[content_access__message]",
-											$dane["content_access__message"],
-											"xlarge",
-											$disabled=false,
-											$validation=false,
-											$prepend=false,
-											$append=false,
-											$rows=5
-										);?>
+										<?=sm_inputfield(array(
+											"type"=>"text",
+											"title"=>"Nazwa roli",
+											"help"=>"Nazwa wewnętrzna",
+											"id"=>"dane_content_access__name",
+											"name"=>"content_access__name",
+											"value"=>$dane["content_access__name"],
+											"size"=>"xlarge",
+											"disabled"=>false,
+											"validation"=>false,
+											"prepend"=>false,
+											"append"=>false,
+											"rows"=>1,
+											"options"=>"",
+											"xss_secured"=>true
+										));?>
+										<?=sm_inputfield(array(
+											"type"=>"textarea",
+											"title"=>"Treść komunikatu dla użytkownika",
+											"help"=>"zostanie wyświetlony w przypadku napotkania braku dostępu",
+											"id"=>"dane_content_access__message",
+											"name"=>"content_access__message",
+											"value"=>$dane["content_access__message"],
+											"size"=>"xlarge",
+											"disabled"=>false,
+											"validation"=>false,
+											"prepend"=>false,
+											"append"=>false,
+											"rows"=>5,
+											"options"=>"",
+											"xss_secured"=>true
+										));?>
 								</div>
 								<div class="span8">
 									<h4><?=__("core", "Poziomy dostępów służą do definiowania ról dostępu do systemu")?></h4>

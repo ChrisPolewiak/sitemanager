@@ -6,6 +6,7 @@ require $INCLUDE_DIR . "/api/contentuser.php";
 $apiMethod = "";
 $apiParams = "";
 $apiEncrypt = isset( $_REQUEST["encrypted"] ) ? $_REQUEST["encrypted"] : 0;
+
 if ( preg_match( "/api\/(.+)/", $page, $tmp ) ) {
 	$apiMethod = $tmp[1];
 }
@@ -20,7 +21,7 @@ if ( is_array( $API[$apiMethod] ) ) {
 	} else {
 		// Parse JSON Data
 		if ( isset( $_REQUEST["json"] ) ) {
-			if ( $_REQUEST["encrypted"] ) {
+			if ( $apiEncrypt ) {
 				$json = base64_decode( $_REQUEST["json"] );
 				$json = sm_string_decrypt( $json );
 			} else {

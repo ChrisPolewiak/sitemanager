@@ -7,20 +7,23 @@
 
 			switch ($fielddata["content_extra__input"]) {
 				case "text": case "textarea": case "checkbox":
-				
-					echo sm_inputfield(
-						$fielddata["content_extra__input"],
-						$fielddata["content_extra__info"],
-						"",
-						"dane_".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"],
-						"dane[".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"]."]",
-						$dane[ $fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"] ],
-						"block-level",
-						$disabled=false,
-						$validation=false,
-						$prepend=false,
-						$append=false,
-						$rows=1);
+
+					echo sm_inputfield(array(
+						"type"	=> $fielddata["content_extra__input"],
+						"title"	=> $fielddata["content_extra__info"],
+						"help"	=> "",
+						"id"	=> "dane_".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"],
+						"name"	=> "dane[".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"]."]",
+						"value"	=> $dane[ $fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"] ],
+						"size"	=> "block-level",
+						"disabled" => 0,
+						"validation" => 0,
+						"prepend" => 0,
+						"append" => 0,
+						"rows" => 10,
+						"options" => "",
+						"xss_secured" => true
+					));
 					break;
 
 				case "select":
@@ -33,20 +36,22 @@
 						}
 					}
 
-					echo sm_inputfield(
-						"select",
-						$fielddata["content_extra__info"],
-						"",
-						"dane_".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"],
-						"dane[".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"]."]",
-						$dane[ $fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"] ],
-						"block-level",
-						$disabled=false,
-						$validation=false,
-						$prepend=false,
-						$append=false,
-						$rows=1,
-						$inputfield_options );
+					echo sm_inputfield(array(
+						"type"	=> "select",
+						"title"	=> $fielddata["content_extra__info"],
+						"help"	=> "",
+						"id"	=> "dane_".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"],
+						"name"	=> "dane[".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"]."]",
+						"value"	=> $dane[ $fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"] ],
+						"size"	=> "block-level",
+						"disabled" => 0,
+						"validation" => 0,
+						"prepend" => 0,
+						"append" => 0,
+						"rows" => 1,
+						"options" => $inputfield_options,
+						"xss_secured" => true
+					));
 					break;
 
 				case "relation":
@@ -60,20 +65,23 @@
 						}
 					}
 
-					echo sm_inputfield(
-						"select",
-						$fielddata["content_extra__info"],
-						"",
-						"dane_".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"],
-						"dane[".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"]."]",
-						$dane[ $fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"] ],
-						"block-level",
-						$disabled=false,
-						$validation=false,
-						$prepend=false,
-						$append=false,
-						$rows=1,
-						$inputfield_options );
+					echo sm_inputfield(array(
+						"type"	=> "select",
+						"title"	=> $fielddata["content_extra__info"],
+						"help"	=> "",
+						"id"	=> "dane_".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"],
+						"name"	=> "dane[".$fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"]."]",
+						"value"	=> $dane[ $fielddata["content_extra__object"]."_extra_".$fielddata["content_extra__dbname"] ],
+						"size"	=> "block-level",
+						"disabled" => 0,
+						"validation" => 0,
+						"prepend" => 0,
+						"append" => 0,
+						"rows" => 1,
+						"options" => $inputfield_options,
+						"xss_secured" => true
+					));
+
 					break;
 
 			}

@@ -103,9 +103,54 @@ else {
 						<div class="row-fluid">
 							<div class="span6">
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "Nazwa wewnętrzna", "wyłącznie litery, cyfry, myślnik i podkreślenie", "dane_content_section__sysname", "dane[content_section__sysname]", $dane["content_section__sysname"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Nazwa sekcji", "", "dane_content_section__name", "dane[content_section__name]", $dane["content_section__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", "Tytuł", "wyświetlany na stronie", "dane_content_section__title", "dane[content_section__title]", $dane["content_section__title"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Nazwa wewnętrzna",
+										"help"=>"wyłącznie litery, cyfry, myślnik i podkreślenie",
+										"id"=>"dane_content_section__sysname",
+										"name"=>"dane[content_section__sysname]",
+										"value"=> $dane["content_section__sysname"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Nazwa sekcji",
+										"help"=>"",
+										"id"=>"dane_content_section__name",
+										"name"=>"dane[content_section__name]",
+										"value"=> $dane["content_section__name"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>"Tytuł",
+										"help"=>"wyświetlany na stronie",
+										"id"=>"dane_content_section__title",
+										"name"=>"dane[content_section__title]",
+										"value"=> $dane["content_section__title"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 								</fieldset>
 
 <?	if ($content_section__id) { ?>
@@ -195,7 +240,22 @@ else {
 			$inputfield_options[ $k ] = $v;
 		}
 ?>
-									<?=sm_inputfield( "select", "Strona", "do której strony ma zostać sekcja przypisana", "danecontent_section2page_content_page__id", "danecontent_section2page[content_page__id]", $danecontent_section2page["content_page__id"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options );?>
+									<?=sm_inputfield(array(
+										"type"	=> "select",
+										"title"	=> "Strona",
+										"help"	=> "do której strony ma zostać sekcja przypisana",
+										"id"	=> "danecontent_section2page_content_page__id",
+										"name"	=> "danecontent_section2page[content_page__id]",
+										"value"	=> $danecontent_section2page["content_page__id"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => $inputfield_options,
+										"xss_secured" => true
+									));?>
 									<div class="row-float">
 										<div class="span3">
 <?
@@ -205,7 +265,22 @@ else {
 			$inputfield_options[$i] = $i;
 		}
 ?>
-											<?=sm_inputfield( "select", "Kolumna", "w której ma się sekcja pojawić", "danecontent_section2page_content_section2content_page__column", "danecontent_section2page[content_section2content_page__column]", $danecontent_section2page["content_section2content_page__column"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options );?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Kolumna",
+												"help"	=> "w której ma się sekcja pojawić",
+												"id"	=> "danecontent_section2page_content_section2content_page__column",
+												"name"	=> "danecontent_section2page[content_section2content_page__column]",
+												"value"	=> $danecontent_section2page["content_section2content_page__column"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span3">
 <?
@@ -215,7 +290,22 @@ else {
 			$inputfield_options[$i] = $i;
 		}
 ?>
-											<?=sm_inputfield( "select", "Kolejność", "w której ma się sekcja pojawić", "danecontent_section2page_content_section2content_page__order", "danecontent_section2page[content_section2content_page__order]", $danecontent_section2page["content_section2content_page__order"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options );?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Kolejność",
+												"help"	=> "w której ma się sekcja pojawić",
+												"id"	=> "danecontent_section2page_content_section2content_page__order",
+												"name"	=> "danecontent_section2page[content_section2content_page__order]",
+												"value"	=> $danecontent_section2page["content_section2content_page__order"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 										<div class="span6">
 <?
@@ -229,12 +319,40 @@ else {
 			}
 		}
 ?>
-											<?=sm_inputfield( "select", "Wymagany poziom dostępu", "ogranicza dostęp", "danecontent_section2page_content_section2content_page__requiredaccess", "danecontent_section2page[content_section2content_page__requiredaccess]", $danecontent_section2page["content_section2content_page__requiredaccess"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options );?>
+											<?=sm_inputfield(array(
+												"type"	=> "select",
+												"title"	=> "Wymagany poziom dostępu",
+												"help"	=> "ogranicza dostęp",
+												"id"	=> "danecontent_section2page_content_section2content_page__requiredaccess",
+												"name"	=> "danecontent_section2page[content_section2content_page__requiredaccess]",
+												"value"	=> $danecontent_section2page["content_section2content_page__requiredaccess"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 1,
+												"options" => $inputfield_options,
+												"xss_secured" => true
+											));?>
 										</div>
 									</div>
-
-									<?=sm_inputfield( "textarea", "Dodatkowe parametry", "opcjonalne zmienne przekazane do skryptu", "danecontent_section2page_content_section2content_page__data", "danecontent_section2page[content_section2content_page__data]", $danecontent_section2page["content_section2content_page__data"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3 );?>
-
+									<?=sm_inputfield(array(
+										"type"	=> "textarea",
+										"title"	=> "Dodatkowe parametry",
+										"help"	=> "opcjonalne zmienne przekazane do skryptu",
+										"id"	=> "danecontent_section2page_content_section2content_page__data",
+										"name"	=> "danecontent_section2page[content_section2content_page__data]",
+										"value"	=> $danecontent_section2page["content_section2content_page__data"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 3,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 <?		if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
 									<div class="btn-toolbar">
 										<input type=hidden name="content_page__id" value="<?=$content_page__id?>">

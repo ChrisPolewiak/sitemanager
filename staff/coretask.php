@@ -95,7 +95,22 @@ else {
 
 					<form action="<?=$page?>" method=post enctype="multipart/form-data" id="sm-form">
 						<fieldset class="no-legend">
-							<?=sm_inputfield( "text", "Nazwa operacji", "używana wewnętrznie", "dane_content_text__title", "dane[content_text__title]", $dane["content_text__title"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+							<?=sm_inputfield(array(
+								"type"=>"text",
+								"title"=>"Nazwa operacji",
+								"help"=>"używana wewnętrznie",
+								"id"=>"dane_content_text__title",
+								"name"=>"dane[content_text__title]",
+								"value"=>$dane["content_text__title"],
+								"size"=>"block-level",
+								"disabled"=>false,
+								"validation"=>false,
+								"prepend"=>false,
+								"append"=>false,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+							));?>
 						</fieldset>
 
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>

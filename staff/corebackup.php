@@ -122,9 +122,54 @@ if(is_array($backupfiles)) {
 							<div>Kopia zapasowa</div>
 						</div>
 						<fieldset class="no-legend">
-							<?=sm_inputfield( "checkbox", "Wykonać kopię bazy danych?", "zostanie wykonana pełna kopia bazy danych całego systemu", "corebackup_backup_database", "corebackup[backup_database]", $corebackup["backup_database"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-							<?=sm_inputfield( "checkbox", "Wykonać kopię bazy plików?", "zostaną zapisane wszystkie zasoby wgrane na serwer", "corebackup_backup_sqldata", "corebackup[backup_sqldata]", $corebackup["backup_sqldata"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-							<?=sm_inputfield( "checkbox", "Wykonać kopię bazy szablonów?", "zostaną zapisane wszystkie szablony", "corebackup_backup_templates", "corebackup[backup_templates]", $corebackup["backup_templates"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+							<?=sm_inputfield(array(
+								"type"=>"checkbox",
+								"title"=>"Wykonać kopię bazy danych?",
+								"help"=>"zostanie wykonana pełna kopia bazy danych całego systemu",
+								"id"=>"corebackup_backup_database",
+								"name"=>"corebackup[backup_database]",
+								"value"=>$corebackup["backup_database"],
+								"size"=>"block-level",
+								"disabled"=>0,
+								"validation"=>0,
+								"prepend"=>0,
+								"append"=>0,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+							));?>
+							<?=sm_inputfield(array(
+								"type"=>"checkbox",
+								"title"=>"Wykonać kopię bazy plików?",
+								"help"=>"zostaną zapisane wszystkie zasoby wgrane na serwer",
+								"id"=>"corebackup_backup_sqldata",
+								"name"=>"corebackup[backup_sqldata]",
+								"value"=>$corebackup["backup_sqldata"],
+								"size"=>"block-level",
+								"disabled"=>0,
+								"validation"=>0,
+								"prepend"=>0,
+								"append"=>0,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+							));?>
+							<?=sm_inputfield(array(
+								"type"=>"checkbox",
+								"title"=>"Wykonać kopię bazy szablonów?",
+								"help"=>"zostaną zapisane wszystkie szablony",
+								"id"=>"corebackup_backup_templates",
+								"name"=>"corebackup[backup_templates]",
+								"value"=>$corebackup["backup_templates"],
+								"size"=>"block-level",
+								"disabled"=>0,
+								"validation"=>0,
+								"prepend"=>0,
+								"append"=>0,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+							));?>
 						</fieldset>
 
 <? if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>

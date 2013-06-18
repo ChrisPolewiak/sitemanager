@@ -1,8 +1,8 @@
 <?
 
 if( is_file("../config.ini.php" ) ) {
-	header("Location: /");
-	exit;
+#	header("Location: /");
+#	exit;
 }
 
 session_start();
@@ -365,30 +365,30 @@ require "_install_header.php";
 #	$inputfield_options["pgsql"]="PostgreSQL";
 #	$inputfield_options["mssql"]="Microsoft SQL Server";
 ?>
-						<?=sm_inputfield( "select", "Typ bazy danych", "Wybierz bazę danych jakiej zamierzasz użyć", "dane_database_engine", "dane[database_engine]", $dane["database_engine"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
+						<?=sm_inputfield( array("type"=>"select", "title"=>"Typ bazy danych", "help"=>"Wybierz bazę danych jakiej zamierzasz użyć", "id"=>"dane_database_engine", "name"=>"dane[database_engine]", "value"=>$dane["database_engine"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>$inputfield_options, "xss_secured"=>true) ) ?>
 <?
 	$dane["database_dbserver"] = $dane["database_dbserver"] ? $dane["database_dbserver"] : "localhost";
 ?>
 						<div class="row-float">
 							<div class="span6">
-								<?=sm_inputfield( "text", "Adres serwera bazy danych", "Wprowadź adres serwera gdzie się znajduje baza danych", "dane_database_dbserver", "dane[database_dbserver]", $dane["database_dbserver"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+								<?=sm_inputfield( array("type"=>"text", "title"=>"Adres serwera bazy danych", "help"=>"Wprowadź adres serwera gdzie się znajduje baza danych", "id"=>"dane_database_dbserver", "name"=>"dane[database_dbserver]", "value"=>$dane["database_dbserver"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 							<div class="span6">
-								<?=sm_inputfield( "text", "Nazwa bazy danych", "Wprowadź nazwę bazy danych", "dane_database_dbname", "dane[database_dbname]", $dane["database_dbname"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+								<?=sm_inputfield( array("type"=>"text", "title"=>"Nazwa bazy danych", "help"=>"Wprowadź nazwę bazy danych", "id"=>"dane_database_dbname", "name"=>"dane[database_dbname]", "value"=>$dane["database_dbname"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 						</div>
 						<div class="row-float">
 							<div class="span6">
-								<?=sm_inputfield( "text", "Nazwa użytkownika", "Wprowadź nazwę użytkownika do bazy danych", "dane_database_dbuser", "dane[database_dbuser]", $dane["database_dbuser"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+								<?=sm_inputfield( array("type"=>"text", "title"=>"Nazwa użytkownika", "help"=>"Wprowadź nazwę użytkownika do bazy danych", "id"=>"dane_database_dbuser", "name"=>"dane[database_dbuser]", "value"=>$dane["database_dbuser"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 							<div class="span6">
-								<?=sm_inputfield( "text", "Hasło", "Wprowadź hasło użytkownika bazy danych", "dane_database_dbpass", "dane[database_dbpass]", $dane["database_dbpass"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+								<?=sm_inputfield( array("type"=>"text", "title"=>"Hasło", "help"=>"Wprowadź hasło użytkownika bazy danych", "id"=>"dane_database_dbpass", "name"=>"dane[database_dbpass]", "value"=>$dane["database_dbpass"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 						</div>
 <?
 	$dane["database_dbprefix"] = $dane["database_dbprefix"] ? $dane["database_dbprefix"] : "sm";
 ?>
-						<?=sm_inputfield( "text", "Prefix dla tabel", "Wprowadź kilku znakowy ciąg, który będzie podany przed każdą tabelą. Umożliwi Ci to instalację kilku edycji SiteManager jednocześnie na tej samej bazie danych", "database_dbprefix", "dane[database_dbprefix]", $dane["database_dbprefix"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+						<?=sm_inputfield( array("type"=>"text", "title"=>"Prefix dla tabel", "help"=>"Wprowadź kilku znakowy ciąg, który będzie podany przed każdą tabelą. Umożliwi Ci to instalację kilku edycji SiteManager jednocześnie na tej samej bazie danych", "id"=>"database_dbprefix", "name"=>"dane[database_dbprefix]", "value"=>$dane["database_dbprefix"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 					</fieldset>
 
 					<div class="btn-toolbar">
@@ -405,13 +405,13 @@ require "_install_header.php";
 
 						<div class="row-float">
 							<div class="span6">
-								<?=sm_inputfield( "checkbox", "Tryb developerski", "W tym trybie wyświetlane są wszystkie komunikaty błędów", "dane_engine_testmode", "dane[engine_testmode]", $dane["engine_testmode"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+								<?=sm_inputfield( array("type"=>"checkbox", "title"=>"Tryb developerski", "help"=>"W tym trybie wyświetlane są wszystkie komunikaty błędów", "id"=>"dane_engine_testmode", "name"=>"dane[engine_testmode]", "value"=>$dane["engine_testmode"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 <?
 $dane["engine_cacheimagetimeout"] = $dane["engine_cacheimagetimeout"] ? $dane["engine_cacheimagetimeout"] : 24;
 ?>
 							<div class="span6">
-								<?=sm_inputfield( "text", "Domyślny czas cache dla zdjęć (godziny)", "Ile godzin mają być przechowywane dane w cache zdjęć", "dane_engine_cacheimagetimeout", "dane[engine_cacheimagetimeout]", $dane["engine_cacheimagetimeout"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+								<?=sm_inputfield( array("type"=>"text", "title"=>"Domyślny czas cache dla zdjęć (godziny)", "help"=>"Ile godzin mają być przechowywane dane w cache zdjęć", "id"=>"dane_engine_cacheimagetimeout", "name"=>"dane[engine_cacheimagetimeout]", "value"=>$dane["engine_cacheimagetimeout"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 						</div>
 <?
@@ -419,10 +419,10 @@ $dane["site_servername"] = $dane["site_servername"] ? $dane["site_servername"] :
 ?>
 						<div class="row-float">
 							<div class="span6">
-								<?=sm_inputfield( "text", "Nazwa serwisu", "Jak będzie się nazywać witryna którą uruchamiasz", "dane_site_servername", "dane[site_servername]", $dane["site_servername"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+								<?=sm_inputfield( array("type"=>"text", "title"=>"Nazwa serwisu", "help"=>"Jak będzie się nazywać witryna którą uruchamiasz", "id"=>"dane_site_servername", "name"=>"dane[site_servername]", "value"=>$dane["site_servername"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 							<div class="span6">
-								<?=sm_inputfield( "text", "Adres e-mail administratora", "Adres e-mail używany w przypadku problemów z witryną", "dane_site_mailaddradmin", "dane[site_mailaddradmin]", $dane["site_mailaddradmin"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+								<?=sm_inputfield( array("type"=>"text", "title"=>"Adres e-mail administratora", "help"=>"Adres e-mail używany w przypadku problemów z witryną", "id"=>"dane_site_mailaddradmin", "name"=>"dane[site_mailaddradmin]", "value"=>$dane["site_mailaddradmin"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 						</div>
 
@@ -435,12 +435,9 @@ if( strlen($dane["site_adminpanel"]<5) ) {
 	}
 }
 ?>
-
-						<?=sm_inputfield( "text", "Adres panelu zarządzania", "Podaj adres panelu zarządzania. Minimum 5 znaków", "dane_site_adminpanel", "dane[site_adminpanel]", $dane["site_adminpanel"], "small", $disabled=false, $validation=false, $prepend="https://adres_serwera/", $append=false, $rows=1);?>
-
-						<?=sm_inputfield( "textarea", "Opis serwisu", "Podaj opis uruchamianej witruny (treść pojawi się w nagłówkach stron)", "dane_site_description", "dane[site_description]", $dane["site_description"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-						<?=sm_inputfield( "textarea", "Słowa kluczowe", "Podaj słowa kluczowe dla uruchamianej witruny (pojawią się w nagłówkach stron)", "dane_site_keywords", "dane[site_keywords]", $dane["site_keywords"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-
+						<?=sm_inputfield( array("type"=>"text", "title"=>"Adres panelu zarządzania", "help"=>"Podaj adres panelu zarządzania. Minimum 5 znaków", "id"=>"dane_site_adminpanel", "name"=>"dane[site_adminpanel]", "value"=>$dane["site_adminpanel"], "size"=>"small", "disabled"=>false, "validation"=>false, "prepend"=>"https://adres_serwera/", "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
+						<?=sm_inputfield( array("type"=>"textarea", "title"=>"Opis serwisu", "help"=>"Podaj opis uruchamianej witruny (treść pojawi się w nagłówkach stron)", "id"=>"dane_site_description", "name"=>"dane[site_description]", "value"=>$dane["site_description"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
+						<?=sm_inputfield( array("type"=>"textarea", "title"=>"Słowa kluczowe", "help"=>"Podaj słowa kluczowe dla uruchamianej witruny (pojawią się w nagłówkach stron)", "id"=>"dane_site_keywords", "name"=>"dane[site_keywords]", "value"=>$dane["site_keywords"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 <?
 /*
 
@@ -471,8 +468,8 @@ if( strlen($dane["site_adminpanel"]<5) ) {
 <?
 $dane["access_username"] = $dane["access_username"] ? $dane["access_username"] : "administrator";
 ?>
-						<?=sm_inputfield( "text", "Identyfikator administratora serwisu", "Podaj nazwę logowania dla konta administratora", "dane_access_username", "dane[access_username]", $dane["access_username"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-						<?=sm_inputfield( "text", "Hasło administratora serwisu", "Podaj hasło dla konta administratora", "dane_access_password", "dane[access_password]", $dane["access_password"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+						<?=sm_inputfield( array("type"=>"text", "title"=>"Identyfikator administratora serwisu", "help"=>"Podaj nazwę logowania dla konta administratora", "id"=>"dane_access_username", "name"=>"dane[access_username]", "value"=>$dane["access_username"], "size"=>"medium", "disabled"=>false, "validation"=>false, "prepend"=>"", "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
+						<?=sm_inputfield( array("type"=>"text", "title"=>"Hasło administratora serwisu", "help"=>"Podaj hasło dla konta administratora", "id"=>"dane_access_password", "name"=>"dane[access_password]", "value"=>$dane["access_password"], "size"=>"medium", "disabled"=>false, "validation"=>false, "prepend"=>"", "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 
 					</fieldset>
 

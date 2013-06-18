@@ -35,5 +35,20 @@ if( isset($__id_table) && $__id_table>0 ) {
 									<div><?=__("core", "Słowa kluczowe")?></div><i class="icon-minus"></i>
 								</div>
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "textarea", "Słowa kluczowe", "wprowadź słowa kluczowe oddzielając je przecinkami", "dane_content_tags_tags", "dane_content_tags[tags]", $dane_content_tags["tags"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=3);?>
+									<?=sm_inputfield(array(
+										"type"	=> "textarea",
+										"title"	=> "Słowa kluczowe",
+										"help"	=> "wprowadź słowa kluczowe oddzielając je przecinkami",
+										"id"	=> "dane_content_tags_tags",
+										"name"	=> "dane_content_tags[tags]",
+										"value"	=> $dane_content_tags["tags"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 3,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 								</fieldset>

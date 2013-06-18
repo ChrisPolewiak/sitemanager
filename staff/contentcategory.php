@@ -91,7 +91,22 @@ if(is_array($CONTENT_CATEGORY_LONGNAME)){
 	}
 }
 ?>
-									<?=sm_inputfield( "select-multi", "", "", "content_category__id", "content_category__id", $content_category__id, "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=10, $inputfield_options);?>
+									<?=sm_inputfield(array(
+										"type"	=> "select-multi",
+										"title"	=> "",
+										"help"	=> "",
+										"id"	=> "content_category__id",
+										"name"	=> "content_category__id",
+										"value"	=> $content_category__id,
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 10,
+										"options" => $inputfield_options,
+										"xss_secured" => true
+									));?>
 <script>
 $('#content_category__id').click(function(){
 	window.location = '?content_category__id='+this.value;
@@ -165,9 +180,38 @@ if (!$content_category__id){
 	$dane["content_category__idparent"] = $content_category__idparent;
 }
 ?>
-									<?=sm_inputfield( "text", "Nazwa", "", "dane_content_category__name", "dane[content_category__name]", $dane["content_category__name"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=10);?>
-									<?=sm_inputfield( "text", "Komentarz", "", "dane_content_category__comment", "dane[content_category__comment]", $dane["content_category__comment"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=10);?>
-
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Nazwa",
+										"help"	=> "",
+										"id"	=> "dane_content_category__name",
+										"name"	=> "dane[content_category__name]",
+										"value"	=> $dane["content_category__name"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 10,
+										"options" => "",
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Komentarz",
+										"help"	=> "",
+										"id"	=> "dane_content_category__comment",
+										"name"	=> "dane[content_category__comment]",
+										"value"	=> $dane["content_category__comment"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 10,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 <?
 $inputfield_options=array();
 $inputfield_options[0]="START";
@@ -190,7 +234,22 @@ if(is_array($CONTENT_CATEGORY_LONGNAME)){
 	}
 }
 ?>
-									<?=sm_inputfield( "select", "Kategoria nadrzędna", "", "dane_content_category__idparent", "dane[content_category__idparent]", $dane["content_category__idparent"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=10, $inputfield_options );?>
+									<?=sm_inputfield(array(
+										"type"	=> "select",
+										"title"	=> "Kategoria nadrzędna",
+										"help"	=> "",
+										"id"	=> "dane_content_category__idparent",
+										"name"	=> "dane[content_category__idparent]",
+										"value"	=> $dane["content_category__idparent"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 10,
+										"options" => $inputfield_options,
+										"xss_secured" => true
+									));?>
 								</fieldset>
 
 <? if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>

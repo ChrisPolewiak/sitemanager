@@ -110,8 +110,22 @@ else {
 						<div class="row-fluid">
 							<div class="span8">
 								<fieldset class="no-legend">
-									<?=sm_inputfield( "text", "Tytuł wiadomości", "wyświetlany na stronie", "dane_content_news__title", "dane[content_news__title]", $dane["content_news__title"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-
+									<?=sm_inputfield(array(
+										"type"	=> "text",
+										"title"	=> "Tytuł wiadomości",
+										"help"	=> "wyświetlany na stronie",
+										"id"	=> "dane_content_news__title",
+										"name"	=> "dane[content_news__title]",
+										"value"	=> $dane["content_news__title"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 <script>
 $('#tabs').ready(function() {
 	$('#tabs a').click(function (e) {
@@ -128,13 +142,43 @@ $('#tabs').ready(function() {
 
 									<div class="tab-content">
 										<div id="tabs-text" class="tab-pane">
-											<?=sm_inputfield( "textarea", "", "", "dane_content_news__lead", "dane[content_news__lead]", $dane["content_news__lead"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=5);?>
+											<?=sm_inputfield(array(
+												"type"	=> "textarea",
+												"title"	=> "",
+												"help"	=> "",
+												"id"	=> "dane_content_news__lead",
+												"name"	=> "dane[content_news__lead]",
+												"value"	=> $dane["content_news__lead"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 5,
+												"options" => "",
+												"xss_secured" => false
+											));?>
 										</div>
 										<div id="tabs-html" class="tab-pane active">
 <?
 	$sm_input_htmleditor["height"] = 300;
 ?>
-											<?=sm_inputfield( "htmleditor", "", "", "dane_content_news__body", "dane[content_news__body]", $dane["content_news__body"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=5);?>
+											<?=sm_inputfield(array(
+												"type"	=> "htmleditor",
+												"title"	=> "",
+												"help"	=> "",
+												"id"	=> "dane_content_news__body",
+												"name"	=> "dane[content_news__body]",
+												"value"	=> $dane["content_news__body"],
+												"size"	=> "block-level",
+												"disabled" => 0,
+												"validation" => 0,
+												"prepend" => 0,
+												"append" => 0,
+												"rows" => 5,
+												"options" => "",
+												"xss_secured" => false
+											));?>
 										</div>
 									</div>
 								</fieldset>
@@ -162,7 +206,22 @@ $('#tabs').ready(function() {
 <?
 	$dane["content_news__datetime"] = $dane["content_news__datetime"] ? $dane["content_news__datetime"] : date("Y-m-d");
 ?>
-									<?=sm_inputfield( "calendar", "Data publikacji", "", "dane_content_news__datetime", "dane[content_news__datetime]", $dane["content_news__datetime"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"	=> "calendar",
+										"title"	=> "Data publikacji",
+										"help"	=> "",
+										"id"	=> "dane_content_news__datetime",
+										"name"	=> "dane[content_news__datetime]",
+										"value"	=> $dane["content_news__datetime"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 <?
 	$inputfield_options=array();
 	$inputfield_options[""]="dowolny";
@@ -170,8 +229,38 @@ $('#tabs').ready(function() {
 		$inputfield_options[ $k ]=$v;
 	}
 ?>
-									<?=sm_inputfield( "select", "Język", "", "dane_content_news__lang", "dane[content_news__lang]", $dane["content_news__lang"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
-									<?=sm_inputfield( "checkbox", "Aktywna", "Czy wiadomość jest widoczna", "dane_content_news__published", "dane[content_news__published]", $dane["content_news__published"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"	=> "select",
+										"title"	=> "Język",
+										"help"	=> "",
+										"id"	=> "dane_content_news__lang",
+										"name"	=> "dane[content_news__lang]",
+										"value"	=> $dane["content_news__lang"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => $inputfield_options,
+										"xss_secured" => true
+									));?>
+									<?=sm_inputfield(array(
+										"type"	=> "checkbox",
+										"title"	=> "Aktywna",
+										"help"	=> "Czy wiadomość jest widoczna",
+										"id"	=> "dane_content_news__published",
+										"name"	=> "dane[content_news__published]",
+										"value"	=> $dane["content_news__published"],
+										"size"	=> "block-level",
+										"disabled" => 0,
+										"validation" => 0,
+										"prepend" => 0,
+										"append" => 0,
+										"rows" => 1,
+										"options" => "",
+										"xss_secured" => true
+									));?>
 								</fieldset>
 <?
 	$__table    = "content_news";
@@ -198,7 +287,22 @@ $('#tabs').ready(function() {
 ?>
 											<tr valign=top class="<?=$class_selected?>">
 												<td>
-													<?=sm_inputfield( "checkbox", "", "", "dane_content_newsgroup_".$row["content_newsgroup__id"], "dane_content_newsgroup[".$row["content_newsgroup__id"]."]", $dane_content_newsgroup[$row["content_newsgroup__id"]], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+													<?=sm_inputfield(array(
+														"type"	=> "checkbox",
+														"title"	=> "",
+														"help"	=> "",
+														"id"	=> "dane_content_newsgroup_".$row["content_newsgroup__id"],
+														"name"	=> "dane_content_newsgroup[".$row["content_newsgroup__id"]."]",
+														"value"	=> $dane_content_newsgroup[$row["content_newsgroup__id"]],
+														"size"	=> "block-level",
+														"disabled" => 0,
+														"validation" => 0,
+														"prepend" => 0,
+														"append" => 0,
+														"rows" => 1,
+														"options" => "",
+														"xss_secured" => true
+													));?>
 												</td>
 												<td><label for="dane_content_newsgroup_<?=$row["content_newsgroup__id"]?>"><?=$row["content_newsgroup__name"]?></label</td>
 											</tr>

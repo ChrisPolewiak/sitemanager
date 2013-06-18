@@ -39,6 +39,7 @@ else {
 	if ($dane = content_file_dane( $content_file__id )) {
 
 		$filedata = base64_decode($dane["content_file__filedata"]);
+
 		$image = new Imagick();
 		$image->ReadImageBlob( $filedata );
 		$geo=$image->getImageGeometry();

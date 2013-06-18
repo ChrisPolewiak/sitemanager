@@ -79,13 +79,118 @@ else {
 		}
 	}
 ?>
-									<?=sm_inputfield( "select", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_TAG"), "", "dane_core_configadminview__tag", "dane[core_configadminview__tag]", $dane["core_configadminview__tag"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
-									<?=sm_inputfield( "text", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_DBNAME"), "", "dane_core_configadminview__dbname", "dane[core_configadminview__dbname]", $dane["core_configadminview__dbname"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_MAINKEY"), "", "dane_core_configadminview__mainkey", "dane[core_configadminview__mainkey]", $dane["core_configadminview__mainkey"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_FUNCTION"), "", "dane_core_configadminview__function", "dane[core_configadminview__function]", $dane["core_configadminview__function"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "checkbox", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_BUTTON_BACK"), "", "dane_core_configadminview__button_back", "dane[core_configadminview__button_back]", $dane["core_configadminview__button_back"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "checkbox", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_BUTTON_ADDNEW"), "", "dane_core_configadminview__button_addnew", "dane[core_configadminview__button_addnew]", $dane["core_configadminview__button_addnew"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
-									<?=sm_inputfield( "text", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_ROWPERPAGE"), "", "dane_core_configadminview__rowperpage", "dane[core_configadminview__rowperpage]", $dane["core_configadminview__rowperpage"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"select",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_TAG"),
+										"help"=>"",
+										"id"=>"dane_core_configadminview__tag",
+										"name"=>"dane[core_configadminview__tag]",
+										"value"=>$dane["core_configadminview__tag"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_DBNAME"),
+										"help"=>"",
+										"id"=>"dane_core_configadminview__dbname",
+										"name"=>"dane[core_configadminview__dbname]",
+										"value"=>$dane["core_configadminview__dbname"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_MAINKEY"),
+										"help"=>"",
+										"id"=>"dane_core_configadminview__mainkey",
+										"name"=>"dane[core_configadminview__mainkey]",
+										"value"=>$dane["core_configadminview__mainkey"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_FUNCTION"),
+										"help"=>"",
+										"id"=>"dane_core_configadminview__function",
+										"name"=>"dane[core_configadminview__function]",
+										"value"=>$dane["core_configadminview__function"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"checkbox",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_BUTTON_BACK"),
+										"help"=>"",
+										"id"=>"dane_core_configadminview__button_back",
+										"name"=>"dane[core_configadminview__button_back]",
+										"value"=>$dane["core_configadminview__button_back"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"checkbox",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_BUTTON_ADDNEW"),
+										"help"=>"",
+										"id"=>"dane_core_configadminview__button_addnew",
+										"name"=>"dane[core_configadminview__button_addnew]",
+										"value"=>$dane["core_configadminview__button_addnew"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_ROWPERPAGE"),
+										"help"=>"",
+										"id"=>"dane_core_configadminview__rowperpage",
+										"name"=>"dane[core_configadminview__rowperpage]",
+										"value"=>$dane["core_configadminview__rowperpage"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 								</fieldset>
 
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
@@ -143,16 +248,60 @@ else {
 											</tr>
 										</tfoot>
 									</table>
-
-									<?=sm_inputfield( "text", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_VIEW_TITLE"), "", "dane_column_core_configadminviewcolumn__title", "dane_column[core_configadminviewcolumn__title]", $dane_column["core_configadminviewcolumn__title"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_VIEW_TITLE"),
+										"help"=>"",
+										"id"=>"dane_column_core_configadminviewcolumn__title",
+										"name"=>"dane[core_configadminviewcolumn__title]",
+										"value"=>$dane["core_configadminviewcolumn__title"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>"",
+										"xss_secured"=>true
+									));?>
 <?
 	$inputfield_options=array();
 	for($i=50;$i<=300;$i+=50) {
 		$inputfield_options[ $i."px" ] = $i."px";
 	}
 ?>
-									<?=sm_inputfield( "select", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_VIEW_WIDTH"), "", "dane_column_core_configadminviewcolumn__width", "dane_column[core_configadminviewcolumn__width]", $dane_column["core_configadminviewcolumn__width"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
-									<?=sm_inputfield( "text", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_VIEW_VALUE"), "", "dane_column_core_configadminviewcolumn__value", "dane_column[core_configadminviewcolumn__value]", $dane_column["core_configadminviewcolumn__value"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"select",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_VIEW_WIDTH"),
+										"help"=>"",
+										"id"=>"dane_column_core_configadminviewcolumn__width",
+										"name"=>"dane[core_configadminviewcolumn__width]",
+										"value"=>$dane["core_configadminviewcolumn__width"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"text",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_VIEW_VALUE"),
+										"help"=>"",
+										"id"=>"dane_column_core_configadminviewcolumn__value",
+										"name"=>"dane[core_configadminviewcolumn__value]",
+										"value"=>$dane["core_configadminviewcolumn__value"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
 <?
 	$inputfield_options=array();
 	$_align = array(
@@ -165,8 +314,38 @@ else {
 		$inputfield_options[ $k ] = $v;
 	}
 ?>
-									<?=sm_inputfield( "select", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_VIEW_ALIGN"), "", "dane_column_core_configadminviewcolumn__align", "dane_column[core_configadminviewcolumn__align]", $dane_column["core_configadminviewcolumn__align"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1, $inputfield_options);?>
-									<?=sm_inputfield( "checkbox", __("CORE", "CORE_CONFIGADMINVIEW__FIELD_VIEW_ORDER"), "", "dane_column_core_configadminviewcolumn__order", "dane_column[core_configadminviewcolumn__order]", $dane_column["core_configadminviewcolumn__order"], "block-level", $disabled=false, $validation=false, $prepend=false, $append=false, $rows=1);?>
+									<?=sm_inputfield(array(
+										"type"=>"select",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_VIEW_ALIGN"),
+										"help"=>"",
+										"id"=>"dane_column_core_configadminviewcolumn__align",
+										"name"=>"dane[core_configadminviewcolumn__align]",
+										"value"=>$dane["core_configadminviewcolumn__align"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
+									<?=sm_inputfield(array(
+										"type"=>"checkbox",
+										"title"=>__("CORE","CORE_CONFIGADMINVIEW__FIELD_VIEW_ORDER"),
+										"help"=>"",
+										"id"=>"dane_column_core_configadminviewcolumn__order",
+										"name"=>"dane[core_configadminviewcolumn__order]",
+										"value"=>$dane["core_configadminviewcolumn__order"],
+										"size"=>"block-level",
+										"disabled"=>0,
+										"validation"=>0,
+										"prepend"=>0,
+										"append"=>0,
+										"rows"=>1,
+										"options"=>$inputfield_options,
+										"xss_secured"=>true
+									));?>
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
 									<div class="btn-toolbar">
 										<input type=hidden name="dane_column[core_configadminview__idcolumn]" value="<?=$dane_column["core_configadminview__idcolumn"]?>">

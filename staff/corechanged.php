@@ -59,12 +59,57 @@ else {
 							<div><?=__("core", "CORE_DELETED__DELETED_OBJECT")?></div>
 						</div>
 						<fieldset class="no-legend">
-							<?=sm_inputfield( "text", __("CORE","CORE_DELETED__FIELD_TABLE"), "", "dane_core_changed__table", "dane[core_changed__table]", $dane["core_changed__table"], "block-level", $disabled=true, $validation=false, $prepend=false, $append=false, $rows=1);?>
-							<?=sm_inputfield( "text", __("CORE","CORE_DELETED__FIELD_ID"), "", "dane_core_changed__tableid", "dane[core_changed__tableid]", $dane["core_changed__tableid"], "block-level", $disabled=true, $validation=false, $prepend=false, $append=false, $rows=1);?>
+							<?=sm_inputfield(array(
+								"type"=>"text",
+								"title"=>__("CORE","CORE_DELETED__FIELD_TABLE"),
+								"help"=>"",
+								"id"=>"dane_core_changed__table",
+								"name"=>"dane[core_changed__table]",
+								"value"=>$dane["core_changed__table"],
+								"size"=>"block-level",
+								"disabled"=>1,
+								"validation"=>0,
+								"prepend"=>0,
+								"append"=>0,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+							));?>
+							<?=sm_inputfield(array(
+								"type"=>"text",
+								"title"=>__("CORE","CORE_DELETED__FIELD_ID"),
+								"help"=>"",
+								"id"=>"dane_core_changed__tableid",
+								"name"=>"dane[core_changed__tableid]",
+								"value"=>$dane["core_changed__tableid"],
+								"size"=>"block-level",
+								"disabled"=>1,
+								"validation"=>0,
+								"prepend"=>0,
+								"append"=>0,
+								"rows"=>1,
+								"options"=>"",
+								"xss_secured"=>true
+							));?>
 <?
 $olddata = var_export( json_decode( stripslashes( $dane["core_changed__olddata"] ) ),true );
 ?>
-							<?=sm_inputfield( "textarea", __("CORE","CORE_DELETED__FIELD_DATA"), "", "dane_core_changed__tableid", "dane[core_changed__olddata]", $olddata, "block-level", $disabled=true, $validation=false, $prepend=false, $append=false, $rows=10);?>
+							<?=sm_inputfield(array(
+								"type"=>"textarea",
+								"title"=>__("CORE","CORE_DELETED__FIELD_DATA"),
+								"help"=>"",
+								"id"=>"dane_core_changed__tableid",
+								"name"=>"dane[core_changed__olddata]",
+								"value"=>$dane["core_changed__olddata"],
+								"size"=>"block-level",
+								"disabled"=>1,
+								"validation"=>0,
+								"prepend"=>0,
+								"append"=>0,
+								"rows"=>10,
+								"options"=>"",
+								"xss_secured"=>true
+							));?>
 
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
 							<input type=hidden name="dane[core_changed__id]" value="<?=$dane["core_changed__id"]?>">
