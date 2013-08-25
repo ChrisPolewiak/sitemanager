@@ -1,6 +1,8 @@
 <?
 sm_core_content_user_accesscheck($access_type_id."_PLUS",1);
 
+$datatable_btn_add="";
+
 $mode = $_GET["mode"];
 if( $_GET["CKEditor"] ) {
 	$mode = "ckeditor";
@@ -33,8 +35,11 @@ if($_REQUEST["ajax"]) {
 				case "thumbs":
 					require "_contentfile_popup_thumbs.php";
 					break;
+				case "form":
+					require "_contentfile_popup_form.php";
+					break;
 				default:
-					echo "nie znany typ widoku";
+					echo "nie znany typ widoku (".$_GET["sm_viewtype"].")";
 					break;
 			}
 			break;
@@ -57,31 +62,6 @@ $sm_viewtype = $sm_viewtype ? $sm_viewtype : "table";
 
 include "_page_header_popup.php";
 
-/*
-switch($sm_viewtype) {
-
-	#
-	# View Type Table
-	####################
-	case "table":
-		require "_contentfile_popup_table.php";
-		break;
-
-	#
-	# View Type Thumbs
-	####################
-	case "thumbs":
-		require "_contentfile_popup_thumbs.php";
-		break;
-
-	#
-	# View Type Form
-	####################
-	case "form":
-
-	break;
-}
-*/
 ?>
 	<div style="float: left;width: 100%;">
 		<div style="margin-left: 300px;" class="sm-dataview">
@@ -195,14 +175,14 @@ $().ready(function(){
 	$('#action-viewtype-form').bind('click',function(){
 		$.loaddata( 'form' );
 	});
-
+<?if($_REQUEST["CKEditor"]) { ?>
 	$('#action-select-file').unbind();
 	$('#action-select-file').bind('click',function(){
 		fileid = $('.sm-fileinfo #content_file__id').val();
-
-		window.opener.CKEDITOR.tools.callFunction(<?=$CKEditorFuncNum_callback?>,'/cacheimg?id='+fileid)
+		window.opener.CKEDITOR.tools.callFunction(<?=$CKEditorFuncNum_callback?>,'/cacheimg/id='+fileid)
 		window.close();
 	});
+<? } ?>
 
 	$('#action-select-files').unbind();
 	$('#action-select-files').bind('click',function(){

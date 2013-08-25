@@ -1,11 +1,13 @@
 <?
 
+$datastore = "content_file";
+
 if (preg_match("/cacheimg\/(.+)/", $page, $tmp)) {
 	$tmp = split("\/", $tmp[1]);
 
 	foreach($tmp AS $param) {
 		if(preg_match("/^id=(.+)/", $param, $value)) {
-			$content_file__id = $value[1];
+			$id = $value[1];
 		}
 		if(preg_match("/^w=(.+)/", $param, $value)) {
 			$width = $value[1];
@@ -16,10 +18,16 @@ if (preg_match("/cacheimg\/(.+)/", $page, $tmp)) {
 		if(preg_match("/^ext.(.+)/", $param, $value)) {
 			$extension = $value[1];
 		}
+		if(preg_match("/^d.(.+)/", $param, $value)) {
+			$datastore = $value[1];
+		}
+		if(preg_match("/^t.(.+)/", $param, $value)) {
+			$datatype = $value[1];
+		}
 	}
 }
 
-if ( $cache = content_cache_get( "content_file", $content_file__id, $width, $height ) ) {
+if ( $cache = content_cache_get( $datastore, $id, $width, $height ) ) {
 	$image = new Imagick();
 
 	switch($cache["content_cache__encode"]) {
@@ -36,10 +44,30 @@ if ( $cache = content_cache_get( "content_file", $content_file__id, $width, $hei
 	exit;
 }
 else {
-	if ($dane = content_file_dane( $content_file__id )) {
+	if ($datastore != "content_file") {
+		$image_filepath = $CACHEIMG[ strtolower($datastore) ]["path"];
+		$image_filedata = $CACHEIMG[ strtolower($datastore) ]["data"];
+		$image_function = $CACHEIMG[ strtolower($datastore) ]["function"];
 
-		$filedata = base64_decode($dane["content_file__filedata"]);
+		eval(" \$dane = $image_function( '$id' ); ");
 
+		if($CACHEIMG[ strtolower($datastore) ]["type"] == "file") {
+			$filedata = file_get_contents( $dane[ $image_filepath ] );
+			$size = GetImageSize($dane[ $image_filepath ]);
+			$mimetype = $size["mime"];
+		}
+		else {
+			$filedata = $dane[ $image_filedata ];
+		}
+	}
+	else {
+		if ($dane = content_file_dane( $id )) {
+			$filedata = base64_decode($dane["content_file__filedata"]);
+			$mimetype = $dane["content_file__filetype"];
+		}
+	}
+
+	if($filedata) {
 		$image = new Imagick();
 		$image->ReadImageBlob( $filedata );
 		$geo=$image->getImageGeometry();
@@ -59,12 +87,12 @@ else {
 
 		if($width || $height) {
 			$cache=array(
-				"content_cache__table" => "content_file",
-				"content_cache__tableid" => $content_file__id,
+				"content_cache__table" => $datastore,
+				"content_cache__tableid" => $id,
 				"content_cache__w" => $width,
 				"content_cache__h" => $height,
 				"content_cache__ttl" => 84600,
-				"content_cache__contenttype" => $dane["content_file__filetype"],
+				"content_cache__contenttype" => $mimetype,
 				"content_cache__data" => $image,
 			);
 			content_cache_add( $cache );

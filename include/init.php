@@ -43,7 +43,7 @@ if(is_array($SM_CONFIG)) {
 	define("SM_DATA_ENCRYPTION_KEY", $SM_CONFIG["engine"]["data_encryption_key"]);
 	define("SM_DATA_ENCRYPTION_CIPHER", MCRYPT_RIJNDAEL_256);
 
-	if ($SM_CONFIG["mail"]) {
+	if (isset($SM_CONFIG["mail"])) {
 		$SM_MAIL_ADDR_ADMIN	= $SM_CONFIG["mail"]["mail_addr_admin"];
 		$SM_MAIL_BACKEND	= $SM_CONFIG["mail"]["mail_backend"];
 		$SM_SMTP_HOST		= $SM_CONFIG["mail"]["smtp_host"];
@@ -69,10 +69,10 @@ else {
 $BACKUP_DIR="";
 
 $SOFTWARE_INFORMATION = array(
-	"version"     => "5.03",
-	"author"      => "Krzysztof Polewiak",
+	"version"     => "5.05",
+	"author"      => "Chris Polewiak",
 	"application" => "SiteManager Engine",
-	"date"        => "2013-06-10",
+	"date"        => "2013-08-04",
 );
 
 $BACKUP_DIR = $BACKUP_DIR ? $BACKUP_DIR : $ROOT_DIR."/backup";

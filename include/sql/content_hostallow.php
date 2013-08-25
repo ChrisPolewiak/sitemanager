@@ -37,7 +37,7 @@ function content_hostallow_edit( $dane ) {
 		$dane["content_hostallow__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
-		core_changed_add( $dane["content_hostallow__id"], "content_hostallow", $tmp_dane="", "add" );
+		core_changed_add( $dane["content_hostallow__id"], "content_hostallow", "", "add" );
 	}
 
 	$dane["record_modify_date"] = time();

@@ -62,7 +62,7 @@ $().ready(function() {
 					$('#dataTable tbody tr#'+id+'').addClass('success');
 					$('.sm-fileinfo').show();
 					$('.sm-fileselected').show();
-					$('.sm-fileinfo .sm-filethumbnail').html('<img src="/cacheimg?id='+id+'&w=230&h=230" class="img-polaroid">');
+					$('.sm-fileinfo .sm-filethumbnail').html('<img src="/cacheimg/id='+id+'/w=230/h=230" class="img-polaroid">');
 					$('.sm-fileinfo .sm-filename').html(data.content_file__filename);
 					$('.sm-fileinfo #content_file__id').val(id);
 

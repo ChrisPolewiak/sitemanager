@@ -33,21 +33,21 @@ if(!is_array($ERROR)) {
 		$templatedir = $ROOT_DIR."/html/pages";
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$dir = scandir( $templatedir );
-		foreach($dir AS $lang){
-			if($lang!="." && $lang!="..") {
-				if(is_dir($templatedir."/".$lang)){
-					$dir2 = scandir( $templatedir."/".$lang );
+		foreach($dir AS $item){
+			if($item!="." && $item!="..") {
+				if(is_dir($templatedir."/".$item)){
+					$dir2 = scandir( $templatedir."/".$item );
 					foreach($dir2 AS $file2){
 						if($file2!="." && $file2!="..") {
 							$fparts = pathinfo($file2);
 							if($fparts["extension"]=="tpl" || $fparts["extension"]=="php") {
-								$systemplatefiles["$lang"."/"."$file2"] = 1;
+								$systemplatefiles["$item"."/"."$file2"] = 1;
 							}
 						}
 					}
 				}
-				elseif(preg_match("/\.tpl$/", $file)) {
-					$systemplatefiles["$file2"];
+				elseif(preg_match("/\.tpl$/", $item) || preg_match("/\.php$/", $item)) {
+					$systemplatefiles[$item] = 1;
 				}
 			}
 		}
@@ -70,6 +70,14 @@ if(!is_array($ERROR)) {
 						"content_template__name" => $tmp[2],
 						"content_template__srcfile" => $tmp[2],
 						"content_template__lang" => $tmp[1]
+					);
+					content_template_add($filedane);
+				}
+				else {
+					$filedane = array(
+						"content_template__name" => $file,
+						"content_template__srcfile" => $file,
+						"content_template__lang" => ""
 					);
 					content_template_add($filedane);
 				}

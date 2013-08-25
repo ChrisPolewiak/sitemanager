@@ -5,15 +5,7 @@ sm_core_content_user_accesscheck($access_type_id."_READ",1);
 $dane = $_REQUEST["dane"];
 $core_task__id = $_REQUEST["core_task__id"];
 
-if ( isset($action["add"]) || isset($action["edit"]) ) {
-	$dane=trimall($dane);
-	if(!$dane["core_task__name"]){
-		$ERROR[]=__("core", "Podaj nazwę skryptu");
-	}
-	if(!$dane["core_task__mhdmd"]){
-		$ERROR[]=__("core", "Podaj konfigurację");
-	}
-}
+core_task_validate( $dane );
 
 if(!is_array($ERROR)) {
 	if ( isset($action["add"]) ) {

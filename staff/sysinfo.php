@@ -87,7 +87,7 @@ include "_page_header5.php";
 								<tr class=even>
 									<td><?=__("CORE", "SYSINFO__LIBRARY")?> PEAR Mail</td>
 <?
-if( ! @include_once "Pear/Mail.php") {;
+if( ! @include_once "Mail.php") {;
 	echo "<td colspan=2><b style=\"color:#c00000\">".__("CORE", "SYSINFO__ERROR")."</b>";
 	echo " - <a href=\"http://pear.php.net/package/Mail\">http://pear.php.net/package/Mail</a><br>";
 	echo " ".("instalacja").": pear install --alldeps --force Mail<br>";
@@ -101,7 +101,7 @@ else
 								<tr class=odd>
 									<td><?=__("CORE", "SYSINFO__LIBRARY")?> PEAR Mail_mime</td>
 <?
-if( ! @include_once "Pear/Mail/mime.php") {
+if( ! @include_once "Mail/mime.php") {
 	echo "<td colspan=2><b style=\"color:#c00000\">".__("CORE", "SYSINFO__ERROR")."</b>";
 	echo " - <a href=\"http://pear.php.net/package/Mail_Mime\">http://pear.php.net/package/Mail_Mime</a><br>";
 	echo " ".("instalacja").": pear install --alldeps --force Mail_mime<br>";

@@ -7,7 +7,6 @@ $plugin = $_REQUEST["plugin"];
 
 if ( $action=="enable" ) {
 
-
 	foreach($SM_PLUGINS AS $tag=>$data){
 		if($data["enabled"]){
 			$plugin_to_save[$tag] = $data;

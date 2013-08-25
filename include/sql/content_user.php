@@ -43,7 +43,7 @@ function content_user_edit( $dane ) {
 		$dane["content_user__login_falsecount"] = 0;
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
-		core_changed_add( $dane["content_user__id"], "content_user", $tmp_dane="", "add" );
+		core_changed_add( $dane["content_user__id"], "content_user", "", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
@@ -57,7 +57,7 @@ function content_user_edit( $dane ) {
 	$dane["content_user__confirm_userdata"] = $dane["content_user__confirm_userdata"] ? 1 : 0;
 	$dane["content_user__confirm_marketing"] = $dane["content_user__confirm_marketing"] ? 1 : 0;
 
-	sm_sql_transaction_begin();
+//	sm_sql_transaction_begin();
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_user_base VALUES (\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__id"])."',\n";
@@ -121,7 +121,7 @@ function content_user_edit( $dane ) {
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_edit:extra()",$SQL_QUERY,$e); }
 
-	sm_sql_transaction_commit();
+//	sm_sql_transaction_commit();
 
 	return $dane["content_user__id"];
 }

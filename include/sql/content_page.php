@@ -123,7 +123,7 @@ function content_page_add( $dane ) {
 		$ERROR[] = "Brak nazwy ";
 	}
 
-	core_changed_add( $dane["content_page__id"], "content_page", $tmp_dane="", "add" );
+	core_changed_add( $dane["content_page__id"], "content_page", "", "add" );
 
 	if( is_array( $ERROR ) ) return false;
 

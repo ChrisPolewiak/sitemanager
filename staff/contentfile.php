@@ -6,11 +6,11 @@ $dane = $_REQUEST["dane"];
 $content_file__id = $_REQUEST["content_file__id"];
 $content_page__id = $_REQUEST["content_page__id"];
 
-if(!is_array($ERROR)) {
+if(!is_array( $ERROR )) {
 	if ( isset($action["add"]) ) {
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$content_file__id = content_file_add($dane);
-		header("Location: $page?content_file__id=$content_file__id");
+		header("Location: $page ? content_file__id=$content_file__id");
 		exit;
 	}
 	elseif ( isset($action["edit"]) ) {

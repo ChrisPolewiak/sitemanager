@@ -123,6 +123,19 @@ if ( sm_core_content_user_accesscheck("CORE_ADMINPANEL_READ") ) {
 			"info-short" => "Zarządzanie bazą użytkowników.",
 			"info-long" => "Moduł służący do zarządzania listą użytkowników. Umożliwia również przypisywanie użytkowników do wybranych grup zabezpieczeń.",
 		);
+		$menu["9admin0content_peeklist"] = array(
+			"access_type_id" => "CORE_SETUP",
+			"level" => "9admin0", "name"  => __("core", "MENU__CONTENT_PEEKLIST"), "file"  => "content_peeklist.php",
+			"info-short" => "Zarządzanie listami zmiennych.",
+			"info-long" => "Moduł służący do zarządzania listami zmiennych.",
+		);
+		$menu["9admin0content_peeklistitem"] = array(
+			"access_type_id" => "CORE_SETUP",
+			"level" => "9admin0", "name"  => __("core", "MENU__CONTENT_PEEKLISTITEM"), "file"  => "content_peeklistitem.php",
+			"info-short" => "Zarządzanie listami.",
+			"info-long" => "Moduł służący do zarządzania listami.",
+			"config" => array( "menu_disabled" => 1, ),
+		);
 		$menu["9admin0content_usergroup"] = array(
 			"access_type_id" => "CORE_SETUP",
 			"level" => "9admin0", "name"  => __("core", "MENU__CONTENT_USERGROUP"), "file"  => "contentusergroup.php",
@@ -192,6 +205,12 @@ if ( sm_core_content_user_accesscheck("CORE_ADMINPANEL_READ") ) {
 			"level" => "9admin0", "name"  => __("core", "MENU__CORE_CHANGED"), "file"  => "corechanged.php",
 			"info-short" => "Bufor zawierający zmienione rekordy.",
 			"info-long" => "Umożliwia przeglądanie zmienionych rekordów i ich przywracanie.",
+		);
+		$menu["9admin0coresession"] = array(
+			"access_type_id" => "CORE_SETUP",
+			"level" => "9admin0", "name"  => __("core", "MENU__CORE_SESSION"), "file"  => "coresession.php",
+			"info-short" => "Lista aktywnych sesji.",
+			"info-long" => "Podgląd aktywnych użytkowników.",
 		);
 	}
 }

@@ -1,28 +1,28 @@
 <?
 
 $SYSTEM_DEFINED_ROLEACTION["CORE"] = array(
-	"A" => array("tag"=>"ADD", "name"=>__("core", "Utworzenie")),
-	"R" => array("tag"=>"READ", "name"=>__("core", "Odczyt")),
-	"W" => array("tag"=>"WRITE", "name"=>__("core", "Zmiana")),
-	"D" => array("tag"=>"DELETE", "name"=>__("core", "Usunięcie")),
-	"P" => array("tag"=>"PLUS", "name"=>__("core", "Utworzenie relacji do")),
-	"M" => array("tag"=>"MINUS", "name"=>__("core", "Usunięcie relacji")),
+	"A" => array("tag"=>"ADD", "name"=>"Utworzenie"),
+	"R" => array("tag"=>"READ", "name"=>"Odczyt"),
+	"W" => array("tag"=>"WRITE", "name"=>"Zmiana"),
+	"D" => array("tag"=>"DELETE", "name"=>"Usunięcie"),
+	"P" => array("tag"=>"PLUS", "name"=>"Utworzenie relacji do"),
+	"M" => array("tag"=>"MINUS", "name"=>"Usunięcie relacji"),
 );
 
 $SYSTEM_DEFINED_ROLES["CORE"] = array(
-	"CONTENTPAGE"         => array("name"=>__("core", "Podstrony"), "actions"=>"ARWDPM"),
-	"CONTENTSECTION"      => array("name"=>__("core", "Sekcje"), "actions"=>"ARWDPM"),
-	"CONTENTTEXT"         => array("name"=>__("core", "Artykuły"), "actions"=>"ARWDPM"),
-	"CONTENTNEWS"         => array("name"=>__("core", "Wiadomości"), "actions"=>"ARWDPM"),
-	"CONTENTUSER"         => array("name"=>__("core", "Użytkownicy"), "actions"=>"ARWDPM"),
-	"CONTENTUSERGROUP"    => array("name"=>__("core", "Grupy użytkowników"), "actions"=>"ARWDPM"),
-	"CONTENTMAILTEMPLATE" => array("name"=>__("core", "Szablony wiadomości e-mail"), "actions"=>"ARWDPM"),
-	"CONTENTFILE"         => array("name"=>__("core", "Multimedia"), "actions"=>"ARWDPM"),
-	"CONTENTCATEGORY"     => array("name"=>__("core", "Kategorie zasobów"), "actions"=>"ARWD"),
-	"CONTENTTEMPLATE"     => array("name"=>__("core", "Szablony podstron"), "actions"=>"ARWDPM"),
-	"CONTENTNEWSGROUP"    => array("name"=>__("core", "Kategorie wiadomości"), "actions"=>"ARWDPM"),
-	"SETUP"               => array("name"=>__("core", "Konfiguracja aplikacji"), "actions"=>"RW"),
-	"ADMINPANEL"          => array("name"=>__("core", "Dostęp do panelu zarządzania"), "actions"=>"R"),
+	"CONTENTPAGE"         => array("name"=>"Podstrony", "actions"=>"ARWDPM"),
+	"CONTENTSECTION"      => array("name"=>"Sekcje", "actions"=>"ARWDPM"),
+	"CONTENTTEXT"         => array("name"=>"Artykuły", "actions"=>"ARWDPM"),
+	"CONTENTNEWS"         => array("name"=>"Wiadomości", "actions"=>"ARWDPM"),
+	"CONTENTUSER"         => array("name"=>"Użytkownicy", "actions"=>"ARWDPM"),
+	"CONTENTUSERGROUP"    => array("name"=>"Grupy użytkowników", "actions"=>"ARWDPM"),
+	"CONTENTMAILTEMPLATE" => array("name"=>"Szablony wiadomości e-mail", "actions"=>"ARWDPM"),
+	"CONTENTFILE"         => array("name"=>"Multimedia", "actions"=>"ARWDPM"),
+	"CONTENTCATEGORY"     => array("name"=>"Kategorie zasobów", "actions"=>"ARWD"),
+	"CONTENTTEMPLATE"     => array("name"=>"Szablony podstron", "actions"=>"ARWDPM"),
+	"CONTENTNEWSGROUP"    => array("name"=>"Kategorie wiadomości", "actions"=>"ARWDPM"),
+	"SETUP"               => array("name"=>"Konfiguracja aplikacji", "actions"=>"RW"),
+	"ADMINPANEL"          => array("name"=>"Dostęp do panelu zarządzania", "actions"=>"R"),
 );
 
 ?>

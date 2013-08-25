@@ -74,7 +74,7 @@ else {
 						</div>
 					</div>
 
-					<form action="<?=$page?>" method=POST id="sm-form">
+					<form action="" method=POST id="sm-form">
 						<fieldset class="no-legend">
 							<div class="row-fluid">
 								<div class="span4">
@@ -83,7 +83,7 @@ else {
 											"title"=>"Nazwa roli",
 											"help"=>"Nazwa wewnętrzna",
 											"id"=>"dane_content_access__name",
-											"name"=>"content_access__name",
+											"name"=>"dane[content_access__name]",
 											"value"=>$dane["content_access__name"],
 											"size"=>"xlarge",
 											"disabled"=>false,
@@ -99,7 +99,7 @@ else {
 											"title"=>"Treść komunikatu dla użytkownika",
 											"help"=>"zostanie wyświetlony w przypadku napotkania braku dostępu",
 											"id"=>"dane_content_access__message",
-											"name"=>"content_access__message",
+											"name"=>"dane[content_access__message]",
 											"value"=>$dane["content_access__message"],
 											"size"=>"xlarge",
 											"disabled"=>false,

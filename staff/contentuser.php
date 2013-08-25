@@ -23,9 +23,6 @@ if( isset($action["add"]) || isset($action["edit"]) ){
 			$ERROR[] = __("core", "Podany identyfikator jest już przypisany do innego użytkownika");
 		}
 	}
-	if(!$dane["content_user__email"]){
-		$ERROR[]=__("core", "Podaj adres e-mail");
-	}
 	if(!$dane["content_user__username"]){
 		$ERROR[]=__("core", "Podaj identyfikator");
 	}
@@ -53,7 +50,6 @@ if(!is_array($ERROR)) {
 
 	if( isset($action["add"]) || isset($action["edit"]) ){
 		if (is_array($dane_content_usergroup)) {
-
 			content_user2content_usergroup_delete_by_content_user($content_user__id);
 			foreach($dane_content_usergroup AS $k=>$v){
 				content_user2content_usergroup_edit( $content_user__id, $k );
@@ -505,7 +501,7 @@ $('#tabs').ready(function() {
 														"help"=>"",
 														"id"=>"dane_content_user__password",
 														"name"=>"dane[content_user__password]",
-														"value"=>$dane["content_user__password"],
+														"value"=>"",
 														"size"=>"block-level",
 														"disabled"=>0,
 														"validation"=>0,

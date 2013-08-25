@@ -20,6 +20,8 @@ require $INCLUDE_DIR."/sql/content_news.php";
 require $INCLUDE_DIR."/sql/content_news2content_newsgroup.php";
 require $INCLUDE_DIR."/sql/content_newsgroup.php";
 require $INCLUDE_DIR."/sql/content_page.php";
+require $INCLUDE_DIR."/sql/content_peeklist.php";
+require $INCLUDE_DIR."/sql/content_peeklistitem.php";
 require $INCLUDE_DIR."/sql/content_section.php";
 require $INCLUDE_DIR."/sql/content_section2content_page.php";
 require $INCLUDE_DIR."/sql/content_tags.php";

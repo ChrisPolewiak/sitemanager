@@ -22,33 +22,18 @@ function filearray_generator_recurent( $id, $fp, $db ) {
 		$counter=0;
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 
-if(!$table_cols) {
-	foreach($row AS $k=>$v) {
-		if($k!="record_create_date" && $k!="record_create_id" && $k!="record_modify_date" && $k!="record_modify_id" && !ereg($db."__path")) {
-			if(preg_match("/^".$db."__(.+)$/i", $k, $tmp) ) {
-				$table_cols[ $tmp[1] ] = $k;
+			if(!$table_cols) {
+				foreach($row AS $k=>$v) {
+					if($k!="record_create_date" && $k!="record_create_id" && $k!="record_modify_date" && $k!="record_modify_id" && !ereg($db."__path")) {
+						if(preg_match("/^".$db."__(.+)$/i", $k, $tmp) ) {
+							$table_cols[ $tmp[1] ] = $k;
+						}
+						else {
+							$table_cols[ $k ] = $k;
+						}
+					}
+				}
 			}
-			else {
-				$table_cols[ $k ] = $k;
-			}
-		}
-	}
-}
-
-#echo "<pre>";
-#print_r($table_cols);
-#print_r($row);
-#echo "</pre>";
-#exit;
-
-/*
-			$counter++;
-			// pierwszy array
-			$row[$db."__order"] = $counter;
-
-			eval ( " ".$db."_edit( \$row ); ");
-			eval ( " \$row = ".$db."_get( \$row[\"".$db."__id\"] ); " );
-*/
 
 			$ilosc = $ilosc_by_cat = 0;
 			eval ( " \$ilosc = ".$db."_count_by_parent(\"".$row[$db."__id"]."\"); ");
@@ -57,9 +42,6 @@ if(!$table_cols) {
 			$string .= "array(";
 			foreach($table_cols AS $k=>$v) {
 				$string .= "\"". $k ."\"=>\"". ereg_replace("(\")", "\\\"", $row[$v]) ."\",";
-				
-//				echo "$k -> ".$row[$v]."|";
-				
 			}
 			$string .= "\"size\"=>\""   . sizeof(json_decode( $row[$db."__path"], $assoc=true)) . "\",";
 			$string .= "\"path\"=>\"" . ereg_replace("(\")", "\\\"", $row[$db."__path"])."\");";

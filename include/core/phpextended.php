@@ -50,7 +50,7 @@ function sm_secure_string_xss( $string ) {
 		$string = preg_replace( "/((\%3C)|<)((\%2F)|\/)*[a-z0-9\%]+((\%3E)|>)/ix", "", $string );
 		// Regex for "<img src" CSS attack
 		$string = preg_replace( "/((\%3C)|<)((\%69)|i|(\%49))((\%6D)|m|(\%4D))((\%67)|g|(\%47))[^\n]+((\%3E)|>)/i", "", $string );
-		$string = htmlentities( $string, ENT_QUOTES | ENT_HTML5, "UTF-8" );
+//		$string = htmlentities( $string, ENT_QUOTES | ENT_HTML5, "UTF-8" );
 		//$string = html_entity_decode( $string );
 	}	
 	return $string;

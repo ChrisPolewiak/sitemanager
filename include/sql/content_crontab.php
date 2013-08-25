@@ -42,7 +42,7 @@ function content_crontab_edit( $dane ) {
 		$dane["content_crontab__laststatus"] = "0";
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
-		core_changed_add( $dane["content_crontab__id"], "content_crontab", $tmp_dane="", "add" );
+		core_changed_add( $dane["content_crontab__id"], "content_crontab", "", "add" );
 	}
 
 	$dane["record_modify_date"] = time();

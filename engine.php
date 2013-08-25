@@ -58,6 +58,7 @@ if($page == $SM_ADMIN_PANEL || preg_match("/^".$SM_ADMIN_PANEL."\//", $page)) {
  * CLEAN VARIABLES
  */
 
+/*
 foreach($_REQUEST AS $k=>$v) {
 	$_REQUEST[$k] = sm_secure_string_xss( $v );
 }
@@ -67,6 +68,7 @@ foreach($_POST AS $k=>$v) {
 foreach($_GET AS $k=>$v) {
 	$_GET[$k] = sm_secure_string_xss( $v );
 }
+*/
 
 $SM_LANG = $LANG;
 

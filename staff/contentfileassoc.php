@@ -70,13 +70,13 @@ if($result=content_fileassoc_fetch_by_multiid( $content_file__tableid, $content_
 <?
 		if (preg_match("/^image/", $row["content_file__filetype"])) {
 ?>
-											<img src="/cacheimg?id=<?=$row["content_file__id"]?>&w=40">
+											<img src="/cacheimg/id=<?=$row["content_file__id"]?>/w=40">
 <?
 		}
 ?>
 										</td>
 										<td>
-											<a href="/cacheimg?id=<?=$row["content_file__id"]?>" target="_new"><?=$row["content_file__filename"]?></a><br>
+											<a href="/cacheimg/id=<?=$row["content_file__id"]?>" target="_new"><?=$row["content_file__filename"]?></a><br>
 											<?=$row["content_file__infoname"]?> <?=$row["content_file__infodescription"]?>
 										</td>
 										<td align=right><?=filesize_convert($row["content_file__filesize"])?></td>

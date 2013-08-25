@@ -77,7 +77,7 @@ function __($schema = "core", $phrase ) {
 	if( sizeof($fnargs)>2 && isset($SM_TRANSLATION[$schema][$phrase]) ) {
 		array_shift($fnargs);
 		array_shift($fnargs);
-		eval ("\$phrase = sprintf( \"".$SM_TRANSLATION[$schema][$phrase]."\", \"".join( "\",\"" ,$fnargs)."\"); ");
+		eval ("\$phrase = sprintf( \"".addslashes($SM_TRANSLATION[$schema][$phrase])."\", \"".join( "\",\"" ,$fnargs)."\"); ");
 		return $phrase;
 	}
 	else {

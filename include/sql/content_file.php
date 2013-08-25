@@ -88,13 +88,13 @@ function content_file_edit( $dane ) {
 		$tmp_dane = content_file_dane( $dane["content_file__id"] );
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
-		core_changed_add( $dane["content_file__id"], "content_file", $tmp_dane="", "edit" );
+		core_changed_add( $dane["content_file__id"], "content_file", "", "edit" );
 	}
 	else {
 		$dane["content_file__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
-		core_changed_add( $dane["content_file__id"], "content_file", $tmp_content_filecategory="", "add" );
+		core_changed_add( $dane["content_file__id"], "content_file", "", "add" );
 	}
 
 	/*

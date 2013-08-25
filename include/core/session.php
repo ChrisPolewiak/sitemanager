@@ -118,7 +118,7 @@ if ( !defined("SESSION_DISABLED") ) {
 	session_start();
 	$_SESSION = sm_session_read( $core_session__sid );
 	register_shutdown_function("sm_session_write");
-	register_shutdown_function("sm_session_gc");
+//	register_shutdown_function("sm_session_gc");
 }
 
 $_SESSION["sm_core"] = array(

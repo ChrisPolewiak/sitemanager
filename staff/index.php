@@ -70,4 +70,10 @@ if(is_array($SM_PLUGINS)) {
 						<a href="<?=$ENGINE?>/sysinfo.php"><?=__("core", "INDEX__MORE_SYSINFO")?></a><br>
 					</fieldset>
 
+					<div class="fieldset-title">
+						<div><?=__("core", "ADMIN_LOGED_USERS")?></div>
+					</div>
+					<fieldset class="no-legend">
+						<b>Ilość użytkowników korzystających z systemu:</b> <?=core_session_count_all()?> - <a href="<?=$ENGINE?>/coresession.php">Lista aktywnych sesji</a><br>
+					</fieldset>
 <? include "_page_footer5.php"; ?>

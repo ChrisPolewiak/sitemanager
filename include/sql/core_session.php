@@ -11,29 +11,42 @@
 /**
  * @category	core_session
  * @package		sql
- * @version		5.0.1
+ * @version		5.0.3
 */
 function core_session_dane($core_session__sid) {
 	global $SESSION_LIFE;
 
-	core_session_delete_old();
-
 	$SQL_QUERY  = "SELECT AES_DECRYPT(core_session__data,'".SM_DATA_ENCRYPTION_KEY."') AS core_session__data \n";
-#	$SQL_QUERY  = "SELECT core_session__data \n";
 	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_core_session \n";
 	$SQL_QUERY .= "WHERE core_session__sid = '".sm_secure_string_sql($core_session__sid)."' \n";
 	$SQL_QUERY .= "  AND UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(core_session__lastused) < ".$SESSION_LIFE." \n";
-//	$SQL_QUERY .= "  AND core_session__remoteaddr = '".$_SERVER["REMOTE_ADDR"]."' \n";
-//	$SQL_QUERY .= "  AND core_session__useragent = '".sm_secure_string_sql($_SERVER["HTTP_USER_AGENT"])."' \n";
+	$SQL_QUERY .= "  AND core_session__remoteaddr = '".$_SERVER["REMOTE_ADDR"]."' \n";
+	$SQL_QUERY .= "  AND core_session__useragent = '".sm_secure_string_sql($_SERVER["HTTP_USER_AGENT"])."' \n";
 
-	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_tags_fetch_all()",$SQL_QUERY,$e); }
+	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("core_session_dane()",$SQL_QUERY,$e); }
 
 	if ($result->rowCount()>0) {
-		$row = ($result->rowCount()>0 ? $result->fetch(PDO::FETCH_ASSOC) : 0);
+		$row = $result->fetch(PDO::FETCH_ASSOC);
 		return $row["core_session__data"];
 	}
 }
 
+/**
+ * @category	core_session
+ * @package		sql
+ * @version		5.0.2
+*/
+function core_session_get($core_session__sid) {
+	global $SESSION_LIFE;
+
+	$SQL_QUERY  = "SELECT *,AES_DECRYPT(core_session__data,'".SM_DATA_ENCRYPTION_KEY."') AS core_session__data \n";
+	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_core_session \n";
+	$SQL_QUERY .= "WHERE core_session__sid = '".sm_secure_string_sql($core_session__sid)."' \n";
+
+	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("core_session_get()",$SQL_QUERY,$e); }
+
+	return ($result->rowCount()>0 ? $result->fetch(PDO::FETCH_ASSOC) : 0);
+}
 /**
  * @category	core_session
  * @package		sql
@@ -109,7 +122,8 @@ function core_session_count() {
 */
 function core_session_fetch_all() {
 
-	$SQL_QUERY = "SELECT * FROM ".DB_TABLEPREFIX."_core_session \n";
+	$SQL_QUERY  = "SELECT *,AES_DECRYPT(core_session__data,'".SM_DATA_ENCRYPTION_KEY."') AS core_session__data \n";
+	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_core_session \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_tags_fetch_all()",$SQL_QUERY,$e); }
 

@@ -13,6 +13,26 @@
  * @package		sql
  * @version		5.0.0
 */
+function content_usergroup_validate( $dane )
+{
+	global $ERROR;
+
+	if ( !$dane["content_usergroup__name"] )
+	{
+		/* LANG_DEFINITION: CONTENT_USERGROUP__MISSING_NAME */
+		$ERROR["content_usergroup__name"] = __("CORE","CONTENT_USERGROUP__MISSING_NAME");
+	}
+	if( ! is_array($ERROR))
+	{
+		return true;
+	}
+}
+
+/**
+ * @category	content_usergroup
+ * @package		sql
+ * @version		5.0.0
+*/
 function content_usergroup_add( $dane ) {
 	$dane["content_usergroup__id"] = "0";
 	return content_usergroup_edit( $dane );
@@ -36,7 +56,7 @@ function content_usergroup_edit( $dane ) {
 		$dane["content_usergroup__id"] = uuid();
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
-		core_changed_add( $dane["content_usergroup__id"], "content_usergroup", $tmp_dane="", "add" );
+		core_changed_add( $dane["content_usergroup__id"], "content_usergroup", "", "add" );
 	}
 
 	$dane["record_modify_date"] = time();
