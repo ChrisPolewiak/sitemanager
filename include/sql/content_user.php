@@ -21,7 +21,7 @@ function content_user_add( $dane ) {
 /**
  * @category	content_user
  * @package		sql
- * @version		5.0.1
+ * @version		5.0.2
 */
 function content_user_edit( $dane ) {
 
@@ -32,6 +32,7 @@ function content_user_edit( $dane ) {
 		$dane["content_user__login_correct"] = $tmp_dane["content_user__login_correct"];
 		$dane["content_user__login_false"] = $tmp_dane["content_user__login_false"];
 		$dane["content_user__login_falsecount"] = $tmp_dane["content_user__login_falsecount"];
+		$dane["content_user__security_token"] = $tmp_dane["content_user__security_token"];
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
 		core_changed_add( $dane["content_user__id"], "content_user", $tmp_dane, "edit" );
@@ -41,6 +42,7 @@ function content_user_edit( $dane ) {
 		$dane["content_user__login_correct"] = 0;
 		$dane["content_user__login_false"] = 0;
 		$dane["content_user__login_falsecount"] = 0;
+		$dane["content_user__security_token"] = md5(rand()*microtime());
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
 		core_changed_add( $dane["content_user__id"], "content_user", "", "add" );
@@ -52,36 +54,16 @@ function content_user_edit( $dane ) {
 	$dane["content_user__username"] = $dane["content_user__username"] ? strtolower($dane["content_user__username"]) : $tmp_dane["content_user__username"];
 	$dane["content_user__password"] = $dane["content_user__password"] ? crypt($dane["content_user__password"]) : $tmp_dane["content_user__password"];
 
-	$dane["content_user__hide_email"] = $dane["content_user__hide_email"] ? 1 : 0;
-	$dane["content_user__confirm_regulation"] = $dane["content_user__confirm_regulation"] ? 1 : 0;
-	$dane["content_user__confirm_userdata"] = $dane["content_user__confirm_userdata"] ? 1 : 0;
-	$dane["content_user__confirm_marketing"] = $dane["content_user__confirm_marketing"] ? 1 : 0;
-
-//	sm_sql_transaction_begin();
-
-	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_user_base VALUES (\n";
+	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_user VALUES (\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__id"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__username"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__password"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__surname"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__firstname"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__email"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__hide_email"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__phone"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__company"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__postcode"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__city"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__street"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__country"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__confirm_regulation"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__confirm_userdata"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__confirm_marketing"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__status"])."',\n";
-	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__comment"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__admin_hostallow"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__login_correct"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__login_false"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__login_falsecount"])."',\n";
+	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__security_token"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_create_date"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_create_id"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_modify_date"])."',\n";
@@ -97,33 +79,25 @@ function content_user_edit( $dane ) {
 		"username"=>$dane["content_user__username"],
 	));
 	
-	foreach($dane AS $k=>$v){
-		if(preg_match("/^content_user_extra_/", $k)) {
-			$fieldnames[]="`".$k."`";
-			$fieldvalues[]="'".$v."'";
-		}
-	}
-
-	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_user_extra (\n";
-	$SQL_QUERY .= " content_user__id\n ";
-	if(is_array($fieldnames)) {
-		$SQL_QUERY .= ",";
-		$SQL_QUERY .= join(",\n ", $fieldnames)."\n";
-	}
-	$SQL_QUERY .= ")\n";
-	$SQL_QUERY .= "VALUES (\n";
-	$SQL_QUERY .= " '". sm_secure_string_sql( $dane["content_user__id"])."'\n ";
-	if(is_array($fieldnames)) {
-		$SQL_QUERY .= ",";
-		$SQL_QUERY .= join(",\n ", $fieldvalues )."\n";
-	}
-	$SQL_QUERY .= ")\n";
-
-	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_edit:extra()",$SQL_QUERY,$e); }
-
-//	sm_sql_transaction_commit();
-
 	return $dane["content_user__id"];
+}
+
+/**
+ * @category	content_user_token_change
+ * @package		sql
+ * @version		5.0.0
+*/
+function content_user_token_change( $content_user__id ) {
+
+	$content_user__security_token = md5(microtime());
+
+	$SQL_QUERY  = "UPDATE ".DB_TABLEPREFIX."_content_user SET ";
+	$SQL_QUERY .= "content_user__security_token = '".$content_user__security_token."' ";
+	$SQL_QUERY .= "WHERE content_user__id = '". sm_secure_string_sql($content_user__id)."' ";
+
+	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_token_change()",$SQL_QUERY,$e); }
+
+	return $content_user__security_token;
 }
 
 /**
@@ -195,7 +169,7 @@ function content_user_delete( $content_user__id ) {
  * @version		5.0.0
 */
 function content_user_disable( $content_user__id ) {
-	return content_user__status_change( $content_user__id, 2 );
+	return content_user_status_change( $content_user__id, 2 );
 }
 
 /**
@@ -203,13 +177,13 @@ function content_user_disable( $content_user__id ) {
  * @package		sql
  * @version		5.0.0
 */
-function content_user__status_change( $content_user__id, $content_user__status) {
+function content_user_status_change( $content_user__id, $content_user__status) {
 
 	$SQL_QUERY  = "UPDATE ".DB_TABLEPREFIX."_content_user \n";
 	$SQL_QUERY .= "SET content_user__status='". sm_secure_string_sql( $content_user__status)."' \n";
 	$SQL_QUERY .= "WHERE content_user__id='". sm_secure_string_sql( $content_user__id)."' \n";
 
-	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user__status_change()",$SQL_QUERY,$e); }
+	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_status_change()",$SQL_QUERY,$e); }
 
 	return 1;
 }
@@ -219,13 +193,14 @@ function content_user__status_change( $content_user__id, $content_user__status) 
  * @package		sql
  * @version		5.0.0
 */
-function content_user__password_change( $content_user__id, $password) {
+function content_user_password_change( $content_user__id, $password) {
 
+	$password = crypt($password);
 	$SQL_QUERY  = "UPDATE ".DB_TABLEPREFIX."_content_user \n";
-	$SQL_QUERY .= "SET content_user__password='". sm_secure_string_sql( $password)."' \n";
+	$SQL_QUERY .= "SET content_user__password='". sm_secure_string_sql($password)."' \n";
 	$SQL_QUERY .= "WHERE content_user__id='". sm_secure_string_sql( $content_user__id)."' \n";
 
-	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user__password_change()",$SQL_QUERY,$e); }
+	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_password_change()",$SQL_QUERY,$e); }
 
 	return 1;
 }
@@ -256,17 +231,10 @@ function content_user_login_status_update( $content_user__id, $status ) {
 /**
  * @category	content_user
  * @package		sql
- * @version		5.0.0
+ * @version		5.0.1
 */
 function content_user_get_by_email( $email ) {
-
-	$SQL_QUERY  = "SELECT * \n";
-	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_content_user \n";
-	$SQL_QUERY .= "WHERE content_user__email LIKE '". sm_secure_string_sql( $email)."'";
-
-	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_get_by_email()",$SQL_QUERY,$e); }
-
-	return ($result->rowCount()>0 ? $result->fetch(PDO::FETCH_ASSOC) : 0);
+	return content_user_get_by_username( $email );
 }
 
 /**
@@ -292,7 +260,7 @@ function content_user_get_by_id( $content_user__id ) {
 */
 function content_user_fetch_all() {
 
-	$SQL_QUERY  = "SELECT *, FROM_UNIXTIME(record_create_date) as record_create_date \n";
+	$SQL_QUERY  = "SELECT * \n";
 	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_content_user \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_fetch_all()",$SQL_QUERY,$e); }
@@ -309,7 +277,7 @@ function content_user_fetch_all_count() {
 
 	$SQL_QUERY  = "SELECT COUNT(*) as ile \n";
 	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_content_user \n";
-	$SQL_QUERY .= "ORDER BY content_user__surname, content_user__firstname, content_user__username";
+	$SQL_QUERY .= "ORDER BY content_user__username";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_fetch_all_count()",$SQL_QUERY,$e); }
 
@@ -324,7 +292,7 @@ function content_user_fetch_all_count() {
  * @package		sql
  * @version		5.0.0
 */
-function content_user__password_check( $password, $prev_password, $content_username ) {
+function content_user_password_check( $password, $prev_password, $content_username ) {
 	global $ERROR;
 
 	if ($password==$content_username){
@@ -335,7 +303,7 @@ function content_user__password_check( $password, $prev_password, $content_usern
 		$ERROR[] = "Hasło musi się składać z liter małych, dużych, cyfr lub znaków specjalnych. Musi zawierać jednocześnie litery oraz cyfry.";
 	}
 	if (strlen($password)<8){
-		$ERROR[] = "Hasło musi posiadać min 5 znaków";
+		$ERROR[] = "Hasło musi posiadać min 8 znaków";
 	}
 }
 
@@ -352,18 +320,45 @@ function content_user_search( $column, $search ) {
 
 	switch($column) {
 		case "name":
-			$SQL_QUERY .= "content_user__firstname LIKE '%". sm_secure_string_sql( $search)."%' OR content_user__surname LIKE '%". sm_secure_string_sql( $search)."%' \n";
-			$SQL_QUERY .= "ORDER BY content_user__surname, content_user__firstname \n";
-			break;
-		case "company":
-			$SQL_QUERY .= "content_user__company LIKE '%". sm_secure_string_sql( $search)."%' OR content_user__surname LIKE '%". sm_secure_string_sql( $search)."%' \n";
-			$SQL_QUERY .= "ORDER BY content_user__company, content_user__surname \n";
+			$SQL_QUERY .= "content_user__username LIKE '%". sm_secure_string_sql($search) ."%' \n";
+			$SQL_QUERY .= "ORDER BY content_user__username \n";
 			break;
 	}
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_search()",$SQL_QUERY,$e); }
 
 	return ($result->rowCount()>0 ? $result : 0);
+}
+
+/**
+ * @category	content_user
+ * @package		sql
+ * @version		5.0.1
+*/
+function content_user_validate( $dane ) {
+	global $ERROR;
+
+	if( !$dane["content_user__username"] ){
+		$ERROR["content_user__username"]="Podaj adres e-mail";
+	}
+	else if($tmp=content_user_get_by_username($dane["content_user__username"])) {
+		if($tmp["content_user__id"] != $dane["content_user__id"]) {
+			$ERROR["content_user__username"] = "Podany identyfikator jest już przypisany do innego użytkownika";
+		}
+	}
+	if( CheckPasswordStrength( $dane["content_user__password"] ) < 2 ||  strlen($dane["content_user__password"]) < 8 ) {
+		$ERROR["content_user__password"] = "Nieprawidłowe hasło - hasło musi się składać z liter i cyfr oraz musi zawierać min 8 znaków";
+	}
+	else if ( strtolower($dane["content_user__username"]) == strtolower($dane["content_user__password"]) ) {
+		$ERROR[] = "Hasło musi być inne niż identyfikator";
+	}
+	if ( $dane["content_user__password"] != $dane["content_user__password2"]) {
+		$ERROR["content_user__password2"] = "Hasło i jego powtórzenie muszą być identyczne";
+	}
+
+	if( ! is_array($ERROR)){
+		return true;
+	}
 }
 
 ?>

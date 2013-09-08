@@ -69,10 +69,10 @@ else {
 $BACKUP_DIR="";
 
 $SOFTWARE_INFORMATION = array(
-	"version"     => "5.05",
+	"version"     => "5.06",
 	"author"      => "Chris Polewiak",
 	"application" => "SiteManager Engine",
-	"date"        => "2013-08-04",
+	"date"        => "2013-09-08",
 );
 
 $BACKUP_DIR = $BACKUP_DIR ? $BACKUP_DIR : $ROOT_DIR."/backup";

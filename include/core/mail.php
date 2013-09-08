@@ -335,8 +335,8 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 	if($result = content_mailtemplate2content_user_fetch_by_content_mailtemplate($content_mailtemplate["content_mailtemplate__id"])) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 			$recipients_from_template[] = array(
-				"name" => $row["content_user__firstname"]." ".$row["content_user__surname"],
-				"addr" => $row["content_user__email"],
+				"name" => "",
+				"addr" => $row["content_user__username"],
 			);
 		}
 	}

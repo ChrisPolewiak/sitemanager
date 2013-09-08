@@ -87,10 +87,10 @@ if( $_SESSION["ADMIN_SESSION"]["content_user__admin_hostallow"] && !checkaccess_
 }
 
 if (isset($_REQUEST["logout"])) {
-	unset($ADMIN_SESSION);
-	$_SESSION["content_user"];
-	$_SESSION["content_useracl"];
-	$_SESSION["content_usergroup"];
+	unset($_SESSION["content_user"]);
+	unset($_SESSION["content_useracl"]);
+	unset($_SESSION["content_usergroup"]);
+	unset($_SESSION["content_access"]);
 	header("Location: /".$SM_ADMIN_PANEL."/login.php");
 	exit;
 }

@@ -145,7 +145,7 @@ function core_task_dane( $core_task__id )
 */
 function core_task_fetch_all()
 {
-	$SQL_QUERY  = "SELECT core_task.*, content_user__firstname, content_user__surname \n";
+	$SQL_QUERY  = "SELECT core_task.*, content_user__username \n";
 	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_core_task AS core_task \n";
 	$SQL_QUERY .= "LEFT JOIN ".DB_TABLEPREFIX."_content_user AS content_user ON content_user.content_user__id = core_task.record_create_id \n";
 	$SQL_QUERY .= "ORDER BY core_task.record_create_date";

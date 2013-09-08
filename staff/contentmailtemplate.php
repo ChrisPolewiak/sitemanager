@@ -272,7 +272,7 @@ $('#tabs').ready(function() {
 									<table class="table">
 										<thead>
 											<tr>
-												<th><?=__("core", "Użytkownik/E-mail")?></th>
+												<th><?=__("core", "Użytkownik")?></th>
 												<th></th>
 											</tr>
 										</thead>
@@ -284,8 +284,7 @@ $('#tabs').ready(function() {
 ?>
 											<tr>
 												<td>
-													<?=$row["content_user__surname"]?> <?=$row["content_user__firstname"]?><br>
-													<?=$row["content_user__email"]?>
+													<?=$row["content_user__username"]?><br>
 												</td>
 												<td><a href="?content_mailtemplate__id=<?=$content_mailtemplate__id?>&content_user__id=<?=$row["content_user__id"]?>&action[mail2user_del]=1"><i class="icon-delete"></i></a></td>
 											</tr>

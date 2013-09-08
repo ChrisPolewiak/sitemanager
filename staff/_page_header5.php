@@ -18,7 +18,7 @@ function confDelete() {
 				<a class="brand" href="/<?=$SM_ADMIN_PANEL?>"><img src="/staff/img/sitemanager-logo-white.png" alt="sitemanager" border=0 style="position:absolute;margin-top:-5px"></a>
 				<ul class="nav pull-right">
 					<li>
-						<a href="/<?=$SM_ADMIN_PANEL?>/self_account.php"><?=__("core", "HEADER__LOGED_USER")?>: <b><?=$_SESSION["content_user"]["content_user__firstname"]?> <?=$_SESSION["content_user"]["content_user__surname"]?></b></a>
+						<a href="/<?=$SM_ADMIN_PANEL?>/self_account.php"><?=__("core", "HEADER__LOGED_USER")?>: <b><?=$_SESSION["content_user"]["content_user__username"]?></b></a>
 					</li>
 					<li><a href="<?=$ENGINE?>/?logout=1"><i class="icon-off"></i>&nbsp;<?=__("core", "BUTTON__LOGOUT")?></a></li>
 				</ul>

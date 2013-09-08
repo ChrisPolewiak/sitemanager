@@ -59,7 +59,7 @@ if (!$core_task__id && $core_task__id!="0") {
 								<td><?=$row["core_task__function"]?></td>
 								<td><?=$row["core_task__status"]?></td>
 								<td><?=date("Y-m-d H:i:s",$row["record_create_date"])?></td>
-								<td><?=$row["content_user__firstname"]?> <?=$row["content_user__surname"]?></td>
+								<td><?=$row["content_user__username"]?></td>
 							</tr>
 <?
 		}

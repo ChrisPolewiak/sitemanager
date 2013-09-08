@@ -10,7 +10,7 @@ require "_header.php";
 				<a href="/<?=$SM_ADMIN_PANEL?>"><img src="/staff/img/sitemanager-logo-white.png" alt="sitemanager" border=0></a>
 			</div>
 			<div class="sm-admin-header-user">
-				<?=__("core", "Zalogowany użytkownik")?>: <b><?=$_SESSION["content_user"]["content_user__firstname"]?> <?=$_SESSION["content_user"]["content_user__surname"]?></b><br>
+				<?=__("core", "Zalogowany użytkownik")?>: <b><?=$_SESSION["content_user"]["content_user__username"]?></b><br>
 				<ul>
 					<li><a href="<?=$ENGINE?>/?logout=1"><?=__("core", "Wyloguj się")?></a></li>
 					<li><?=__("core", "Ustawienia konta")?>,</li>

@@ -259,7 +259,7 @@ else {
 												<td>Właściciel</td>
 												<td>
 <?
-	$content_user__name = (is_array($content_user) ? $content_user["content_user__surname"]." ".$content_user["content_user__firstname"] : "");
+	$content_user__name = (is_array($content_user) ? $content_user["content_user__username"] : "");
 ?>
 													<?=sm_inputfield(array(
 														"type"	=> "text",

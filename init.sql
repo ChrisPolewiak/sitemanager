@@ -486,29 +486,16 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_usergroupacl` (
   KEY `content_usergroupacl__id` (`content_usergroupacl__id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE IF NOT EXISTS `%prefix%_content_user_base` (
+CREATE TABLE IF NOT EXISTS `%prefix%_content_user` (
   `content_user__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content_user__username` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content_user__password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `content_user__surname` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__firstname` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__hide_email` TINYINT(1) DEFAULT NULL,
-  `content_user__phone` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__company` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__postcode` VARCHAR(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__city` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__street` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__country` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `content_user__confirm_regulation` TINYINT(4) NOT NULL,
-  `content_user__confirm_userdata` TINYINT(4) NOT NULL,
-  `content_user__confirm_marketing` TINYINT(4) NOT NULL,
   `content_user__status` TINYINT(4) DEFAULT NULL,
-  `content_user__comment` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `content_user__admin_hostallow` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `content_user__login_correct` INT(11) DEFAULT NULL,
   `content_user__login_false` INT(11) DEFAULT NULL,
   `content_user__login_falsecount` INT(11) DEFAULT NULL,
+  `content_user__security_token` CHAR(64) DEFAULT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `record_modify_date` INT(11) DEFAULT NULL,
@@ -516,15 +503,6 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_user_base` (
   PRIMARY KEY (`content_user__id`),
   UNIQUE KEY `content_user__username` (`content_user__username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
-CREATE TABLE IF NOT EXISTS `%prefix%_content_user_extra` (
-  `content_user__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  UNIQUE KEY `content_user__id` (`content_user__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
-CREATE ALGORITHM=MERGE VIEW `%prefix%_content_user` AS
-SELECT `content_user_base`.* FROM (`%prefix%_content_user_base` `content_user_base` JOIN `%prefix%_content_user_extra` `content_user_extra`)
-WHERE (`content_user_extra`.`content_user__id` = `content_user_base`.`content_user__id`);
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_config` (
   `core_config__name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,

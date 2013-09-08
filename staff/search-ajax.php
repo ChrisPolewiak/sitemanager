@@ -17,14 +17,7 @@ switch($object){
 	case "content_user":
 		if($result = content_user_search("name", $query)) {
 			while($row=$result->fetch(PDO::FETCH_ASSOC)){
-				$data[$row["content_user__id"]] = $row["content_user__firstname"]." ".$row["content_user__surname"];
-			}
-		}
-		break;
-	case "content_user-company":
-		if($result = content_user_search("company", $query)) {
-			while($row=$result->fetch(PDO::FETCH_ASSOC)){
-				$data[$row["content_user__id"]] = $row["content_user_company"];
+				$data[$row["content_user__id"]] = $row["content_user__username"];
 			}
 		}
 		break;

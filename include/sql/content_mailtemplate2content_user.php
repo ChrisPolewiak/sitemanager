@@ -75,7 +75,7 @@ function content_mailtemplate2content_user_fetch_by_content_mailtemplate( $conte
 	$SQL_QUERY .= "LEFT JOIN ".DB_TABLEPREFIX."_content_user AS user \n";
 	$SQL_QUERY .= "  ON user.content_user__id = mailaction2user.content_user__id \n";
 	$SQL_QUERY .= "WHERE content_mailtemplate__id='". sm_secure_string_sql( $content_mailtemplate__id)."' \n";
-	$SQL_QUERY .= "ORDER BY user.content_user__surname \n";
+	$SQL_QUERY .= "ORDER BY user.content_user__username \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_mailtemplate2content_user_fetch_by_content_mailtemplate()",$SQL_QUERY,$e); }
 

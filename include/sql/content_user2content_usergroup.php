@@ -58,7 +58,7 @@ function content_user2content_usergroup_fetch_by_content_usergroup( $content_use
 	$SQL_QUERY .= "     ".DB_TABLEPREFIX."_content_user AS u \n";
 	$SQL_QUERY .= "WHERE u2g.content_usergroup__id='". sm_secure_string_sql( $content_usergroup__id)."' \n";
 	$SQL_QUERY .= "  AND u.content_user__id=u2g.content_user__id \n";
-	$SQL_QUERY .= "ORDER BY u.content_user__surname, u.content_user__firstname, u.content_user__username \n";
+	$SQL_QUERY .= "ORDER BY u.content_user__username \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user2content_usergroup_fetch_by_content_usergroup()",$SQL_QUERY,$e); }
 

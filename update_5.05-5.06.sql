@@ -1,0 +1,18 @@
+DROP VIEW sm_content_user;
+DROP TABLE sm_content_user_extra;
+ALTER TABLE sm_content_user_base RENAME sm_content_user;
+ALTER TABLE sm_content_user DROP COLUMN content_user__surname;
+ALTER TABLE sm_content_user DROP COLUMN content_user__firstname;
+ALTER TABLE sm_content_user DROP COLUMN content_user__email;
+ALTER TABLE sm_content_user DROP COLUMN content_user__hide_email;
+ALTER TABLE sm_content_user DROP COLUMN content_user__phone;
+ALTER TABLE sm_content_user DROP COLUMN content_user__company;
+ALTER TABLE sm_content_user DROP COLUMN content_user__postcode;
+ALTER TABLE sm_content_user DROP COLUMN content_user__city;
+ALTER TABLE sm_content_user DROP COLUMN content_user__street;
+ALTER TABLE sm_content_user DROP COLUMN content_user__country;
+ALTER TABLE sm_content_user DROP COLUMN content_user__confirm_regulation;
+ALTER TABLE sm_content_user DROP COLUMN content_user__confirm_userdata;
+ALTER TABLE sm_content_user DROP COLUMN content_user__confirm_marketing;
+ALTER TABLE sm_content_user DROP COLUMN content_user__comment;
+ALTER TABLE sm_content_user ADD COLUMN content_user__security_token CHAR(64) AFTER content_user__login_falsecount;

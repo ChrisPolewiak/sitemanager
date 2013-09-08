@@ -174,9 +174,7 @@ $('#action-add').click(function() {
 		"function_fetch" => "content_user2content_usergroup_fetch_by_content_usergroup('$content_usergroup__id')",
 		"mainkey" => "content_user__id",
 		"columns" => array(
-			array( "title"=>__("core", "Identyfikator"), "width"=>"15%", "value"=>"%%{content_user__username}%%", "order"=>1, ),
-			array( "title"=>__("core", "Nazwisko i imię"), "width"=>"30%", "align"=>"left", "value"=>"%%{content_user__surname}%% %%{content_user__firstname}%%", "order"=>1, ),
-			array( "title"=>__("core", "Adres e-mail"), "width"=>"30%", "value"=>"%%{content_user__email}%%", "order"=>1, ),
+			array( "title"=>__("core", "Identyfikator"), "width"=>"100%", "value"=>"%%{content_user__username}%%", "order"=>1, ),
 			array( "title"=>__("core", "Status"), "width"=>"10%", "align"=>"center", "value"=>"%%{content_user__status}%%", "order"=>1, 
 				"valuesmatch"=>array( 
 					1=>"<div class=gray>".__("core", "Nowy - nieaktywny")."</div>",
