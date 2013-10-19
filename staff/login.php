@@ -3,91 +3,112 @@
 $action = $_REQUEST["action"];
 $backto = $_REQUEST["backto"];
 
-if( isset($action["login"])) {
+if( isset($action["login"]))
+{
 
-	if($_SESSION["formtoken"]["staff-login"] != $_REQUEST["formtoken"]) {
+	if($_SESSION["formtoken"]["staff-login"] != $_REQUEST["formtoken"])
 		$ERROR[] = __("core", "FORM_SECURITY_ERROR");
-	}
-	else {
+
+	else
+	{
 
 		$user_login    = trim($_POST["user_login"]);
 		$user_password = trim($_POST["user_password"]);
 
-		if ( !$user_login || !$user_password ) {
+		if ( !$user_login || !$user_password )
 			$ERROR[] = __("core", "LOGIN__EROR_MISSING_USERNAME_AND_PASSWORD");
-		}
-		else {
-			if ( ! $tmp_content_user = content_user_get_by_username( $user_login ) ) {
+
+		else
+		{
+			if ( ! $tmp_content_user = content_user_get_by_username( $user_login ) )
 				$ERROR[] = __("core", "LOGIN__ERROR_WRONG_USERNAME");
-			}
-			else {
+
+			else
+			{
 				$delta = 0;
-				if( $tmp_content_user["content_user__login_falsecount"]>=200 ) {
+				if( $tmp_content_user["content_user__login_falsecount"]>=200 )
+				{
 					$delta_req = 3*60;
 					$delta = time() - $tmp_content_user["content_user__login_false"];
 				}
-				if ($delta < $delta_req) {
+				if ($delta < $delta_req)
 					$ERROR[] = __("core", "LOGIN__ERROR_PASSWORD_LOCK", ($delta_req-$delta) );
-				}
-				else {
+
+				else
+				{
 					$haslo = crypt( $user_password, $tmp_content_user["content_user__password"] );
-					if ($haslo != $tmp_content_user["content_user__password"] ) {
+					if ($haslo != $tmp_content_user["content_user__password"] )
+					{
 						$ERROR[] = __("core", "LOGIN__ERROR_BAD_PASSWORD");
 						content_user_login_status_update( $tmp_content_user["content_user__id"], false );
 					}
-					else {
-						if( $tmp_content_user["content_user__admin_hostallow"] && !checkaccess_by_hostallow($tmp_content_user["content_user__admin_hostallow"]) ){
+					else
+					{
+						if( $tmp_content_user["content_user__admin_hostallow"] && !checkaccess_by_hostallow($tmp_content_user["content_user__admin_hostallow"]) )
 							$ERROR[] = __("core", "LOGIN__ERROR_ACCESS_DENIED_FROM_IP");
-						}
-						else {
-							if($tmp_content_user["content_user__status"]==3) {
+
+						else
+						{
+							if($tmp_content_user["content_user__status"]==3)
 								$ERROR[] = __("core", "LOGIN__ERROR_ACCOUNT_DISABLED");
-							}
-							else {
+
+							else
+							{
 								content_user_login_status_update( $tmp_content_user["content_user__id"], true );
 
 								unset($_SESSION["content_usergroup"]);
 								// lista grup uzytkownika
-								if($result = content_user2content_usergroup_fetch_by_content_user( $tmp_content_user["content_user__id"] )) {
-									while($row=$result->fetch(PDO::FETCH_ASSOC)) {
+								if($result = content_user2content_usergroup_fetch_by_content_user( $tmp_content_user["content_user__id"] ))
+								{
+									while($row=$result->fetch(PDO::FETCH_ASSOC))
 										$content_usergroup[$row["content_usergroup__id"]] = 1;
-									}
 								}
 
 								unset($content_useracl);
 								unset($_SESSION["content_useracl"]);
 								// lista dostępów dla użytkownika
-								if($result = content_useracl_fetch_by_user( $tmp_content_user["content_user__id"] ) ) {
-									while($row=$result->fetch(PDO::FETCH_ASSOC)) {
+
+								if($result = content_user2content_access_fetch_by_user( $tmp_content_user["content_user__id"] ) )
+								{
+									while($row=$result->fetch(PDO::FETCH_ASSOC))
+									{
 										$tmp = split("\|", $row["content_access__tags"]);
 										foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
 									}
 								}
 
 								// lista dostępów dla grup użytkownika
-								foreach($content_usergroup AS $k=>$v) $content_usergroup_flip[]=$k;
-									if($result = content_usergroupacl_fetch_by_usergroup( $content_usergroup_flip ) ) {
-										while($row=$result->fetch(PDO::FETCH_ASSOC)) {
-											$tmp = split("\|", $row["content_access__tags"]);
-										foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
+								foreach($content_usergroup AS $k=>$v)
+									$content_usergroup_flip[]=$k;
+
+								if($result = content_usergroup2content_access_fetch_by_usergroup( $content_usergroup_flip ) )
+								{
+									while($row=$result->fetch(PDO::FETCH_ASSOC))
+									{
+										$tmp = split("\|", $row["content_access__tags"]);
+										foreach($tmp AS $k=>$v)
+										{
+											if($v)
+												$content_useracl[$v]=1;
+										}
 									}
 								}
 
 								$_SESSION["content_useracl"] = $content_useracl;
 
-								if( ! $content_useracl["CORE_ADMINPANEL_READ"] ) {
+								if( ! $content_useracl["CORE_ADMINPANEL_READ"] )
 									$ERROR[] = __("core", "LOGIN__ERROR_ACL_MISSING");
-								}
+
 								else {
 									$_SESSION["content_user"] = $tmp_content_user;
 									$_SESSION["content_usergroup"] = $content_usergroup;
 
-									if($backto){
+									if($backto)
 										header("Location: ".base64_decode($backto));
-									}
-									else {
+
+									else
 										header("Location: /".$SM_ADMIN_PANEL."?admin_lang=$admin_lang");
-									}
+
 									exit;
 								}
 							}
@@ -173,13 +194,18 @@ form {
 			</div>
 		</div>
 		<div class="login-body">
-<? if (is_array($ERROR)) { ?>
+<?
+if (is_array($ERROR))
+{
+?>
 			<div class="login-alert">
 				<div class="alert alert-error">
 					<?=join("<br>",$GLOBALS["ERROR"])?>
 				</div>
 			</div>
-<? } ?>
+<?
+}
+?>
 
 <?/*
 			<form name=login action="<?=preg_match("/logout.*$/", $_SERVER["REQUEST_URI"]) ? "/".$SM_ADMIN_PANEL."/" : $_SERVER["REQUEST_URI"]?>" method=post>
@@ -264,6 +290,4 @@ form {
 			<br>
 		</div>
 	</div>
-<?
-include "_footer5.php";
-?>
+<? include "_footer5.php"; ?>

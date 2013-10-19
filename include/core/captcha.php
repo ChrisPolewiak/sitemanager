@@ -2,19 +2,19 @@
 
 require $INCLUDE_DIR."/core/secureimage.php";
 
-$w = isset($_REQUEST["w"]) ? $_REQUEST["w"] : 50;
-$w = $w<=100 ? $w : 100;
+$w = isset($_REQUEST["w"]) ? $_REQUEST["w"] : 0;
+$w = $w<=300 ? $w : 300;
 
-$h = isset($_REQUEST["h"]) ? $_REQUEST["h"] : 0;
-$h = $h<=300 ? $h : 300;
+$h = isset($_REQUEST["h"]) ? $_REQUEST["h"] : 50;
+$h = $h<=100 ? $h : 100;
 
 $img = new Securimage();
 $img->case_sensitive  = false;
-$img->image_height    = $w ? $w : 50;
-$img->image_width     = $h ? $h : (int)($img->image_height * 2.875);
+$img->image_width     = $w ? $w : 50;
+$img->image_height    = $h ? $h : (int)($img->image_height * 2.875);
 $img->charset         = "ABCDEFGHIJKLMNOPQRSTUWVXYZ";
 
-$img->perturbation    = 0.9;
+$img->perturbation    = 0.5;
 $img->image_bg_color  = new Securimage_Color("#ffffff");
 $img->text_color      = new Securimage_Color(rand(0, 128),rand(0, 128),rand(0, 128));
 $img->num_lines       = 0;

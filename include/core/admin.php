@@ -23,16 +23,16 @@ function sm_core_content_user_accesscheck( $accesstag, $error=false ) {
 		ob_clean();
 		$row=content_access_get_by_sysname($accesstag);
 		$msg  = "<div class=\"error-message\">";
-		$msg .= "<div class=\"error-message-title\">".__("core", "Brak dostępu")."</div>\n";
+		$msg .= "<div class=\"error-message-title\">Brak dostępu</div>\n";
 		$msg .= "<div class=\"error-message-body\">\n";
-		$msg .= __("core", "Dostęp do tej części systemu wymaga podniesienia uprawnień.")."<br>\n";
-		$msg .= __("core", "Wymagany poziom dostępu").":<br>\n";
+		$msg .= "Dostęp do tej części systemu wymaga podniesienia uprawnień.<br>\n";
+		$msg .= "Wymagany poziom dostępu:<br>\n";
 		$msg .= "- <b>$accesstag</b>";
 		if($row) $msg .= " - ".$row["content_access__name"]."<br>\n";
 		$msg .= "</div>\n";
-		include $ROOT_DIR."/staff/_header.php";
+		include $ROOT_DIR."/staff/_page_header5.php";
 		echo $msg;
-		include $ROOT_DIR."/staff/_footer.php";
+		include $ROOT_DIR."/staff/_page_footer5.php";
 		exit;
 	}
 	else
@@ -60,7 +60,7 @@ function sm_core_auth__create_sessiondata( $content_user__id ) {
 
 	// lista dostępów dla użytkownika
 	unset($content_useracl);
-	if($result = content_useracl_fetch_by_user( $content_user__id ) ) {
+	if($result = content_user2content_access_fetch_by_user( $content_user__id ) ) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 			$tmp = split("\|", $row["content_access__tags"]);
 			foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
@@ -68,7 +68,7 @@ function sm_core_auth__create_sessiondata( $content_user__id ) {
 	}
 	// lista dostępów dla grup użytkownika
 	foreach($content_usergroup AS $k=>$v) $content_usergroup_flip[]=$k;
-	if($result = content_usergroupacl_fetch_by_usergroup( $content_usergroup_flip ) ) {
+	if($result = content_usergroup2content_access_fetch_by_usergroup( $content_usergroup_flip ) ) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 			$tmp = split("\|", $row["content_access__tags"]);
 			foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
@@ -104,7 +104,7 @@ function sm_content_user_access_prepare() {
 		// lista dostępów dla użytkownika
 		unset($content_useracl);
 		unset($content_access);
-		if($result = content_useracl_fetch_by_user( $_SESSION["content_user"]["content_user__id"] ) ) {
+		if($result = content_user2content_access_fetch_by_user( $_SESSION["content_user"]["content_user__id"] ) ) {
 			while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 				$content_access[$row["id_content_access"]]=1;
 				$tmp = split("\|", $row["content_access__tags"]);
@@ -116,7 +116,7 @@ function sm_content_user_access_prepare() {
 			$content_usergroup_flip[]=$k;
 
 		// lista dostępów dla grup użytkownika
-		if($result = content_usergroupacl_fetch_by_usergroup( $content_usergroup_flip ) ) {
+		if($result = content_usergroup2content_access_fetch_by_usergroup( $content_usergroup_flip ) ) {
 			while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 				$content_access[$row["id_content_access"]]=1;
 				$tmp = split("\|", $row["content_access__tags"]);

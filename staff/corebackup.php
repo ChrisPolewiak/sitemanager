@@ -5,13 +5,14 @@ sm_core_content_user_accesscheck($access_type_id."_READ",1);
 $dane = $_REQUEST["dane"];
 $corebackup = $_REQUEST["corebackup"];
 
-if ( isset($action["backup"]) ) {
+if ( isset($action["backup"]) )
+{
+	if($corebackup["backup_database"] || $corebackup["backup_sqldata"] || $corebackup["backup_templates"])
+	{
+		set_time_limit(3600);
 
-	if($corebackup["backup_database"] || $corebackup["backup_sqldata"] || $corebackup["backup_templates"]) {
-
-	set_time_limit(3600);
-
-		if(!is_dir($BACKUP_DIR)){	
+		if(!is_dir($BACKUP_DIR))
+		{
 			mkdir($BACKUP_DIR);
 			chgrp($BACKUP_DIR, $SET_FILES_GROUP);
 			chmod($BACKUP_DIR, 0770);
@@ -21,31 +22,36 @@ if ( isset($action["backup"]) ) {
 			chgrp($BACKUP_DIR."/.htaccess", $SET_FILES_GROUP);
 			chmod($BACKUP_DIR."/.htaccess", 0660);
 		}
+
 		$timestamp = time();
-		if($corebackup["backup_database"]) {
+		if($corebackup["backup_database"])
+		{
 			$sql_file="$BACKUP_DIR/backup-".$timestamp."-database.tar.gz";
 			exec("`which mysqldump` -u$DB_USER -p$DB_PASS $DB_NAME -h$DB_SERVER --add-drop-table | gzip -9 > $sql_file");
 			echo "$sql_file<br>";
 		}
-		if($corebackup["backup_sqldata"]) {
+
+		if($corebackup["backup_sqldata"])
+		{
 			$cfl_file="$BACKUP_DIR/backup-".$timestamp."-sqldata.tar.gz";
 			exec("tar czf $cfl_file $ROOT_DIR/html/sqldata");
 			echo "$cfl_file<br>";
 		}
-		if($corebackup["backup_templates"]) {
+
+		if($corebackup["backup_templates"])
+		{
 			$tpl_file="$BACKUP_DIR/backup-".$timestamp."-templates.tar.gz";
 			exec("tar czf $tpl_file $ROOT_DIR/html/css $ROOT_DIR/html/img $ROOT_DIR/html/js $ROOT_DIR/html/pages");
 			echo "$tpl_file<br>";
 		}
 	}
 }
-if ( isset($action["delete"]) ) {
+if ( isset($action["delete"]) )
+{
 	$filepath = $BACKUP_DIR."/backup-".urlencode($timestamp)."-".urlencode($type).".tar.gz";
-	if(is_file($filepath)) {
+	if(is_file($filepath))
 		unlink($filepath);
-	}
 }
-
 
 include "_page_header5.php";
 
@@ -72,17 +78,28 @@ $dane = htmlentitiesall($dane);
 <?
 $d = dir($BACKUP_DIR);
 unset($backupfiles);
-while (false !== ($entry = $d->read())) {
-	if($entry!="." && $entry!=".." && $entry!=".htaccess") {
-		if(preg_match("/backup-(\d+)-(\w+)\..+/",$entry,$tmp)){
+while (false !== ($entry = $d->read()))
+{
+	if($entry!="." && $entry!=".." && $entry!=".htaccess")
+	{
+		if(preg_match("/backup-(\d+)-(\w+)\..+/",$entry,$tmp))
+		{
 			$time = $tmp[1];
 			$type = $tmp[2];
 			$file = $entry;
-			switch($type) {
-				case "templates": $type_name = "Szablony"; break;
-				case "database": $type_name = "Baza danych"; break;
-				case "sqldata": $type_name = "Pliki"; break;
+			switch($type)
+			{
+				case "templates":
+					$type_name = "Szablony";
+					break;
+				case "database":
+					$type_name = "Baza danych";
+					break;
+				case "sqldata":
+					$type_name = "Pliki";
+					break;
 			}
+
 			$filesize = filesize($BACKUP_DIR."/".$entry);
 
 			$backupfiles[$entry]=array(
@@ -95,9 +112,11 @@ while (false !== ($entry = $d->read())) {
 		}
 	}
 }
-if(is_array($backupfiles)) {
+if(is_array($backupfiles))
+{
 	krsort($backupfiles);
-	foreach($backupfiles AS $k=>$v) {
+	foreach($backupfiles AS $k=>$v)
+	{
 ?>
 									<tr>
 										<td><b><?=$v["file"]?></b></td>
@@ -172,11 +191,16 @@ if(is_array($backupfiles)) {
 							));?>
 						</fieldset>
 
-<? if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
+<?
+if (sm_core_content_user_accesscheck($access_type_id."_WRITE"))
+{
+?>
 						<div class="btn-toolbar">
 							<a class="btn btn-mini btn-info" id="action-backup"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BACKUP")?></a>
 						</div>
-<? } ?>
+<?
+}
+?>
 <script>
 $('#action-backup').click(function() {
 	$('#sm-form').append('<input type="hidden" name="action[backup]" value=1>');

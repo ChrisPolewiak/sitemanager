@@ -20,23 +20,40 @@ $CMSCRONTAB[] = array(
 */
 function cmscore_coretask_process() {
 
-	if($result = coretask_fetch_waiting( $limit=5 ) ) {
+	$start_time = microtime(true);
+
+	if($result = core_task_fetch_waiting( $limit=50 ) ) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)){
-			$_params = unserialize($row["coretask__params"]);
-			$str  = " \$return = ".$row["coretask__function"]."(";
+
+			$current_time = microtime(true);
+
+			if( ($current_time - $start_time) > 60) {
+				// finish if process takes longer than a minute
+				return array(1,"");
+			}
+
+			$start = microtime(true);
+
+			$_params = json_decode($row["core_task__params"], true);
+
+			$str  = " \$return = ".$row["core_task__function"]."(";
 			$str2="";
 			foreach($_params AS $k=>$v){
 				$str2 .= $str2 ? "," : "";
 				$str2 .= " \$$k=\"$v\"";
 			}
 			$str .= $str2;
-			$str .= ");\n";
-			echo $str;
-			coretask_result( $row["id_coretask"], $return );
-			
+			$str .= " );\n";
+			eval ( $str );
+
+			$core_task__execution_time = microtime(true) - $start;
+			echo "execution: $core_task__execution_time \n";
+
+			core_task_result( $row["core_task__id"], $return, $core_task__execution_time );
+
 		}
 	}
-        return array(1,"");
+	return array(1,"");
 }
 
 $CMSCRONTAB[] = array(

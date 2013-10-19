@@ -39,6 +39,7 @@ if(is_array($SM_CONFIG)) {
 	if ($SM_CONFIG["engine"]["cache_image_timeout"]) {
 		$CACHE_IMAGE_TIMEOUT = $SM_CONFIG["engine"]["cache_image_timeout"];
 	}
+	define("CACHE_IMAGE_TIMEOUT", $CACHE_IMAGE_TIMEOUT);
 
 	define("SM_DATA_ENCRYPTION_KEY", $SM_CONFIG["engine"]["data_encryption_key"]);
 	define("SM_DATA_ENCRYPTION_CIPHER", MCRYPT_RIJNDAEL_256);
@@ -69,10 +70,10 @@ else {
 $BACKUP_DIR="";
 
 $SOFTWARE_INFORMATION = array(
-	"version"     => "5.06",
+	"version"     => "5.08",
 	"author"      => "Chris Polewiak",
 	"application" => "SiteManager Engine",
-	"date"        => "2013-09-08",
+	"date"        => "2013-10-19",
 );
 
 $BACKUP_DIR = $BACKUP_DIR ? $BACKUP_DIR : $ROOT_DIR."/backup";

@@ -5,20 +5,22 @@ sm_core_content_user_accesscheck($access_type_id."_READ",1);
 $dane = $_REQUEST["dane"];
 $access_type_id = $_REQUEST["access_type_id"];
 
-if(!is_array($ERROR)) {
-	if ( isset($action["edit"]) ) {
+if(!is_array($ERROR))
+{
+	if ( isset($action["edit"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
-		foreach($dane AS $k=>$v){
+		foreach($dane AS $k=>$v)
 			core_config_edit( array("config_name"=>$k, "config_value"=>$v) );
-		}
 	}
 }
 
 include "_page_header5.php";
-if($result=core_config_fetch_all()){
-	while($row=$result->fetch(PDO::FETCH_ASSOC)){
+
+if($result=core_config_fetch_all())
+{
+	while($row=$result->fetch(PDO::FETCH_ASSOC))
 		$dane[ $row["config_name"] ] = $row["config_value"];
-	}
 }
 
 $dane = htmlentitiesall($dane);
@@ -202,11 +204,16 @@ $('#tabs').ready(function() {
 							</div>
 						</div>
 
-<? if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
+<?
+if (sm_core_content_user_accesscheck($access_type_id."_WRITE"))
+{
+?>
 						<div class="btn-toolbar">
 							<a class="btn btn-mini btn-info" id="action-edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__SAVE")?></a>
 						</div>
-<? } ?>
+<?
+}
+?>
 <script>
 $('#action-edit').click(function() {
 	$('#sm-form').append('<input type="hidden" name="action[edit]" value=1>');

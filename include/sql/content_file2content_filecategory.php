@@ -11,14 +11,16 @@
 /**
  * @category	content_file2content_filecategory
  * @package		sql
- * @version		5.0.0
+ * @version		5.1.0
 */
-function content_file2content_filecategory_edit( $content_file__id, $content_filecategory__id ) {
+function content_file2content_filecategory_edit( $content_file2content_filecategory__id, $content_file__id, $content_filecategory__id ) {
 
 	$dane["record_create_date"] = time();
 	$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
+	$content_file2content_filecategory__id = $content_file2content_filecategory__id ? $content_file2content_filecategory__id : uuid();
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_file2content_filecategory VALUES (\n";
+	$SQL_QUERY .= "'". sm_secure_string_sql( $content_file2content_filecategory__id)."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $content_file__id)."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $content_filecategory__id)."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_create_date"])."',\n";
@@ -49,13 +51,12 @@ function content_file2content_filecategory_fetch_by_content_filecategory( $conte
 /**
  * @category	content_file2content_filecategory
  * @package		sql
- * @version		5.0.0
+ * @version		5.1.0
 */
-function content_file2content_filecategory_delete( $content_file__id, $content_filecategory__id ) {
+function content_file2content_filecategory_delete( $content_file2content_filecategory__id ) {
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_file2content_filecategory \n";
-	$SQL_QUERY .= "WHERE content_file__id='". sm_secure_string_sql( $content_file__id)."' \n";
-	$SQL_QUERY .= "  AND content_filecategory__id='". sm_secure_string_sql( $content_filecategory__id)."' \n";
+	$SQL_QUERY .= "WHERE content_file2content_filecategory__id='". sm_secure_string_sql( $content_file2content_filecategory__id)."' \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_file2content_filecategory_delete()",$SQL_QUERY,$e); }
 

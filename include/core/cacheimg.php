@@ -1,102 +1,109 @@
 <?
 
-$datastore = "content_file";
+function content_cache_generator( $datastore, $id, $width, $height, $showimg=false ) {
+	global $CACHEIMG; 
 
-if (preg_match("/cacheimg\/(.+)/", $page, $tmp)) {
-	$tmp = split("\/", $tmp[1]);
+	$debug=false;
 
-	foreach($tmp AS $param) {
-		if(preg_match("/^id=(.+)/", $param, $value)) {
-			$id = $value[1];
-		}
-		if(preg_match("/^w=(.+)/", $param, $value)) {
-			$width = $value[1];
-		}
-		if(preg_match("/^h=(.+)/", $param, $value)) {
-			$height = $value[1];
-		}
-		if(preg_match("/^ext.(.+)/", $param, $value)) {
-			$extension = $value[1];
-		}
-		if(preg_match("/^d.(.+)/", $param, $value)) {
-			$datastore = $value[1];
-		}
-		if(preg_match("/^t.(.+)/", $param, $value)) {
-			$datatype = $value[1];
-		}
-	}
-}
+$debug ? $start = microtime(true) : "";
 
-if ( $cache = content_cache_get( $datastore, $id, $width, $height ) ) {
-	$image = new Imagick();
+	if ($datastore != "content_file")
+	{
 
-	switch($cache["content_cache__encode"]) {
-		case "base64":
-			$filedata = base64_decode( $cache["content_cache__data"] );
-			break;
-	}
-	$image = new Imagick();
-	$image->ReadImageBlob( $filedata );
-	header("Content-type: ".$cache["content_cache__contenttype"]);
-	echo $image;
-	
-	content_cache_clear();
-	exit;
-}
-else {
-	if ($datastore != "content_file") {
 		$image_filepath = $CACHEIMG[ strtolower($datastore) ]["path"];
 		$image_filedata = $CACHEIMG[ strtolower($datastore) ]["data"];
 		$image_function = $CACHEIMG[ strtolower($datastore) ]["function"];
 
+echo $debug ? microtime(true)-$start."\tstart<br>\n" : "";
+
 		eval(" \$dane = $image_function( '$id' ); ");
 
-		if($CACHEIMG[ strtolower($datastore) ]["type"] == "file") {
+		if (! $dane)
+			return 0;
+ echo $debug ? microtime(true)-$start."\tget data from sql to resize<br>\n" : "";
+
+		if($CACHEIMG[ strtolower($datastore) ]["type"] == "file")
+		{
 			$filedata = file_get_contents( $dane[ $image_filepath ] );
 			$size = GetImageSize($dane[ $image_filepath ]);
 			$mimetype = $size["mime"];
 		}
-		else {
+		else
+		{
 			$filedata = $dane[ $image_filedata ];
 		}
+
+ echo $debug ? microtime(true)-$start."\tget filedata (datastore)<br>\n" : "";
+
 	}
-	else {
-		if ($dane = content_file_dane( $id )) {
+	else
+	{
+
+		if ($dane = content_file_dane( $id ))
+		{
 			$filedata = base64_decode($dane["content_file__filedata"]);
 			$mimetype = $dane["content_file__filetype"];
 		}
+
+ echo $debug ? microtime(true)-$start."\tget filedata (content_file_dane)<br>\n" : "";
+
 	}
 
-	if($filedata) {
+	if($filedata)
+	{
 		$image = new Imagick();
 		$image->ReadImageBlob( $filedata );
+
+ echo $debug ? microtime(true)-$start."\tReadImageBlob<br>\n" : "";
+
 		$geo=$image->getImageGeometry();
 
-		if ($width && !$height || !$width && $height) {
+ echo $debug ? microtime(true)-$start."\tgetImageGeometry<br>\n" : "";
+
+		if ($width && !$height || !$width && $height)
+		{
 			// Thumbnail
 			$w = $width ? $width : $height;
 			$h = $height ? $height : $width;
 			$image->cropThumbnailImage ( $w, $h );
+
+ echo $debug ? microtime(true)-$start."\tcropThumbnailImage<br>\n" : "";
+
 		}
-		elseif($width && $height) {
+		elseif($width && $height)
+		{
 			// scale
 			$image->scaleImage( $width, $height, TRUE );
+
+ echo $debug ? microtime(true)-$start."\tscaleImage<br>\n" : "";
+
 		}
-		header("Content-type: ".$dane["content_file__filetype"]);
-		echo $image;
+
+		if($showimg)
+		{
+			header("Content-type: ".$dane["content_file__filetype"]);
+			echo $image;
+		}
 
 		if($width || $height) {
+
+ echo $debug ? microtime(true)-$start."\tpre-content_cache_add<br>\n" : "";
+
 			$cache=array(
 				"content_cache__table" => $datastore,
 				"content_cache__tableid" => $id,
 				"content_cache__w" => $width,
 				"content_cache__h" => $height,
-				"content_cache__ttl" => 84600,
+				"content_cache__ttl" => CACHE_IMAGE_TIMEOUT,
 				"content_cache__contenttype" => $mimetype,
 				"content_cache__data" => $image,
 			);
 			content_cache_add( $cache );
+
+ echo $debug ? microtime(true)-$start."\tcontent_cache_add<br>\n" : "";
+
 		}
 	}
 }
+
 ?>

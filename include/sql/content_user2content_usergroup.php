@@ -11,14 +11,16 @@
 /**
  * @category	content_user2content_usergroup
  * @package		sql
- * @version		5.0.0
+ * @version		5.1.0
 */
-function content_user2content_usergroup_edit( $content_user__id, $content_usergroup__id ) {
+function content_user2content_usergroup_edit( $content_user2content_usergroup__id, $content_user__id, $content_usergroup__id ) {
 
 	$dane["record_create_date"] = time();
 	$dane["record_create_id"] = $_SESSION["content_user"]["content_user__id"];
+	$content_user2content_usergroup__id = $content_user2content_usergroup__id ? $content_user2content_usergroup__id : uuid();
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_user2content_usergroup VALUES (\n";
+	$SQL_QUERY .= "'". sm_secure_string_sql( $content_user2content_usergroup__id)."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $content_user__id)."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $content_usergroup__id)."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_create_date"])."',\n";
@@ -37,8 +39,9 @@ function content_user2content_usergroup_edit( $content_user__id, $content_usergr
 */
 function content_user2content_usergroup_fetch_by_content_user( $content_user__id ) {
 
-	$SQL_QUERY  = "SELECT * \n";
-	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_content_user2content_usergroup \n";
+	$SQL_QUERY  = "SELECT c.*, g.content_usergroup__name \n";
+	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_content_user2content_usergroup AS c \n";
+	$SQL_QUERY .= "LEFT JOIN ".DB_TABLEPREFIX."_content_usergroup AS g ON c.content_usergroup__id=g.content_usergroup__id \n";
 	$SQL_QUERY .= "WHERE content_user__id='". sm_secure_string_sql( $content_user__id)."' \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user2content_usergroup_fetch_by_content_user()",$SQL_QUERY,$e); }
@@ -68,13 +71,12 @@ function content_user2content_usergroup_fetch_by_content_usergroup( $content_use
 /**
  * @category	content_user2content_usergroup
  * @package		sql
- * @version		5.0.0
+ * @version		5.1.0
 */
-function content_user2content_usergroup_delete( $content_user__id, $content_usergroup__id ) {
+function content_user2content_usergroup_delete( $content_user2content_usergroup__id ) {
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_user2content_usergroup \n";
-	$SQL_QUERY .= "WHERE content_user__id='". sm_secure_string_sql( $content_user__id)."' \n";
-	$SQL_QUERY .= "  AND content_usergroup__id='". sm_secure_string_sql( $content_usergroup__id)."' \n";
+	$SQL_QUERY .= "WHERE content_user2content_usergroup__id='". sm_secure_string_sql( $content_user2content_usergroup__id)."' \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user2content_usergroup_delete()",$SQL_QUERY,$e); }
 

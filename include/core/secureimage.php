@@ -204,7 +204,7 @@ class Securimage
      * The length of the captcha code
      * @var int
      */
-    public $code_length    = 6;
+    public $code_length    = 8;
     /**
      * Whether the captcha should be case sensitive (not recommended, use only for maximum protection)
      * @var bool
@@ -248,7 +248,7 @@ class Securimage
      * The level of noise (random dots) to place on the image, 0-10
      * @var int
      */
-    public $noise_level  = 0;
+    public $noise_level  = 2;
     
     /**
      * The signature text to draw on the bottom corner of the image
@@ -259,7 +259,7 @@ class Securimage
      * The color of the signature text
      * @var Securimage_Color
      */
-    public $signature_color = '#707070';
+    public $signature_color = '#000000';
     /**
      * The path to the ttf font file to use for the signature text, defaults to $ttf_file (AHGBold.ttf)
      * @var string
@@ -713,7 +713,7 @@ class Securimage
             imagestring($this->im, 4, 10, ($this->image_height / 2) - 5, 'Failed to load TTF font file!', $this->gdtextcolor);
         } else {
             if ($this->perturbation > 0) {
-                $font_size = $height2 * .4;
+                $font_size = $height2 * .5;
                 $bb = imageftbbox($font_size, 0, $this->ttf_file, $this->code_display);
                 $tx = $bb[4] - $bb[0];
                 $ty = $bb[5] - $bb[1];

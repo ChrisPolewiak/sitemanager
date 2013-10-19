@@ -1,9 +1,12 @@
 <?
 
-if( is_file("../config.ini.php" ) ) {
+if( is_file("../config.ini.php" ) )
+{
 #	header("Location: /");
 #	exit;
 }
+
+$debug_mode=false;
 
 session_start();
 
@@ -22,8 +25,10 @@ require "../include/core/phpextended.php";
 
 $_SESSION["step"]["index"] = 1;
 
-if(isset($_POST["action"]["next"])) {
-	switch( $_POST["dane"]["step"] ) {
+if(isset($_POST["action"]["next"]))
+{
+	switch( $_POST["dane"]["step"] )
+	{
 		case "index":
 			$next_step = "db";
 			$_SESSION["step"][$next_step] = 1;
@@ -34,37 +39,35 @@ if(isset($_POST["action"]["next"])) {
 		case "db":
 			$dane = $_POST["dane"];
 					
-			if( ! $dane["database_engine"]) {
+			if( ! $dane["database_engine"])
 				$ERROR[] = "Podaj typ serwera baz danych";
-			}
-			if( ! $dane["database_dbserver"]) {
-				$ERROR[] = "Podaj adres serwera baz danych";
-			}
-			if( ! $dane["database_dbuser"]) {
-				$ERROR[] = "Podaj nazwę użytkownika do bazy danych";
-			}
-			if( ! $dane["database_dbpass"]) {
-				$ERROR[] = "Podaj hasło dla użytkownika do bazy danych";
-			}
-			if( ! $dane["database_dbprefix"]) {
-				$ERROR[] = "Podaj prefix dla tabel";
-			}
-			elseif( !preg_match("/^([a-z]{1})([a-z\d]{1,4})$/", strtolower($dane["database_dbprefix"]), $tmp) ) {
-				$ERROR[] = "prefix może składać się wyłacznie z liter i cyfr mi mieć od 2 do 5 znaków";
-			}
 
-			if( $dane["database_dbserver"] && $dane["database_dbuser"] && $dane["database_dbpass"] ) {
-				try {
-					$SM_PDO = new PDO($dane["database_engine"] .":dbname=". $dane["database_dbname"] .";host=". $dane["database_dbserver"], $dane["database_dbuser"], $dane["database_dbpass"]);
-				}
-				catch(PDOException $e) {
-					$ERROR[] = $e->getMessage();
-				}
-				if( !is_array($ERROR)) {
+			if( ! $dane["database_dbserver"])
+				$ERROR[] = "Podaj adres serwera baz danych";
+
+			if( ! $dane["database_dbuser"])
+				$ERROR[] = "Podaj nazwę użytkownika do bazy danych";
+
+			if( ! $dane["database_dbpass"])
+				$ERROR[] = "Podaj hasło dla użytkownika do bazy danych";
+
+			if( ! $dane["database_dbprefix"])
+				$ERROR[] = "Podaj prefix dla tabel";
+
+			elseif( !preg_match("/^([a-z]{1})([a-z\d]{1,4})$/", strtolower($dane["database_dbprefix"]), $tmp) )
+				$ERROR[] = "prefix może składać się wyłacznie z liter i cyfr mi mieć od 2 do 5 znaków";
+
+			if( $dane["database_dbserver"] && $dane["database_dbuser"] && $dane["database_dbpass"] )
+			{
+				try { $GLOBALS["SM_PDO"] = new PDO($dane["database_engine"] .":dbname=". $dane["database_dbname"] .";host=". $dane["database_dbserver"], $dane["database_dbuser"], $dane["database_dbpass"]); }
+				catch(PDOException $e) { $ERROR[] = $e->getMessage(); }
+
+				if( !is_array($ERROR))
+				{
 					$SQL = "SELECT * FROM ".$dane["database_dbprefix"]."_core_session LIMIT 1";
-					if ( $SM_PDO->query( $SQL ) ) {
+					if ( $GLOBALS["SM_PDO"]->query( $SQL ) )
 						$ERROR[] = "W bazie znajduje się już instancja SiteManager. Zmień prefix dla tabel, by nie nadpisać istniejących danych.";
-					}
+
 					else {
 						$_SESSION["config"][ $_POST["dane"]["step"] ] = $dane;
 						$next_step = "app";
@@ -80,16 +83,17 @@ if(isset($_POST["action"]["next"])) {
 		case "app":
 			$dane = $_POST["dane"];
 					
-			if( ! $dane["engine_cacheimagetimeout"]) {
+			if( ! $dane["engine_cacheimagetimeout"])
 				$ERROR[] = "Podaj domyślny czas przechowywania zdjęć w cache";
-			}
-			if( strlen($dane["site_adminpanel"])<5 ) {
+
+			if( strlen($dane["site_adminpanel"])<5 )
+			{
 				$ERROR[] = "Za krótki adres panelu zarządzania";
 				$dane["site_adminpanel"]="";
 			}
-			
 
-			if(!is_array($ERROR)) {
+			if(!is_array($ERROR))
+			{
 				$_SESSION["config"][ $_POST["dane"]["step"] ] = $dane;
 				$next_step = "access";
 				$_SESSION["step"][$next_step] = 1;
@@ -101,15 +105,14 @@ if(isset($_POST["action"]["next"])) {
 		case "access":
 			$dane = $_POST["dane"];
 					
-			if( strlen($dane["access_username"])<5 ) {
+			if( strlen($dane["access_username"])<5 )
 				$ERROR[] = "Identyfikat administratora musi zawierać min 5 znaków";
-			}
 
-			if( !preg_match("/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}/", $dane["access_password"]) ) {
+			if( !preg_match("/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}/", $dane["access_password"]) )
 				$ERROR[] = "Hasło musi spełniać wymogi złożoności. Musi zawierać minimum 5 znaków i składać się z cyfr, liter małych oraz dużych";
-			}
 
-			if(!is_array($ERROR)) {
+			if(!is_array($ERROR))
+			{
 				$_SESSION["config"][ $_POST["dane"]["step"] ] = $dane;
 				$next_step = "confirm";
 				$_SESSION["step"][$next_step] = 1;
@@ -121,61 +124,43 @@ if(isset($_POST["action"]["next"])) {
 		case "confirm":
 			if(!is_array($ERROR)) {
 
-				try {
-					$SM_PDO = new PDO( $_SESSION["config"]["db"]["database_engine"] .":dbname=". $_SESSION["config"]["db"]["database_dbname"] .";host=". $_SESSION["config"]["db"]["database_dbserver"], $_SESSION["config"]["db"]["database_dbuser"], $_SESSION["config"]["db"]["database_dbpass"]);
-				}
-				catch(PDOException $e) {
-					echo $e->getMessage();
-					exit;
-				}
-				$sqlfile = file("../init.sql") or die("Missing init.sql file");
+				try { $GLOBALS["SM_PDO"] = new PDO( $_SESSION["config"]["db"]["database_engine"] .":dbname=". $_SESSION["config"]["db"]["database_dbname"] .";host=". $_SESSION["config"]["db"]["database_dbserver"], $_SESSION["config"]["db"]["database_dbuser"], $_SESSION["config"]["db"]["database_dbpass"]); }
+				catch(PDOException $e) { echo $e->getMessage(); exit; }
+
+				$sqlfile = file("../include/install/mysql-init.sql") or die("Missing include/install/mysql-init.sql file");
 				
 				$sqlquery = "";
-				foreach( $sqlfile AS $line ) {
-				$line = trim($line);
-				$sqlquery .= $line . "\n";
-				if(preg_match( "/;$/", $line)) {
-# echo "<pre>$sqlquery</pre>";
+				foreach( $sqlfile AS $line ) 
+				{
+					$line = trim($line);
+					$sqlquery .= $line . "\n";
+					if(preg_match( "/;$/", $line)) 
+					{
 						$sqlquery = preg_replace("/(%prefix%)/is", $_SESSION["config"]["db"]["database_dbprefix"], $sqlquery);
-						$SM_PDO->query( $sqlquery );
+						try { $GLOBALS["SM_PDO"]->query( $sqlquery ); }
+						catch(PDOException $e) { sqlerr("install:import-init.sql()",$sqlquery,$e); }
 						$sqlquery = "";
 					}
 				}
 
 				$content_user__id = uuid();
-				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_user_base VALUES ( \n";
+				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_user VALUES ( \n";
 				$sqlquery .= " '".$content_user__id."', \n";
 				$sqlquery .= " '".$_SESSION["config"]["access"]["access_username"]."', \n";
 				$sqlquery .= " '".crypt($_SESSION["config"]["access"]["access_password"])."', \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " 'Administrator', \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " 0, \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " '', \n";
 				$sqlquery .= " 1, \n";
-				$sqlquery .= " 1, \n";
+				$sqlquery .= " NULL, \n";
 				$sqlquery .= " 0, \n";
 				$sqlquery .= " 0, \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " '', \n";
-				$sqlquery .= " NULL, \n";
-				$sqlquery .= " NULL, \n";
+				$sqlquery .= " 0, \n";
 				$sqlquery .= " 0, \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."', \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				$SM_PDO->query( $sqlquery );
+				try { $GLOBALS["SM_PDO"]->query( $sqlquery ); } 
+				catch(PDOException $e) { sqlerr("install:crreate_admin()",$sqlquery,$e); }
 
-				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_user_extra VALUES ('".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:1()",$sqlquery,$e); }
 				$content_access__id1 = uuid();
 				
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_access VALUES ( \n";
@@ -188,8 +173,10 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".$content_user__id."', \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:2()",$sqlquery,$e); }
+if($debug_mode) echo "<pre>$sqlquery</pre>";
+ob_flush();
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); }
+				catch(PDOException $e) { sqlerr("install:2()",$sqlquery,$e); }
 
 				$content_access__id2 = uuid();
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_access VALUES ( \n";
@@ -202,8 +189,10 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".$content_user__id."', \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:3()",$sqlquery,$e); }
+if($debug_mode) echo "<pre>$sqlquery</pre>";
+ob_flush();
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); }
+				catch(PDOException $e) { sqlerr("install:3()",$sqlquery,$e); }
 
 				$content_usergroup__id1 = uuid();
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroup VALUES ( \n";
@@ -213,8 +202,10 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".$content_user__id."', \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:4()",$sqlquery,$e); }
+if($debug_mode) echo "<pre>$sqlquery</pre>";
+ob_flush();
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); }
+				catch(PDOException $e) { sqlerr("install:4()",$sqlquery,$e); }
 
 				$content_usergroup__id2 = uuid();
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroup VALUES ( \n";
@@ -224,42 +215,55 @@ if(isset($_POST["action"]["next"])) {
 				$sqlquery .= " '".$content_user__id."', \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:5()",$sqlquery,$e); }
+if($debug_mode) echo "<pre>$sqlquery</pre>";
+ob_flush();
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); }
+				catch(PDOException $e) {  sqlerr("install:5()",$sqlquery,$e); }
 				
-				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroupacl VALUES ( \n";
+				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroup2content_access VALUES ( \n";
+				$sqlquery .= " '".uuid()."', \n";
 				$sqlquery .= " '".$content_access__id1."', \n";
 				$sqlquery .= " '".$content_usergroup__id1."', \n";
 				$sqlquery .= " 1, \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:6()",$sqlquery,$e); }
+if($debug_mode) echo "<pre>$sqlquery</pre>";
+ob_flush();
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); }
+				catch(PDOException $e) { sqlerr("install:6()",$sqlquery,$e); }
 
-				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroupacl VALUES ( \n";
+				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_usergroup2content_access VALUES ( \n";
 				$sqlquery .= " '".$content_access__id2."', \n";
 				$sqlquery .= " '".$content_usergroup__id2."', \n";
 				$sqlquery .= " 1, \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:7()",$sqlquery,$e); }
+if($debug_mode) echo "<pre>$sqlquery</pre>";
+ob_flush();
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); }
+				catch(PDOException $e) { sqlerr("install:7()",$sqlquery,$e); }
 				
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_user2content_usergroup VALUES ( \n";
+				$sqlquery .= " '".uuid()."', \n";
 				$sqlquery .= " '".$content_user__id."', \n";
 				$sqlquery .= " '".$content_usergroup__id1."', \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:8()",$sqlquery,$e); }
+if($debug_mode) echo "<pre>$sqlquery</pre>";
+ob_flush();
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); }
+				catch(PDOException $e) { sqlerr("install:8()",$sqlquery,$e); }
 
 				$sqlquery  = "INSERT INTO ".$_SESSION["config"]["db"]["database_dbprefix"]."_content_user2content_usergroup VALUES ( \n";
+				$sqlquery .= " '".uuid()."', \n";
 				$sqlquery .= " '".$content_user__id."', \n";
 				$sqlquery .= " '".$content_usergroup__id2."', \n";
 				$sqlquery .= " '".time()."', \n";
 				$sqlquery .= " '".$content_user__id."') \n";
-# echo "<pre>$sqlquery</pre>";
-				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); } catch(PDOException $e) { sqlerr("install:9()",$sqlquery,$e); }
+if($debug_mode) echo "<pre>$sqlquery</pre>";
+ob_flush();
+				try { $result = $GLOBALS["SM_PDO"]->query($sqlquery); }
+				catch(PDOException $e) { sqlerr("install:9()",$sqlquery,$e); }
 
 				$fp = fopen("../config.ini.php","w");
 				fputs($fp, "<"."?"."/"."*"."\n\n");
@@ -304,37 +308,41 @@ if(isset($_POST["action"]["next"])) {
 }
 
 $step = "index";
-if ( preg_match("/^\/*([^\?]*)/", $_SERVER["REQUEST_URI"], $tmp)) {
+if ( preg_match("/^\/*([^\?]*)/", $_SERVER["REQUEST_URI"], $tmp))
 	$url = $tmp[1];
-}
 
 if (ereg("\/", $url))
 	$step = substr($url,strpos($url,"/")+1);
 
-if( ! $_SESSION["step"][$step]) {
-	header("Location: /install");
+if( ! $_SESSION["step"][$step])
+{
+	if(!$debug_mode) header("Location: /install");
 	exit;
 }
 
-foreach($_SESSION["config"][$step] AS $k=>$v) {
+foreach($_SESSION["config"][$step] AS $k=>$v)
 	$dane[$k] = $dane[$k] ? $dane[$k] : $v;
-}
 
 require "_install_header.php";
 
 ?>
 				<form action="" method=post enctype="multipart/form-data" id="sm-form">
 
-<? if( isset($GLOBALS["ERROR"]) && $GLOBALS["ERROR"] ) { ?>
+<?
+if( isset($GLOBALS["ERROR"]) && $GLOBALS["ERROR"] )
+{
+?>
 				<div class="alert alert-error">
 					<?=join("<br>",$GLOBALS["ERROR"])?>
 				</div>
-<? } ?>
+<?
+}
+?>
 
 <?
-
-	switch($step) {
-		default: case "index":
+switch($step)
+{
+	default: case "index":
 ?>
 					<fieldset class="no-legend">
 						<h4>Dziękujemy za wybranie programu SiteManager</h4>
@@ -352,22 +360,22 @@ require "_install_header.php";
 						<a class="btn btn-normal btn-info" id="action-next"><i class="icon-play icon-white"></i>&nbsp;DALEJ</a>
 					</div>
 <?
-		break;
+	break;
 
-		case "db":
+	case "db":
 ?>
 					<fieldset class="no-legend">
 						<h4>Konfiguracja ustawień bazy danych</h4>
 
 <?
-	$inputfield_options=array();
-	$inputfield_options["mysql"]="MySQL";
-#	$inputfield_options["pgsql"]="PostgreSQL";
-#	$inputfield_options["mssql"]="Microsoft SQL Server";
+		$inputfield_options=array();
+		$inputfield_options["mysql"]="MySQL";
+#		$inputfield_options["pgsql"]="PostgreSQL";
+#		$inputfield_options["mssql"]="Microsoft SQL Server";
 ?>
 						<?=sm_inputfield( array("type"=>"select", "title"=>"Typ bazy danych", "help"=>"Wybierz bazę danych jakiej zamierzasz użyć", "id"=>"dane_database_engine", "name"=>"dane[database_engine]", "value"=>$dane["database_engine"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>$inputfield_options, "xss_secured"=>true) ) ?>
 <?
-	$dane["database_dbserver"] = $dane["database_dbserver"] ? $dane["database_dbserver"] : "localhost";
+		$dane["database_dbserver"] = $dane["database_dbserver"] ? $dane["database_dbserver"] : "localhost";
 ?>
 						<div class="row-float">
 							<div class="span6">
@@ -386,7 +394,7 @@ require "_install_header.php";
 							</div>
 						</div>
 <?
-	$dane["database_dbprefix"] = $dane["database_dbprefix"] ? $dane["database_dbprefix"] : "sm";
+		$dane["database_dbprefix"] = $dane["database_dbprefix"] ? $dane["database_dbprefix"] : "sm";
 ?>
 						<?=sm_inputfield( array("type"=>"text", "title"=>"Prefix dla tabel", "help"=>"Wprowadź kilku znakowy ciąg, który będzie podany przed każdą tabelą. Umożliwi Ci to instalację kilku edycji SiteManager jednocześnie na tej samej bazie danych", "id"=>"database_dbprefix", "name"=>"dane[database_dbprefix]", "value"=>$dane["database_dbprefix"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 					</fieldset>
@@ -396,9 +404,9 @@ require "_install_header.php";
 						<a class="btn btn-normal btn-info" id="action-next"><i class="icon-play icon-white"></i>&nbsp;DALEJ</a>
 					</div>
 <?
-		break;
+	break;
 
-		case "app":
+	case "app":
 ?>
 					<fieldset class="no-legend">
 						<h4>Konfiguracja ustawień aplikacji</h4>
@@ -408,14 +416,14 @@ require "_install_header.php";
 								<?=sm_inputfield( array("type"=>"checkbox", "title"=>"Tryb developerski", "help"=>"W tym trybie wyświetlane są wszystkie komunikaty błędów", "id"=>"dane_engine_testmode", "name"=>"dane[engine_testmode]", "value"=>$dane["engine_testmode"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 <?
-$dane["engine_cacheimagetimeout"] = $dane["engine_cacheimagetimeout"] ? $dane["engine_cacheimagetimeout"] : 24;
+		$dane["engine_cacheimagetimeout"] = $dane["engine_cacheimagetimeout"] ? $dane["engine_cacheimagetimeout"] : 24*30;
 ?>
 							<div class="span6">
 								<?=sm_inputfield( array("type"=>"text", "title"=>"Domyślny czas cache dla zdjęć (godziny)", "help"=>"Ile godzin mają być przechowywane dane w cache zdjęć", "id"=>"dane_engine_cacheimagetimeout", "name"=>"dane[engine_cacheimagetimeout]", "value"=>$dane["engine_cacheimagetimeout"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 							</div>
 						</div>
 <?
-$dane["site_servername"] = $dane["site_servername"] ? $dane["site_servername"] : "SiteManager";
+		$dane["site_servername"] = $dane["site_servername"] ? $dane["site_servername"] : "SiteManager";
 ?>
 						<div class="row-float">
 							<div class="span6">
@@ -427,20 +435,19 @@ $dane["site_servername"] = $dane["site_servername"] ? $dane["site_servername"] :
 						</div>
 
 <?
-$chars = "abcdefghijklmnopqrstuwvzyz1234567890";
-if( strlen($dane["site_adminpanel"]<5) ) {
-	$dane["site_adminpanel"] = "";
-	for($i=1;$i<=8;$i++) {
-		$dane["site_adminpanel"] .= $chars[intval(rand(0,36))];
-	}
-}
+		$chars = "abcdefghijklmnopqrstuwvzyz1234567890";
+		if( strlen($dane["site_adminpanel"]<5) )
+		{
+			$dane["site_adminpanel"] = "";
+			for($i=1;$i<=8;$i++)
+				$dane["site_adminpanel"] .= $chars[intval(rand(0,36))];
+		}
 ?>
 						<?=sm_inputfield( array("type"=>"text", "title"=>"Adres panelu zarządzania", "help"=>"Podaj adres panelu zarządzania. Minimum 5 znaków", "id"=>"dane_site_adminpanel", "name"=>"dane[site_adminpanel]", "value"=>$dane["site_adminpanel"], "size"=>"small", "disabled"=>false, "validation"=>false, "prepend"=>"https://adres_serwera/", "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 						<?=sm_inputfield( array("type"=>"textarea", "title"=>"Opis serwisu", "help"=>"Podaj opis uruchamianej witruny (treść pojawi się w nagłówkach stron)", "id"=>"dane_site_description", "name"=>"dane[site_description]", "value"=>$dane["site_description"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 						<?=sm_inputfield( array("type"=>"textarea", "title"=>"Słowa kluczowe", "help"=>"Podaj słowa kluczowe dla uruchamianej witruny (pojawią się w nagłówkach stron)", "id"=>"dane_site_keywords", "name"=>"dane[site_keywords]", "value"=>$dane["site_keywords"], "size"=>"block-level", "disabled"=>false, "validation"=>false, "prepend"=>false, "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 <?
 /*
-
 	$inputfield_options=array();
 	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
 		$inputfield_options[ $k ] = $v;
@@ -458,15 +465,15 @@ if( strlen($dane["site_adminpanel"]<5) ) {
 						<a class="btn btn-normal btn-info" id="action-next"><i class="icon-play icon-white"></i>&nbsp;DALEJ</a>
 					</div>
 <?
-		break;
+	break;
 
-		case "access":
+	case "access":
 ?>
 					<fieldset class="no-legend">
 						<h4>Konfiguracja ustawień dostępu</h4>
 
 <?
-$dane["access_username"] = $dane["access_username"] ? $dane["access_username"] : "administrator";
+		$dane["access_username"] = $dane["access_username"] ? $dane["access_username"] : "administrator";
 ?>
 						<?=sm_inputfield( array("type"=>"text", "title"=>"Identyfikator administratora serwisu", "help"=>"Podaj nazwę logowania dla konta administratora", "id"=>"dane_access_username", "name"=>"dane[access_username]", "value"=>$dane["access_username"], "size"=>"medium", "disabled"=>false, "validation"=>false, "prepend"=>"", "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
 						<?=sm_inputfield( array("type"=>"text", "title"=>"Hasło administratora serwisu", "help"=>"Podaj hasło dla konta administratora", "id"=>"dane_access_password", "name"=>"dane[access_password]", "value"=>$dane["access_password"], "size"=>"medium", "disabled"=>false, "validation"=>false, "prepend"=>"", "append"=>false, "rows"=>1, "options"=>"", "xss_secured"=>true) ) ?>
@@ -478,9 +485,9 @@ $dane["access_username"] = $dane["access_username"] ? $dane["access_username"] :
 						<a class="btn btn-normal btn-info" id="action-next"><i class="icon-play icon-white"></i>&nbsp;DALEJ</a>
 					</div>
 <?
-		break;
+	break;
 
-		case "confirm":
+	case "confirm":
 ?>
 					<fieldset class="no-legend">
 						<h4>Weryfikacja danych</h4>
@@ -567,10 +574,10 @@ $dane["access_username"] = $dane["access_username"] ? $dane["access_username"] :
 						<a class="btn btn-normal btn-info" id="action-next"><i class="icon-play icon-white"></i>&nbsp;POTWIERDZAM</a>
 					</div>
 <?
-		break;
+	break;
 
 
-	}
+}
 ?>
 <script>
 $().ready(function(){
@@ -584,7 +591,4 @@ $().ready(function(){
 });
 </script>
 				</form>
-<?
-
-require "_install_footer.php";
-?>
+<?require "_install_footer.php";?>

@@ -15,6 +15,8 @@
 */
 function content_cache_add( $dane ) {
 
+$start = microtime(true);
+
 	$dane = trimall($dane);
 
 	$dane["content_cache__id"] = uuid();
@@ -42,7 +44,7 @@ function content_cache_add( $dane ) {
 	$SQL_QUERY .= ")\n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_cache_add()",$SQL_QUERY,$e); }
-	
+
 	return $dane["content_cache__id"];
 }
 

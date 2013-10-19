@@ -5,6 +5,7 @@ sm_core_content_user_accesscheck($access_type_id."_READ",1);
 $dane = $_REQUEST["dane"];
 $content_mailtemplate__id = $_REQUEST["content_mailtemplate__id"];
 $content_user__id = $_REQUEST["content_user__id"];
+$content_mailtemplate2content_user__id = $_REQUEST["content_mailtemplate2content_user__id"];
 
 if( isset($action["add"]) || isset($action["edit"]) ){
 	$dane=trimall($dane);
@@ -41,11 +42,15 @@ if(!is_array($ERROR)) {
 	}
 	elseif ( isset($action["mail2user_add"]) ) {
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
-		content_mailtemplate2content_user_edit( array("content_mailtemplate__id"=>$content_mailtemplate__id, "content_user__id"=>$content_user__id) );
+		content_mailtemplate2content_user_edit( array(
+			"content_mailtemplate2content_user__id"=>$content_mailtemplate2content_user__id,
+			"content_mailtemplate__id"=>$content_mailtemplate__id,
+			"content_user__id"=>$content_user__id)
+		);
 	}
 	elseif ( isset($action["mail2user_del"]) ) {
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
-		content_mailtemplate2content_user_delete( $content_mailtemplate__id, $content_user__id );
+		content_mailtemplate2content_user_delete( $content_mailtemplate2content_user__id );
 	}
 }
 else {
@@ -286,7 +291,7 @@ $('#tabs').ready(function() {
 												<td>
 													<?=$row["content_user__username"]?><br>
 												</td>
-												<td><a href="?content_mailtemplate__id=<?=$content_mailtemplate__id?>&content_user__id=<?=$row["content_user__id"]?>&action[mail2user_del]=1"><i class="icon-delete"></i></a></td>
+												<td><a href="?content_mailtemplate__id=<?=$content_mailtemplate__id?>&content_user__id=<?=$row["content_user__id"]?>&content_mailtemplate2content_user__id=<?=$row["content_mailtemplate2content_user__id"]?>&action[mail2user_del]=1"><i class="icon-delete"></i></a></td>
 											</tr>
 <?
 		}

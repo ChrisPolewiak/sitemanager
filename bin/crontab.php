@@ -1,11 +1,10 @@
 #!/usr/bin/php -q
 <?
 
-$engine_files_version["bin/".__FILE__]["version"] = "4.32";
-$engine_files_version["bin/".__FILE__]["moddate"] = "2008-11-10";
-
 define("SESSION_DISABLED",true);
-include_once dirname(__FILE__)."/../include/init.inc";
+$ROOT_DIR = dirname(__FILE__)."/../";
+$INCLUDE_DIR = $ROOT_DIR."/include";
+require $INCLUDE_DIR."/init.php";
 
 if($_SERVER["argv"][1]){
 	if (function_exists( $_SERVER["argv"][1] )){

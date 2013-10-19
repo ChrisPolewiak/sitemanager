@@ -5,48 +5,54 @@ sm_core_content_user_accesscheck($access_type_id."_READ",1);
 $dane = $_REQUEST["dane"];
 $content_text__id = $_REQUEST["content_text__id"];
 
-if( isset($action["add"]) || isset($action["edit"]) ){
+if( isset($action["add"]) || isset($action["edit"]) )
+{
 	$dane=trimall($dane);
-	if(!$dane["content_text__name"]){
+	if(!$dane["content_text__name"])
 		$ERROR[]=__("core", "Podaj nazwę wewnętrzną artykułu");
-	}
-	if(!$dane["content_text__title"]){
+
+	if(!$dane["content_text__title"])
 		$ERROR[]=__("core", "Podaj tytuł artykułu");
-	}
 }
 
-if(!is_array($ERROR)) {
-	if ( isset($action["add"]) ) {
+if(!is_array($ERROR))
+{
+	if ( isset($action["add"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$content_text__id = content_text_add($dane);
 	}
-	elseif ( isset($action["edit"]) ) {
+
+	elseif ( isset($action["edit"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$tmp = content_text_dane($dane["content_text__id"]);
 		$content_text__id = content_text_edit($dane);
 	}
-	elseif ( isset($action["delete"]) ) {
+
+	elseif ( isset($action["delete"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		content_text_delete($content_text__id);
 		unset($content_text__id);
 	}
 }
-else {
+else
 	$content_text__id = $content_text__id ? $content_text__id : "0";
-}
 
-if( $content_text__id ) {
+if( $content_text__id )
 	$dane = content_text_dane( $content_text__id );
-}
 
-if(isset($action["clone"])){
+if(isset($action["clone"]))
+{
 	$content_text__id=0;
 	$dane["content_text__id"]=0;
 }
 
 include "_page_header5.php";
 
-if (!$content_text__id && $content_text__id!="0") {
+if (!$content_text__id && $content_text__id!="0")
+{
 	$params = array(
 		"button_back" => 1,
 		"button_addnew" => 1,
@@ -64,7 +70,8 @@ if (!$content_text__id && $content_text__id!="0") {
 	);
 	include "_datatable_list5.php";
 }
-else {
+else
+{
 ?>
 					<div class="btn-toolbar">
 						<div class="btn-group">
@@ -150,19 +157,30 @@ $('#tabs').ready(function() {
 									</div>
 								</fieldset>
 
-<?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
+<?
+	if (sm_core_content_user_accesscheck($access_type_id."_WRITE"))
+	{
+?>
 								<input type=hidden name="dane[content_text__id]" value="<?=$dane["content_text__id"]?>">
 								<input type=hidden name="content_text__id" value="<?=$dane["content_text__id"]?>">
 								<input type=hidden name="content_text_table" value="<?=$dane["content_text_table"]?>">
 								<input type=hidden name="content_text_id" value="<?=$dane["content_text_id"]?>">
 								<div class="btn-toolbar">
-<?		if ($dane["content_text__id"]) {?>
+<?
+		if ($dane["content_text__id"])
+		{
+?>
 									<a class="btn btn-normal btn-info" id="action-edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__SAVE")?></a>
 									<a class="btn btn-normal btn-info" id="action-clone"><i class="icon-tint icon-white"></i>&nbsp;<?=__("core", "KLONUJ")?></a>
 									<a class="btn btn-normal btn-danger" id="action-delete"><i class="icon-remove icon-white" onclick="return confDelete()"></i>&nbsp;<?=__("core", "BUTTON__DELETE")?></a>
-<?		} else {?>
+<?
+		}
+		else {
+?>
 									<a class="btn btn-normal btn-info" id="action-add"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__ADD")?></a>
-<?		}?>
+<?
+		}
+?>
 								</div>
 
 							</div>
@@ -191,10 +209,9 @@ $('#tabs').ready(function() {
 									<div class="row-fluid">
 										<div class="span6">
 <?
-	$inputfield_options=array();
-	for($i=1;$i<10;$i++) {
-		$inputfield_options[ $i ]=$i;
-	}
+		$inputfield_options=array();
+		for($i=1;$i<10;$i++)
+			$inputfield_options[ $i ]=$i;
 ?>
 											<?=sm_inputfield(array(
 												"type"=>"select",
@@ -215,11 +232,10 @@ $('#tabs').ready(function() {
 										</div>
 										<div class="span6">
 <?
-	$inputfield_options=array();
-	$inputfield_options[""]="dowolny";
-	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
-		$inputfield_options[ $k ]=$v;
-	}
+		$inputfield_options=array();
+		$inputfield_options[""]="dowolny";
+		foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v)
+			$inputfield_options[ $k ]=$v;
 ?>
 											<?=sm_inputfield(array(
 												"type"=>"select",
@@ -240,16 +256,17 @@ $('#tabs').ready(function() {
 										</div>
 									</div>
 <?
-	$inputfield_options=array();
-	$inputfield_options[]="Brak powiązania";
-	foreach($CONTENT_PAGE_LONGNAME AS $k=>$v) {
-		$prefix = substr($v,0,2);
-		$v = preg_replace( "/(.+?)@@@/is", " / .. ", $v);
-		$num = $k; if($k<10){ $num = "0".$num; } if($k<100){ $num = "0".$num; }
-		$prefix = preg_replace( "/(.+?)@@@([^@]+)@*.*/", "\\1", $CONTENT_PAGE_LONGNAME[$k]);
-		$v = $prefix." : ".$v;
-		$inputfield_options[ $k ] = $v;
-	}
+		$inputfield_options=array();
+		$inputfield_options[]="Brak powiązania";
+		foreach($CONTENT_PAGE_LONGNAME AS $k=>$v)
+		{
+			$prefix = substr($v,0,2);
+			$v = preg_replace( "/(.+?)@@@/is", " / .. ", $v);
+			$num = $k; if($k<10){ $num = "0".$num; } if($k<100){ $num = "0".$num; }
+			$prefix = preg_replace( "/(.+?)@@@([^@]+)@*.*/", "\\1", $CONTENT_PAGE_LONGNAME[$k]);
+			$v = $prefix." : ".$v;
+			$inputfield_options[ $k ] = $v;
+		}
 ?>
 									<?=sm_inputfield(array(
 										"type"=>"select",
@@ -268,13 +285,13 @@ $('#tabs').ready(function() {
 										"xss_secured"=>true
 									));?>
 <?
-	$inputfield_options=array();
-	$inputfield_options[]="Brak powiązania";
-	if($result = content_section_fetch_all()) {
-		while($row=$result->fetch(PDO::FETCH_ASSOC)){
-			$inputfield_options[ $row["content_section__id"] ] = $row["content_section__name"];
+		$inputfield_options=array();
+		$inputfield_options[]="Brak powiązania";
+		if($result = content_section_fetch_all())
+		{
+			while($row=$result->fetch(PDO::FETCH_ASSOC))
+				$inputfield_options[ $row["content_section__id"] ] = $row["content_section__name"];
 		}
-	}
 ?>
 									<?=sm_inputfield(array(
 										"type"=>"select",
@@ -295,21 +312,24 @@ $('#tabs').ready(function() {
 								</fieldset>
 
 <?
-	$__table    = "content_text";
-	$__tableid  = $content_text__id;
-	require "__contenttags.php";
+		$__table    = "content_text";
+		$__tableid  = $content_text__id;
+		require "__contenttags.php";
 ?>
 
 <?
-	if ($content_text__id) {
-		$__table    = "content_text";
-		$__tableid  = $content_text__id;
-		include "__contentfile_attach.php";
-	}
+		if ($content_text__id)
+		{
+			$__table    = "content_text";
+			$__tableid  = $content_text__id;
+			include "__contentfile_attach.php";
+		}
 ?>
 							</div>
 						</div>
-<?	} ?>
+<?
+	}
+?>
 <script>
 $('#action-clone').click(function() {
 	$('#sm-form').append('<input type="hidden" name="action[clone]" value=1>');

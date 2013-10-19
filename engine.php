@@ -30,7 +30,7 @@ if($page == "api" || preg_match("/^api\//", $page)) {
  */
 if($page == "cacheimg" || preg_match("/^cacheimg\//", $page)) {
 	require $INCLUDE_DIR."/init.php";
-	require $INCLUDE_DIR."/core/cacheimg.php";
+	require $INCLUDE_DIR."/core/cacheimg_execute.php";
 	exit;
 }
 

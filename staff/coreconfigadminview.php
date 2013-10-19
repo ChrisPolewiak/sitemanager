@@ -7,43 +7,48 @@ $dane_column = $_REQUEST["dane_column"];
 $core_configadminview__id = $_REQUEST["core_configadminview__id"];
 $core_configadminview__idcolumn = $_REQUEST["core_configadminview__idcolumn"];
 
-if( isset($action["add"]) || isset($action["edit"]) ){
+if( isset($action["add"]) || isset($action["edit"]) )
 	$dane=trimall($dane);
-}
 
-if(!is_array($ERROR)) {
-	if ( isset($action["add"]) ) {
+if(!is_array($ERROR))
+{
+	if ( isset($action["add"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$core_configadminview__id = core_configadminview_add($dane);
 	}
-	if ( isset($action["edit"]) ) {
+
+	if ( isset($action["edit"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$core_configadminview__id = core_configadminview_edit($dane);
 	}
-	if ( isset($action["column_add"]) ) {
+
+	if ( isset($action["column_add"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$core_configadminview__idcolumn = core_configadminviewcolumn_add($dane_column);
 	}
-	if ( isset($action["column_edit"]) ) {
+
+	if ( isset($action["column_edit"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$core_configadminview__idcolumn = core_configadminviewcolumn_edit($dane_column);
 	}
 }
-else {
+else
 	$core_configadminview__id = $core_configadminview__id ? $core_configadminview__id : "0";
-}
 
-if( $core_configadminview__id ) {
+if( $core_configadminview__id )
 	$dane = core_configadminview_dane( $core_configadminview__id );
-}
-if( $core_configadminview__idcolumn ) {
+
+if( $core_configadminview__idcolumn )
 	$dane_column = core_configadminviewcolumn_dane( $core_configadminview__idcolumn );
-}
 
 include "_page_header5.php";
 
-if (!$core_configadminview__id && $core_configadminview__id!="0") {
-
+if (!$core_configadminview__id && $core_configadminview__id!="0")
+{
 	$params = array(
 		"button_back" => 1,
 		"button_addnew" => 1,
@@ -57,7 +62,8 @@ if (!$core_configadminview__id && $core_configadminview__id!="0") {
 	);
 	include "_datatable_list5.php";
 }
-else {
+else
+{
 ?>
 					<div class="btn-toolbar">
 						<div class="btn-group">
@@ -73,10 +79,10 @@ else {
 								<fieldset class="no-legend">
 <?
 	$inputfield_options=array();
-	foreach($menu AS $tag=>$menu_item) {
-		if($menu_item["level"]) {
+	foreach($menu AS $tag=>$menu_item)
+	{
+		if($menu_item["level"])
 			$inputfield_options[ $tag ] = $menu_item["name"];
-		}
 	}
 ?>
 									<?=sm_inputfield(array(
@@ -193,18 +199,31 @@ else {
 									));?>
 								</fieldset>
 
-<?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
+<?
+	if (sm_core_content_user_accesscheck($access_type_id."_WRITE"))
+	{
+?>
 								<div class="btn-toolbar">
 									<input type=hidden name="dane[core_configadminview__id]" value="<?=$dane["core_configadminview__id"]?>">
 									<input type=hidden name="core_configadminview__id" value="<?=$dane["core_configadminview__id"]?>">
-<?		if ($dane["core_configadminview__id"]) {?>
+<?
+		if ($dane["core_configadminview__id"])
+		{
+?>
 									<a class="btn btn-normal btn-info" id="action-edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__SAVE")?></a>
 									<a class="btn btn-normal btn-danger" id="action-delete"><i class="icon-remove icon-white" onclick="return confDelete()"></i>&nbsp;<?=__("core", "BUTTON__DELETE")?></a>
-<?		} else {?>
+<?
+		}
+		else {
+?>
 									<a class="btn btn-normal btn-info" id="action-add"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__ADD")?></a>
-<?		}?>
+<?
+		}
+?>
 								</div>
-<?	} ?>
+<?
+	}
+?>
 
 							</div>
 							<div class="span6">
@@ -226,8 +245,10 @@ else {
 										</thead>
 										<tbody>
 <?
-	if($result=core_configadminviewcolumn_fetch_by_adminview( $core_configadminview__id )) {
-		while($row=$result->fetch(PDO::FETCH_ASSOC)){
+	if($result=core_configadminviewcolumn_fetch_by_adminview( $core_configadminview__id ))
+	{
+		while($row=$result->fetch(PDO::FETCH_ASSOC))
+		{
 ?>
 											<tr>
 												<td><?=$row["core_configadminviewcolumn__title"]?></td>
@@ -266,9 +287,8 @@ else {
 									));?>
 <?
 	$inputfield_options=array();
-	for($i=50;$i<=300;$i+=50) {
+	for($i=50;$i<=300;$i+=50)
 		$inputfield_options[ $i."px" ] = $i."px";
-	}
 ?>
 									<?=sm_inputfield(array(
 										"type"=>"select",
@@ -310,9 +330,8 @@ else {
 		"c"=>__("CORE", "TXT__ALIGN_CENTER"),
 		"r"=>__("CORE", "TXT__ALIGN_RIGHT")
 	);
-	foreach($_align AS $k=>$v) {
+	foreach($_align AS $k=>$v)
 		$inputfield_options[ $k ] = $v;
-	}
 ?>
 									<?=sm_inputfield(array(
 										"type"=>"select",
@@ -346,19 +365,32 @@ else {
 										"options"=>$inputfield_options,
 										"xss_secured"=>true
 									));?>
-<?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
+<?
+	if (sm_core_content_user_accesscheck($access_type_id."_WRITE"))
+	{
+?>
 									<div class="btn-toolbar">
 										<input type=hidden name="dane_column[core_configadminview__idcolumn]" value="<?=$dane_column["core_configadminview__idcolumn"]?>">
 										<input type=hidden name="core_configadminview__idcolumn" value="<?=$dane_column["core_configadminview__idcolumn"]?>">
 										<input type=hidden name="dane_column[core_configadminview__id]" value="<?=$core_configadminview__id?>">
-<?		if ($dane_column["core_configadminview__idcolumn"]) {?>
+<?
+		if ($dane_column["core_configadminview__idcolumn"])
+		{
+?>
 										<a class="btn btn-mini btn-info" id="action-column_edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__SAVE")?></a>
 										<a class="btn btn-mini btn-danger" id="action-column_delete"><i class="icon-remove icon-white" onclick="return confDelete()"></i>&nbsp;<?=__("core", "BUTTON__DELETE")?></a>
-<?		} else {?>
+<?
+		}
+		else {
+?>
 										<a class="btn btn-mini btn-info" id="action-column_add"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__ADD")?></a>
-<?	}?>
+<?
+		}
+?>
 									</div>
-<? } ?>
+<?
+	}
+?>
 								</fieldset>
 							</div>
 						</div>

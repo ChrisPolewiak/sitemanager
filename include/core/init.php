@@ -2,6 +2,7 @@
 
 require $INCLUDE_DIR."/core/admin.php";
 require $INCLUDE_DIR."/core/bitlogical.php";
+require $INCLUDE_DIR."/core/cacheimg.php";
 require $INCLUDE_DIR."/core/codetrigger.php";
 require $INCLUDE_DIR."/core/conversions.php";
 require $INCLUDE_DIR."/core/cronfunction.php";

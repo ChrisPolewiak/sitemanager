@@ -125,13 +125,13 @@ if ( sm_core_content_user_accesscheck("CORE_ADMINPANEL_READ") ) {
 		);
 		$menu["9admin0content_peeklist"] = array(
 			"access_type_id" => "CORE_SETUP",
-			"level" => "9admin0", "name"  => __("core", "MENU__CONTENT_PEEKLIST"), "file"  => "content_peeklist.php",
+			"level" => "9admin0", "name"  => "Listy zmiennych", "file"  => "content_peeklist.php",
 			"info-short" => "Zarządzanie listami zmiennych.",
 			"info-long" => "Moduł służący do zarządzania listami zmiennych.",
 		);
 		$menu["9admin0content_peeklistitem"] = array(
 			"access_type_id" => "CORE_SETUP",
-			"level" => "9admin0", "name"  => __("core", "MENU__CONTENT_PEEKLISTITEM"), "file"  => "content_peeklistitem.php",
+			"level" => "9admin0", "name"  => "Listy zmiennych", "file"  => "content_peeklistitem.php",
 			"info-short" => "Zarządzanie listami.",
 			"info-long" => "Moduł służący do zarządzania listami.",
 			"config" => array( "menu_disabled" => 1, ),
@@ -205,6 +205,12 @@ if ( sm_core_content_user_accesscheck("CORE_ADMINPANEL_READ") ) {
 			"level" => "9admin0", "name"  => __("core", "MENU__CORE_CHANGED"), "file"  => "corechanged.php",
 			"info-short" => "Bufor zawierający zmienione rekordy.",
 			"info-long" => "Umożliwia przeglądanie zmienionych rekordów i ich przywracanie.",
+		);
+		$menu["9admin0coreclear"] = array(
+			"access_type_id" => "CORE_SETUP",
+			"level" => "9admin0", "name"  => "Porządkowanie bazy danych", "file"  => "coreclear.php",
+			"info-short" => "Porządkowanie bazy danych",
+			"info-long" => "Usuwanie z bazy zbędnych danych.",
 		);
 		$menu["9admin0coresession"] = array(
 			"access_type_id" => "CORE_SETUP",

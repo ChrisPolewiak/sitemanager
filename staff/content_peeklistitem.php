@@ -111,7 +111,6 @@ else {
 	}
 ?>
 						</fieldset>
-
 <?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
 						<div class="btn-toolbar">
 							<input type=hidden name="dane[content_peeklistitem__id]" value="<?=$dane["content_peeklistitem__id"]?>">

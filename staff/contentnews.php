@@ -38,7 +38,7 @@ if(!is_array($ERROR)) {
 		if (is_array($dane_content_newsgroup)) {
 			content_news2content_newsgroup_delete_by_content_news($content_news__id);
 			foreach($dane_content_newsgroup AS $k=>$v){
-				content_news2content_newsgroup_edit( $content_news__id, $k );
+				content_news2content_newsgroup_edit( 0, $content_news__id, $k );
 			}
 		}
 	}

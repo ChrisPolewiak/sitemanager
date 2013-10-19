@@ -11,14 +11,16 @@
 /**
  * @category	content_news2content_newsgroup
  * @package		sql
- * @version		5.0.0
+ * @version		5.1.0
 */
-function content_news2content_newsgroup_edit( $content_news__id, $content_newsgroup__id ) {
+function content_news2content_newsgroup_edit( $content_news2content_newsgroup__id, $content_news__id, $content_newsgroup__id ) {
 
 	$dane["record_create_date"] = time();
 	$dane["record_create_id"] = $_SESSION["content_user"]["content_user__id"];
+	$content_news2content_newsgroup__id = $content_news2content_newsgroup__id ? $content_news2content_newsgroup__id : uuid();
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_content_news2content_newsgroup VALUES ( \n";
+	$SQL_QUERY .= "'". sm_secure_string_sql( $content_news2content_newsgroup__id)."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $content_news__id)."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $content_newsgroup__id)."', \n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_create_date"])."', \n";
@@ -49,13 +51,12 @@ function content_news2content_newsgroup_fetch_by_content_news( $content_news__id
 /**
  * @category	content_news2content_newsgroup
  * @package		sql
- * @version		5.0.0
+ * @version		5.1.0
 */
-function content_news2content_newsgroup_delete( $content_news__id, $content_newsgroup__id ) {
+function content_news2content_newsgroup_delete( $content_news2content_newsgroup__id ) {
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_news2content_newsgroup \n";
-	$SQL_QUERY .= "WHERE content_news__id='". sm_secure_string_sql( $content_news__id)."' \n";
-	$SQL_QUERY .= "  AND content_newsgroup__id='". sm_secure_string_sql( $content_newsgroup__id)."' \n";
+	$SQL_QUERY .= "WHERE content_news2content_newsgroup__id='". sm_secure_string_sql( $content_news2content_newsgroup__id)."' \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_news2content_newsgroup_delete()",$SQL_QUERY,$e); }
 

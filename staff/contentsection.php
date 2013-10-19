@@ -6,6 +6,7 @@ $dane = $_REQUEST["dane"];
 $content_section__id = $_REQUEST["content_section__id"];
 $content_page__id = $_REQUEST["content_page__id"];
 $danecontent_section2page = $_REQUEST["danecontent_section2page"];
+$content_section2content_page__id = $_REQUEST["content_section2content_page__id"];
 
 if ( isset($action["add"]) || isset($action["edit"]) ) {
 	$dane=trimall($dane);
@@ -52,7 +53,7 @@ if(!is_array($ERROR)) {
 	}
 	elseif ( isset($action["section2page_delete"]) ) {
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
-		content_section2content_page_delete( $content_section__id, $content_page__id );
+		content_section2content_page_delete( $content_section2content_page__id );
 	}
 }
 else {
@@ -65,8 +66,8 @@ if( $content_section__id ) {
 if( $content_page__id ) {
 	$danecontent_page = content_page_get( $content_page__id );
 }
-if( $content_section__id && $content_page__id ) {
-	$danecontent_section2page = content_section2content_page_get( $content_section__id, $content_page__id );
+if( $content_section2content_page__id ) {
+	$danecontent_section2page = content_section2content_page_get( $content_section2content_page__id );
 }
 
 include "_page_header5.php";
@@ -181,10 +182,10 @@ else {
 												<td><?=$row["content_section2content_page__requiredaccess"]?></td>
 <?				if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
 												<td align=center>
-                											<a href="?content_section__id=<?=$content_section__id?>&content_page__id=<?=$row["content_page__id"]?>"><i class="icon-edit"></i></a>
+                											<a href="?content_section__id=<?=$content_section__id?>&content_page__id=<?=$row["content_page__id"]?>&content_section2content_page__id=<?=$row["content_section2content_page__id"]?>"><i class="icon-edit"></i></a>
 												</td>
 												<td align=center>
-                											<a href="?content_section__id=<?=$content_section__id?>&content_page__id=<?=$row["content_page__id"]?>&action[section2page_delete]=1" OnClick="return confDelete()"><i class="icon-remove"></i></a></a>
+                											<a href="?content_section__id=<?=$content_section__id?>&content_page__id=<?=$row["content_page__id"]?>&content_section2content_page__id=<?=$row["content_section2content_page__id"]?>&action[section2page_delete]=1" OnClick="return confDelete()"><i class="icon-remove"></i></a></a>
 												</td>
 <?				} else { ?>
 												<td></td><td></td>		

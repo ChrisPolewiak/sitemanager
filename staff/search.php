@@ -21,10 +21,10 @@ include "_page_header.php";
             <br>
 
 <?
-if (!function_exists($type."_staff_search")){
+if (!function_exists($type."_staff_search"))
 	echo __("core", "Nie zdefiniowano wyszukiwarki dla obiektu").": ".$type.".";
-}
-else {
+else
+{
 ?>
             <table cellspacing=2 cellpadding=2 bgcolor="#F1F2F2" width="100%">
 <form action="<?=$ENGINE?>/<?=$page?>">
@@ -45,28 +45,32 @@ else {
 
 
 <?
-if ( $query ) {
+if ( $query )
+{
 
 	$query = ereg_replace("%", "", $query);
 
 	if (strlen($query)<1)
 		error( __("core", "Należy podać minimum 1 znak") );
 
-	if ($query) {
-
-		if(function_exists($type."_staff_search")){
+	if ($query)
+	{
+		if(function_exists($type."_staff_search"))
+		{
 			eval(" \$result = ".$type."_staff_search( \"$query\" ); ");
 
-			if ($result) {
+			if ($result)
+			{
 				$found = $result->rowCount();
 				print "<br><b>".__("core", "Ilość znalezionych rekordów").": ".$found."</b><br>\n";
-				while ( $row = $result->fetch(PDO::FETCH_ASSOC) ) {
+				while ( $row = $result->fetch(PDO::FETCH_ASSOC) )
+				{
 					$wynix[] = $row;
 					$first_letter[substr($row["res"],0,1)]++;
 				}
-				foreach($first_letter AS $letter=>$null) {
+				foreach($first_letter AS $letter=>$null)
 					$letters_line .= "<td><a href=\"#step_".$letter."\">".strtoupper($letter)."</a></td>";
-				}
+
 				$letters_line = "<img src=0 width=1 height=8><br><table align=center width=\"100%\" cellspacing=1 cellpadding=3 bgcolor=\"#E0E0E0\"><tr bgcolor=\"#F1F2F2\">".$letters_line."<td width=0><img src=0 width=1 height=12></td></tr></table><img src=0 width=1 height=3><br>";
 
 				$find_status = 1;
@@ -76,12 +80,14 @@ if ( $query ) {
 					$row["res"] = preg_replace("/($query)/i", "<b>\\1</b>", $row["res"]);
 
 					$letter = substr($row["res"],0,1);
-					if ($letter != $prev_letter) {
+					if ($letter != $prev_letter)
+					{
 						echo "<a name=\"step_".$letter."\"></a>";
 						$change_letter=true;
 					}
 
-					if ($change_letter) {
+					if ($change_letter)
+					{
 						echo $letters_line;
 						$change_letter=false;
 					}
@@ -93,16 +99,15 @@ if ( $query ) {
 					$prev_letter = $letter;
 				}
 			}
-			else {
-				if ( is_array( $ERROR ) ) {
+			else
+			{
+				if ( is_array( $ERROR ) )
 					echo "<b><li>".join("<li>", $ERROR)."<br><br></b>\n";
-				}
 				echo __("core", "Nic nie znaleziono")."<br>".__("core", "Spróbuj inaczej sprecyzować swoje zapytanie...");
 			}
 		}
-		else {
+		else
 			echo __("core", "Nie zdefiniowano wyszukiwarki dla obiektu").": ".$type.".";
-		}
 	}
 }
 ?>

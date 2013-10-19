@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_access` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_access__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_cache` (
   `content_cache__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -24,11 +24,11 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_cache` (
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_cache__id`),
-  KEY `content_cache__table` (`content_cache__table`),
-  KEY `content_cache__tableid` (`content_cache__tableid`),
-  KEY `content_cache__w` (`content_cache__w`),
-  KEY `content_cache__h` (`content_cache__h`),
-  KEY `content_cache__ttl` (`content_cache__ttl`)
+  INDEX (`content_cache__table`),
+  INDEX (`content_cache__tableid`),
+  INDEX (`content_cache__w`),
+  INDEX (`content_cache__h`),
+  INDEX (`content_cache__ttl`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_category` (
@@ -46,10 +46,10 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_category` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_category__id`),
-  KEY `content_category__idparent` (`content_category__idparent`),
-  KEY `content_category__idtop` (`content_category__idtop`),
-  KEY `content_user__id` (`content_user__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_category__idparent`),
+  INDEX (`content_category__idtop`),
+  INDEX (`content_user__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_crontab` (
   `content_crontab__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_crontab` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_crontab__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_extra` (
   `content_extra__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_extra` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_extra__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_extralist` (
   `content_extralist__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_extralist` (
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_extralist__id`),
   UNIQUE KEY `content_extralist__value` (`content_extralist__value`,`content_extra__id`),
-  KEY `content_extra__id` (`content_extra__id`)
+  INDEX (`content_extra__id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_file` (
@@ -119,8 +119,8 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_file` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_file__id`),
-  KEY `content_category__id` (`content_category__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_category__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_file2content_filecategory` (
   `content_file2content_filecategory__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -128,9 +128,10 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_file2content_filecategory` (
   `content_filecategory__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`content_file__id`,`content_filecategory__id`),
-  KEY `content_file2content_filecategory__id` (`content_file2content_filecategory__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  PRIMARY KEY (`content_file2content_filecategory__id`),
+  INDEX (`content_filecategory__id`),
+  INDEX (`content_file__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_fileassoc` (
   `content_file__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -141,9 +142,9 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_fileassoc` (
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_file__id`,`content_fileassoc__tableid`,`content_fileassoc__table`,`content_fileshowtypeitem__id`),
-  KEY `content_fileassoc__tableid` (`content_fileassoc__tableid`),
-  KEY `content_fileassoc__table` (`content_fileassoc__table`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_fileassoc__tableid`),
+  INDEX (`content_fileassoc__table`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_filecategory` (
   `content_filecategory__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -160,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_filecategory` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_filecategory__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_fileico` (
   `content_fileico__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -171,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_fileico` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_fileico__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_fileshowtype` (
   `content_fileshowtype__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -182,8 +183,8 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_fileshowtype` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_fileshowtype__id`),
-  KEY `content_fileshowtype__tag` (`content_fileshowtype__sysname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_fileshowtype__sysname`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_fileshowtypeitem` (
   `content_fileshowtypeitem__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -196,9 +197,9 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_fileshowtypeitem` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_fileshowtypeitem__id`),
-  KEY `content_fileshowtypeitem__tag` (`content_fileshowtypeitem__sysname`),
-  KEY `content_fileshowtype__id` (`content_fileshowtype__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_fileshowtypeitem__sysname`),
+  INDEX (`content_fileshowtype__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_hostallow` (
   `content_hostallow__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -210,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_hostallow` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_hostallow__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_mailtemplate` (
   `content_mailtemplate__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -227,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_mailtemplate` (
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_mailtemplate__id`),
   UNIQUE KEY `content_mailtemplate__sysname` (`content_mailtemplate__sysname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_mailtemplate2content_user` (
   `content_mailtemplate2content_user__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -235,10 +236,10 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_mailtemplate2content_user` (
   `content_user__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`content_mailtemplate__id`,`content_user__id`),
-  KEY `content_user__id` (`content_user__id`),
-  KEY `content_mailtemplate2content_user__id` (`content_mailtemplate2content_user__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  PRIMARY KEY (`content_mailtemplate2content_user__id`),
+  INDEX (`content_mailtemplate__id`),
+  INDEX (`content_user__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_news` (
   `content_news__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -253,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_news` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_news__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_news2content_newsgroup` (
   `content_news2content_newsgroup__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -261,9 +262,10 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_news2content_newsgroup` (
   `content_newsgroup__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`content_news__id`,`content_newsgroup__id`),
-  KEY `content_news2content_newsgroup__id` (`content_news2content_newsgroup__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  PRIMARY KEY (`content_news2content_newsgroup__id`),
+  INDEX (`content_news__id`),
+  INDEX (`content_newsgroup__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_newsgroup` (
   `content_newsgroup__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -274,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_newsgroup` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_newsgroup__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_page` (
   `content_page__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -303,11 +305,11 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_page` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_page__id`),
-  KEY `content_page__url` (`content_page__url`),
-  KEY `content_template__id` (`content_template__id`),
-  KEY `content_page__idtop` (`content_page__idtop`),
-  KEY `content_page__lang` (`content_page__lang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_page__url`),
+  INDEX (`content_template__id`),
+  INDEX (`content_page__idtop`),
+  INDEX (`content_page__lang`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE `%prefix%_content_peeklist` (
   `content_peeklist__id` CHAR(36) NOT NULL,
@@ -331,7 +333,7 @@ CREATE TABLE `%prefix%_content_peeklist` (
   PRIMARY KEY (`content_peeklist__id`),
   INDEX (`content_peeklist__plugin`),
   INDEX (`content_peeklist__sysname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE `%prefix%_content_peeklistitem` (
   `content_peeklistitem__id` CHAR(36) NOT NULL,
@@ -353,7 +355,7 @@ CREATE TABLE `%prefix%_content_peeklistitem` (
   `record_modify_id` char(36) NOT NULL,
   PRIMARY KEY (`content_peeklistitem__id`),
   INDEX (`content_peeklist__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_plugin` (
   `content_plugin__sysname` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -362,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_plugin` (
   `content_plugin__path` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `content_plugin__enabled` TINYINT(4) DEFAULT NULL,
   UNIQUE KEY `content_plugin__sysname` (`content_plugin__sysname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_section` (
   `content_section__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -374,8 +376,8 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_section` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_section__id`),
-  KEY `content_section__sysname` (`content_section__sysname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX(`content_section__sysname`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_section2content_page` (
   `content_section2content_page__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -389,11 +391,12 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_section2content_page` (
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`content_section__id`,`content_page__id`),
-  KEY `content_section2content_page__id` (`content_section2content_page__id`),
-  KEY `content_section2content_page__column` (`content_section2content_page__column`),
-  KEY `content_section2content_page__order` (`content_section2content_page__order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  PRIMARY KEY (`content_section2content_page__id`),
+  INDEX (`content_section__id`),
+  INDEX (`content_page__id`),
+  INDEX (`content_section2content_page__column`),
+  INDEX (`content_section2content_page__order`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_tags` (
   `content_tags__tag` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -403,8 +406,8 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_tags` (
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  KEY `content_tags__id` (`content_tags__tableid`,`content_tags__table`,`content_tags__tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_tags__tableid`,`content_tags__table`,`content_tags__tag`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_template` (
   `content_template__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -416,9 +419,9 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_template` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_template__id`),
-  KEY `content_template__lang` (`content_template__lang`),
-  KEY `content_template__name` (`content_template__name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_template__lang`),
+  INDEX (`content_template__name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_text` (
   `content_text__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -437,12 +440,12 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_text` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_text__id`),
-  KEY `content_text__lang` (`content_text__lang`),
-  KEY `content_page__id` (`content_page__id`),
-  KEY `content_section__id` (`content_section__id`),
-  KEY `content_text__tableid` (`content_text__tableid`),
-  KEY `content_text__table` (`content_text__table`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`content_text__lang`),
+  INDEX (`content_page__id`),
+  INDEX (`content_section__id`),
+  INDEX (`content_text__tableid`),
+  INDEX (`content_text__table`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_user2content_usergroup` (
   `content_user2content_usergroup__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -450,20 +453,22 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_user2content_usergroup` (
   `content_usergroup__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`content_user__id`,`content_usergroup__id`)
-  KEY `content_user2content_usergroup__id` (`content_user2content_usergroup__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  PRIMARY KEY (`content_user2content_usergroup__id`),
+  INDEX (`content_user__id`),
+  INDEX (`content_usergroup__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE IF NOT EXISTS `%prefix%_content_useracl` (
-  `content_useracl__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+CREATE TABLE IF NOT EXISTS `%prefix%_content_user2content_access` (
+  `content_user2content_access__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content_access__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content_user__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `content_useracl__bit` bigINT(20) NOT NULL,
+  `content_user2content_access__bit` bigINT(20) NOT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`content_access__id`,`content_user__id`),
-  KEY `content_useracl__id` (`content_useracl__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  PRIMARY KEY (`content_user2content_access__id`),
+  INDEX (`content_access__id`),
+  INDEX (`content_user__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_usergroup` (
   `content_usergroup__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -473,18 +478,19 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_usergroup` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_usergroup__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-CREATE TABLE IF NOT EXISTS `%prefix%_content_usergroupacl` (
-  `content_usergroupacl__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+CREATE TABLE IF NOT EXISTS `%prefix%_content_usergroup2content_access` (
+  `content_usergroup2content_access__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content_access__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content_usergroup__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `content_usergroupacl__bit` bigINT(20) NOT NULL,
+  `content_usergroup2content_access__bit` bigINT(20) NOT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`content_access__id`,`content_usergroup__id`),
-  KEY `content_usergroupacl__id` (`content_usergroupacl__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  PRIMARY KEY (`content_usergroup2content_access__id`),
+  INDEX (`content_access__id`),
+  INDEX (`content_usergroup__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_content_user` (
   `content_user__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -502,13 +508,13 @@ CREATE TABLE IF NOT EXISTS `%prefix%_content_user` (
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`content_user__id`),
   UNIQUE KEY `content_user__username` (`content_user__username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_config` (
   `core_config__name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `core_config__value` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`core_config__name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_configadminview` (
   `core_configadminview__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -525,9 +531,9 @@ CREATE TABLE IF NOT EXISTS `%prefix%_core_configadminview` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`core_configadminview__id`),
-  KEY `core_configadminview__tag` (`core_configadminview__tag`,`content_user__id`),
-  KEY `content_user__id` (`content_user__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`core_configadminview__tag`,`content_user__id`),
+  INDEX (`content_user__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_configadminviewcolumn` (
   `core_configadminviewcolumn__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -546,8 +552,8 @@ CREATE TABLE IF NOT EXISTS `%prefix%_core_configadminviewcolumn` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`core_configadminviewcolumn__id`),
-  KEY `core_configadminview__id` (`core_configadminview__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`core_configadminview__id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_relation` (
   `core_relation__srctable` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -559,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `%prefix%_core_relation` (
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` INT(11) DEFAULT NULL,
   UNIQUE KEY `core_relation__srctable` (`core_relation__srctable`,`core_relation__srcid`,`core_relation__dsttable`,`core_relation__dstid`,`core_relation__type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_session` (
   `core_session__sid` VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -575,21 +581,22 @@ CREATE TABLE IF NOT EXISTS `%prefix%_core_sitemanager` (
   `core_sitemanager__versiondb` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `core_sitemanager__versionapp` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `core_sitemanager__dateedit` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_task` (
   `core_task__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `core_task___plugin` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `core_task___function` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `core_task___params` BLOB,
-  `core_task___status` TINYINT(4) DEFAULT NULL,
-  `core_task___result` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `core_task__plugin` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `core_task__function` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `core_task__params` TEXT,
+  `core_task__status` TINYINT(4) DEFAULT NULL,
+  `core_task__result` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `core_task__execution_time` INT(11) DEFAULT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`core_task__id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_translation` (
   `core_translation__id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -602,22 +609,22 @@ CREATE TABLE IF NOT EXISTS `%prefix%_core_translation` (
   `record_modify_date` INT(11) DEFAULT NULL,
   `record_modify_id` CHAR(36) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`core_translation__id`),
-  KEY `core_translation__source` (`core_translation__source`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  INDEX (`core_translation__source`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_changed` (
   `core_changed__id` CHAR(36) NOT NULL,
   `core_changed__tableid` CHAR(36) NOT NULL,
   `core_changed__table` VARCHAR(255) DEFAULT NULL,
   `core_changed__olddata` BLOB,
-  `core_deleted__state` CHAR(5) NOT NULL,
+  `core_deleted__state` CHAR(10) NOT NULL,
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) DEFAULT NULL,
   PRIMARY KEY (`core_changed__id`),
-  KEY `core_changed__tableid` (`core_changed__tableid`),
-  KEY `core_changed__table` (`core_changed__table`),
-  KEY `record_create_date` (`record_create_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  INDEX (`core_changed__tableid`),
+  INDEX (`core_changed__table`),
+  INDEX (`record_create_date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `%prefix%_core_deleted` (
   `core_deleted__id` CHAR(36) NOT NULL,
@@ -627,6 +634,6 @@ CREATE TABLE IF NOT EXISTS `%prefix%_core_deleted` (
   `record_create_date` INT(11) DEFAULT NULL,
   `record_create_id` CHAR(36) DEFAULT NULL,
   PRIMARY KEY (`core_deleted__id`),
-  KEY `core_deleted__tableid` (`core_deleted__tableid`),
-  KEY `core_deleted__table` (`core_deleted__table`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  INDEX (`core_deleted__tableid`),
+  INDEX (`core_deleted__table`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -3,16 +3,16 @@
 sm_core_content_user_accesscheck($access_type_id."_READ",1);
 
 $lang = isset($_REQUEST["lang"]) ? $_REQUEST["lang"] : "pl";
-if(! isset($SM_TRANSLATION_LANGUAGES[$lang])) {
+if(! isset($SM_TRANSLATION_LANGUAGES[$lang]))
 	$lang = "pl";
-}
 
-if ( isset($action["edit"]) ) {
+if ( isset($action["edit"]) )
 	$dane=trimall($dane);
-}
 
-if(!is_array($ERROR)) {
-	if ( isset($action["edit"]) ) {
+if(!is_array($ERROR))
+{
+	if ( isset($action["edit"]) )
+	{
 		$language_code = $_REQUEST["language"];
 		$dane = $_REQUEST["dane"];
 
@@ -26,9 +26,11 @@ if(!is_array($ERROR)) {
 		fputs($fp,"LANGUAGE_CODE = \"".$language_code."\"\n");
 		fputs($fp,"LANGUAGE_NAME = \"".$SM_TRANSLATION_LANGUAGES[$language_code]."\"\n");
 		fputs($fp,"\n");
-		foreach($dane AS $_section=>$_section_data){
+		foreach($dane AS $_section=>$_section_data)
+		{
 			fputs($fp,"[".$_section."]\n");
-			foreach($_section_data AS $_k=>$_v){
+			foreach($_section_data AS $_k=>$_v)
+			{
 				$_v = strip_tags($_v);
 				fputs($fp,$_k." = \"".$_v."\"\n");
 			}
@@ -54,10 +56,10 @@ $dane = htmlentitiesall($dane);
 							<div class="row-float">
 								<div class="span3">
 <?
-	$inputfield_options = array();
-	foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v) {
-		$inputfield_options[ $k ] = $v;
-	}
+$inputfield_options = array();
+foreach($SM_TRANSLATION_LANGUAGES AS $k=>$v)
+	$inputfield_options[ $k ] = $v;
+
 ?>
 									<?=sm_inputfield(array(
 										"type"=>"select",
@@ -85,13 +87,16 @@ $dane = htmlentitiesall($dane);
 							</div>
 						</fieldset>
 <?
-	foreach( $translation_data AS $translation_section=>$translation_section_data ) {
-		if ($translation_section == "_DEFINE_") continue;
+foreach( $translation_data AS $translation_section=>$translation_section_data )
+{
+	if ($translation_section == "_DEFINE_")
+		continue;
 ?>
 						<fieldset>
 							<legend><?=__("core", "CORE_TRANSLATION__SECTION")?>: <?=$translation_section?></legend>
 <?
-		foreach($translation_section_data AS $k=>$v) {
+	foreach($translation_section_data AS $k=>$v)
+	{
 ?>
 							<div class="row-float">
 								<div class="span4">
@@ -132,17 +137,22 @@ $dane = htmlentitiesall($dane);
 								</div>
 							</div>
 <?
-		}
+	}
 ?>
 						</fieldset>
 <?
-	}
+}
 ?>
-<?	if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
+<?
+if (sm_core_content_user_accesscheck($access_type_id."_WRITE"))
+{
+?>
 						<div class="btn-toolbar">
 							<a class="btn btn-normal btn-info" id="action-edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__SAVE")?></a>
 						</div>
-<? } ?>
+<?
+}
+?>
 <script>
 $('#action-select').click(function() {
 	window.location = '?lang='+$('#language').val();

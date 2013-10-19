@@ -22,7 +22,7 @@ $SYSTEM_DEFINED_ROLES["CORE"] = array(
 	"CONTENTTEMPLATE"     => array("name"=>"Szablony podstron", "actions"=>"ARWDPM"),
 	"CONTENTNEWSGROUP"    => array("name"=>"Kategorie wiadomości", "actions"=>"ARWDPM"),
 	"SETUP"               => array("name"=>"Konfiguracja aplikacji", "actions"=>"RW"),
-	"ADMINPANEL"          => array("name"=>"Dostęp do panelu zarządzania", "actions"=>"R"),
+	"ADMINPANEL"          => array("name"=>"Dostęp do panelu zarządzania", "actions"=>"RW"),
 );
 
 ?>

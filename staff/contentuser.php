@@ -7,54 +7,59 @@ $content_user__id = $_REQUEST["content_user__id"];
 $dane_content_usergroup = $_REQUEST["dane_content_usergroup"];
 $set = $_REQUEST["set"];
 
-if( isset($action["add"]) || isset($action["edit"]) ){
+if( isset($action["add"]) || isset($action["edit"]) )
 	$dane=trimall($dane);
-}
 
-if( isset($action["add"]) || $dane["content_user__password"] ){
+if( isset($action["add"]) || $dane["content_user__password"] )
 	content_user_password_check( $dane["content_user__password"], "", $dane["content_user__username"] );
-}
 
-if(!is_array($ERROR)) {
-	if ( isset($action["add"]) ) {
+if(!is_array($ERROR))
+{
+	if ( isset($action["add"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$content_user__id = content_user_add($dane);
 	}
-	elseif ( isset($action["edit"]) ) {
+
+	elseif ( isset($action["edit"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		$content_user__id = content_user_edit($dane);
-		content_useracl_delete_content_user( $content_user__id );
-		if($content_user__id && is_array($set)) {
-			foreach($set AS $__content_access__id=>$null){
-				content_useracl_add( $__content_access__id, $content_user__id, 1 );
-			}
+		content_user2content_access_delete_by_user( $content_user__id );
+		if($content_user__id && is_array($set))
+		{
+			foreach($set AS $__content_access__id=>$null)
+				content_user2content_access_add( 0, $__content_access__id, $content_user__id, 1 );
 		}
 	}
-	elseif ( isset($action["delete"]) ) {
+
+	elseif ( isset($action["delete"]) )
+	{
 		sm_core_content_user_accesscheck($access_type_id."_WRITE",1);
 		content_user_disable($dane["content_user__id"]);
 	}
 
-	if( isset($action["add"]) || isset($action["edit"]) ){
-		if (is_array($dane_content_usergroup)) {
+	if( isset($action["add"]) || isset($action["edit"]) )
+	{
+		if (is_array($dane_content_usergroup))
+		{
 			content_user2content_usergroup_delete_by_content_user($content_user__id);
-			foreach($dane_content_usergroup AS $k=>$v){
-				content_user2content_usergroup_edit( $content_user__id, $k );
-			}
+			foreach($dane_content_usergroup AS $k=>$v)
+				content_user2content_usergroup_edit( 0, $content_user__id, $k );
 		}
 	}
 }
-else {
+else
 	$content_user__id = $content_user__id ? $content_user__id : "0";
-}
 
-if( $content_user__id ) {
+if( $content_user__id )
+{
 	$dane = content_user_dane( $content_user__id );
 	unset($dane_content_usergroup);
-	if($result = content_user2content_usergroup_fetch_by_content_user( $content_user__id )){
-		while($row=$result->fetch(PDO::FETCH_ASSOC)){
+	if($result = content_user2content_usergroup_fetch_by_content_user( $content_user__id ))
+	{
+		while($row=$result->fetch(PDO::FETCH_ASSOC))
 			$dane_content_usergroup[$row["content_usergroup__id"]]=1;
-		}
 	}
 }
 
@@ -62,7 +67,8 @@ include "_page_header5.php";
 
 $dane = htmlentitiesall($dane);
 
-if (!$content_user__id && $content_user__id!="0") {
+if (!$content_user__id && $content_user__id!="0")
+{
 	$params = array(
 		"button_back" => 1,
 		"button_addnew" => 1,
@@ -85,7 +91,8 @@ if (!$content_user__id && $content_user__id!="0") {
 	);
 	include "_datatable_list5.php";
 }
-else {
+else
+{
 ?>
 					<div class="btn-toolbar">
 						<div class="btn-group">
@@ -164,9 +171,11 @@ $('#tabs').ready(function() {
 												</thead>
 												<tbody>
 <?
-	if($result=content_usergroup_fetch_all()){
+	if($result=content_usergroup_fetch_all())
+	{
 		$even="";
-		while($row=$result->fetch(PDO::FETCH_ASSOC)){
+		while($row=$result->fetch(PDO::FETCH_ASSOC))
+		{
 			$even=$even==1?0:1;
 ?>
 													<tr valign=top class=<?=($even?"even":"odd")?>>
@@ -208,9 +217,8 @@ $('#tabs').ready(function() {
 										<fieldset class="no-legend">
 <?
 	$inputfield_options = array();
-	foreach($CONTENT_USER_STATUS_ARRAY AS $k=>$v){
+	foreach($CONTENT_USER_STATUS_ARRAY AS $k=>$v)
 		$inputfield_options[$k] = $v["name"];
-	}
 ?>
 											<?=sm_inputfield(array(
 												"type"=>"select",
@@ -273,23 +281,25 @@ $('#tabs').ready(function() {
 										</thead>
 										<tbody>
 <?
-	if ($result=content_useracl_fetch_by_user( $content_user__id )) {
-		while($row=$result->fetch(PDO::FETCH_ASSOC)){
+	if ($result=content_user2content_access_fetch_by_user( $content_user__id ))
+	{
+		while($row=$result->fetch(PDO::FETCH_ASSOC))
 			$content_useracl[ $row["content_access__id"] ] = 1;
-		}
 	}
-        if ($result=content_access_fetch_all()){
-                $even="";
-                while($row=$result->fetch(PDO::FETCH_ASSOC)){
-                        $even=$even==1?0:1;
+	if ($result=content_access_fetch_all())
+	{
+		$even="";
+		while($row=$result->fetch(PDO::FETCH_ASSOC))
+		{
+			$even=$even==1?0:1;
 ?>
 											<tr class=<?=($even?"even":"odd")?>>
 												<td><?=$row["content_access__name"]?> <i>(<?=$row["content_access__tag"]?>)</i></td>
 												<td align=center><input type="checkbox" name="set[<?=$row["content_access__id"]?>]" <?=($content_useracl[$row["content_access__id"]]?"checked":"")?>></td>
 											</tr>
 <?
-                }
-        }
+		}
+	}
 ?>
 										</tbody>
 									</table>
@@ -304,28 +314,42 @@ $('#tabs').ready(function() {
 								</fieldset>
 							</div>
 						</div>
-<? if (sm_core_content_user_accesscheck($access_type_id."_WRITE")) { ?>
+<?
+	if (sm_core_content_user_accesscheck($access_type_id."_WRITE"))
+	{
+?>
 						<input type=hidden name="dane[content_user__id]" value="<?=$dane["content_user__id"]?>">
 						<input type=hidden name="content_user__id" value="<?=$content_user__id?>">
 						<div class="btn-toolbar">
-<?	if ($dane["content_user__id"]) {?>
+<?
+		if ($dane["content_user__id"])
+		{
+?>
 							<a class="btn btn-normal btn-info" id="action-edit"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__SAVE")?></a>
 							<a class="btn btn-normal btn-danger" id="action-delete"><i class="icon-remove icon-white" onclick="return confDelete()"></i>&nbsp;<?=__("core", "BUTTON__DELETE")?></a>
-<?	} else {?>
+<?
+		}
+		else {
+?>
 							<a class="btn btn-normal btn-info" id="action-add"><i class="icon-ok icon-white"></i>&nbsp;<?=__("core", "BUTTON__ADD")?></a>
-<?	}?>
+<?
+		}
+		?>
 						</div>
-<? } ?>
+<?
+	}
+?>
 
 <?
 
-if($content_user__id){
-        if($result=content_useracl_fetch_by_user($dane["content_user__id"])){
-                while($row=$result->fetch(PDO::FETCH_ASSOC)){
-                        $content_useracl[$row["content_access__id"]] = $row["content_useracl_bit"];
-                }
-        }
-}
+	if($content_user__id)
+	{
+		if($result=content_user2content_access_fetch_by_user($dane["content_user__id"]))
+		{
+			while($row=$result->fetch(PDO::FETCH_ASSOC))
+				$content_useracl[$row["content_access__id"]] = $row["content_useracl_bit"];
+		}
+	}
 ?>
 <script>
 $('#action-edit').click(function() {
@@ -341,7 +365,7 @@ $('#action-add').click(function() {
 	$('#sm-form').submit();
 });
 </script>
-					</form>
+</form>
 
 <?
 }
