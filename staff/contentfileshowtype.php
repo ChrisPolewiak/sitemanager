@@ -65,7 +65,7 @@ if( $content_fileshowtype__id ) {
 }
 if( $content_fileshowtypeitem__id ) {
 	$danecontent_fileshowtypeitem = content_fileshowtypeitem_dane( $content_fileshowtypeitem__id );
-	$tmp = split("_",$danecontent_fileshowtypeitem["content_fileshowtypeitem__sysname"]);
+	$tmp = explode("_",$danecontent_fileshowtypeitem["content_fileshowtypeitem__sysname"]);
 	$danecontent_fileshowtypeitem["content_fileshowtypeitem__sysname"] = $tmp[2];
 }
 

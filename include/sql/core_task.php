@@ -250,4 +250,20 @@ function core_task_result( $core_task__id, $message, $core_task__execution_time 
 	return $core_task__id;
 }
 
+/**
+ * @category	cote_task
+ * @package	sql
+ * @version	5.0.0
+*/
+function core_task_lock( $core_task__id )
+{
+	$SQL_QUERY  = "UPDATE ".DB_TABLEPREFIX."_core_task \n";
+	$SQL_QUERY .= "SET core_task__status=-1 \n";
+	$SQL_QUERY .= "WHERE core_task__id='". sm_secure_string_sql( $core_task__id)."' \n";
+	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("core_task_lock()",$SQL_QUERY,$e); }
+
+	return $core_task__id;
+}
+
+
 ?>

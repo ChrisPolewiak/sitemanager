@@ -4,7 +4,7 @@ $datastore = "content_file";
 
 if (preg_match("/cacheimg\/(.+)/", $page, $tmp))
 {
-	$tmp = split("\/", $tmp[1]);
+	$tmp = explode("\/", $tmp[1]);
 
 	foreach($tmp AS $param)
 	{
@@ -26,6 +26,9 @@ if (preg_match("/cacheimg\/(.+)/", $page, $tmp))
 		if(preg_match("/^t.(.+)/", $param, $value))
 			$datatype = $value[1];
 
+		if(preg_match("/^nowm$/", $param, $value))
+			$nowatermark = true;
+
 	}
 }
 
@@ -45,7 +48,6 @@ if ( $cache = content_cache_get( $datastore, $id, $width, $height ) )
 	header("Content-type: ".$cache["content_cache__contenttype"]);
 	echo $image;
 	
-	content_cache_clear();
 	exit;
 }
 else

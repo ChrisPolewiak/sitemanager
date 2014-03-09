@@ -11,7 +11,7 @@ if(isset( $_POST["dane_content_tags"]["tags"])){
     
 	content_tags_delete_by_id( $__id_table, $__table);
 	
-	$tags = split(",", $dane_content_tags["tags"]);
+	$tags = explode(",", $dane_content_tags["tags"]);
 	if(is_array($tags)){
 		foreach($tags AS $tag) {
 			$tag=trim(strip_tags($tag));

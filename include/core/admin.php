@@ -62,7 +62,7 @@ function sm_core_auth__create_sessiondata( $content_user__id ) {
 	unset($content_useracl);
 	if($result = content_user2content_access_fetch_by_user( $content_user__id ) ) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
-			$tmp = split("\|", $row["content_access__tags"]);
+			$tmp = explode("|", $row["content_access__tags"]);
 			foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
 		}
 	}
@@ -70,7 +70,7 @@ function sm_core_auth__create_sessiondata( $content_user__id ) {
 	foreach($content_usergroup AS $k=>$v) $content_usergroup_flip[]=$k;
 	if($result = content_usergroup2content_access_fetch_by_usergroup( $content_usergroup_flip ) ) {
 		while($row=$result->fetch(PDO::FETCH_ASSOC)) {
-			$tmp = split("\|", $row["content_access__tags"]);
+			$tmp = explode("|", $row["content_access__tags"]);
 			foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
 		}
 	}
@@ -107,7 +107,7 @@ function sm_content_user_access_prepare() {
 		if($result = content_user2content_access_fetch_by_user( $_SESSION["content_user"]["content_user__id"] ) ) {
 			while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 				$content_access[$row["id_content_access"]]=1;
-				$tmp = split("\|", $row["content_access__tags"]);
+				$tmp = explode("|", $row["content_access__tags"]);
 				foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
 			}
 		}
@@ -119,7 +119,7 @@ function sm_content_user_access_prepare() {
 		if($result = content_usergroup2content_access_fetch_by_usergroup( $content_usergroup_flip ) ) {
 			while($row=$result->fetch(PDO::FETCH_ASSOC)) {
 				$content_access[$row["id_content_access"]]=1;
-				$tmp = split("\|", $row["content_access__tags"]);
+				$tmp = explode("|", $row["content_access__tags"]);
 				foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
 			}
 		}

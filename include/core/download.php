@@ -59,7 +59,7 @@ function download_file( $type, $id, $method ) {
 }
 
 if ( isset($_REQUEST["actiondownload"]) ){
-	if (list($__type,$__id,$_method)=split("\|", $_REQUEST["actiondownload"])){
+	if (list($__type,$__id,$_method)=explode("|", $_REQUEST["actiondownload"], -1)){
 		download_file( $__type, $__id, $_method );
 	}
 }

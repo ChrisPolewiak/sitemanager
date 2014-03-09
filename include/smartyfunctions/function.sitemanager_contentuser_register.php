@@ -60,7 +60,7 @@ function smarty_function_sitemanager_contentuser_register($params, &$smarty) {
 		$smarty->assign("error", $ERROR);
 	}
 	else {
-		$groups = split(",",$groups);
+		$groups = explode(",",$groups);
 		$dane["contentuser_status"]=CONTENTUSER_STATUS_NEW;
 		$id_contentuser = contentuser_add($dane);
 		if($id_contentuser) {

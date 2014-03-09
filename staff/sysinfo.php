@@ -56,7 +56,7 @@ if(is_array($SM_PLUGINS))
 								<tr class=even>
 									<td><?=__("CORE", "SYSINFO__FIELD_PHP")?></td>
 <?
-$php_version = split("\.", PHP_VERSION);
+$php_version = explode("\.", PHP_VERSION);
 $php_version_id = ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]);
 if ($php_version_id >= 50300)
 {

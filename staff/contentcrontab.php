@@ -34,8 +34,7 @@ else {
 	$content_crontab__id = $content_crontab__id ? $content_crontab__id : "0";
 }
 
-
-if( $content_crontab__id > 0 ) {
+if( $content_crontab__id ) {
 	$dane = content_crontab_dane( $content_crontab__id );
 }
 
@@ -147,7 +146,7 @@ else {
 								"append" => 0,
 								"rows" => 1,
 								"options" => $inputfield_options,
-								"xss_secured" => true
+								"xss_secured" => false
 							));?>
 						</fieldset>
 

@@ -72,7 +72,7 @@ if( isset($action["login"]))
 								{
 									while($row=$result->fetch(PDO::FETCH_ASSOC))
 									{
-										$tmp = split("\|", $row["content_access__tags"]);
+										$tmp = explode("|", $row["content_access__tags"]);
 										foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
 									}
 								}
@@ -85,7 +85,7 @@ if( isset($action["login"]))
 								{
 									while($row=$result->fetch(PDO::FETCH_ASSOC))
 									{
-										$tmp = split("\|", $row["content_access__tags"]);
+										$tmp = explode("|", $row["content_access__tags"]);
 										foreach($tmp AS $k=>$v)
 										{
 											if($v)

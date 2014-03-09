@@ -363,7 +363,7 @@ function content_page_delete( $content_page__id ) {
 		return false;
 
 	if ($deleted = content_page_get( $content_page__id ) ) {
-		core_changed_addadd( $content_page__id, "content_page", $deleted, "del" );
+		core_changed_add( $content_page__id, "content_page", $deleted, "del" );
 	}
 
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_content_page \n";

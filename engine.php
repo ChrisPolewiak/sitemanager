@@ -85,9 +85,9 @@ if($result=content_page_fetch_by_lang( $SM_LANG )){
 		if( $row["content_page__url"] ) {
 			$PAGES_ALLOW[$row["content_page__url"]] = $row;
 			if($row["content_page__params"]) {
-				$_params = split("\|",$row["content_page__params"]);
+				$_params = explode("|",$row["content_page__params"]);
 				foreach($_params AS $_param) {
-					list($k,$v) = split("=", $_param);
+					list($k,$v) = explode("=", $_param);
 					$PAGES_ALLOW[$row["content_page__url"]]["params"][$k] = $v;
 				}
 			}
@@ -168,7 +168,14 @@ elseif ($PAGES_ALLOW[$page]) {
 				$content_page__params = $PAGES_ALLOW[$page]["params"];
 				$SITE_DESCRIPTION = $PAGES_ALLOW[$page]["content_page__description"] ? $PAGES_ALLOW[$page]["content_page__description"] : $SITE_DESCRIPTION;
 				$SITE_KEYWORDS = $PAGES_ALLOW[$page]["content_page__keywords"] ? $PAGES_ALLOW[$page]["content_page__keywords"] : $SITE_KEYWORD;
-				require $content_template__srcfile;
+				if(is_file($content_template__srcfile)) {
+					require $content_template__srcfile;
+				}
+				else {
+					header("HTTP/1.0 503 Service unavailable");
+					echo "Internal Error - Requested Resource not found";
+					exit;
+				}
 				break;
 		}
 	}

@@ -16,7 +16,7 @@ echo "-- check available updates\n";
 $updates_info = file($update_url_version);
 for($i=0; $i<sizeof($updates_info); $i++) {
 	$new_version = $version;
-	list($version) = split("\t", trim($updates_info[$i]));
+	list($version) = explode("\t", trim($updates_info[$i]));
 	if ($version == $SOFTWARE_INFORMATION["version"]) {
 		next;
 		break;
@@ -52,7 +52,7 @@ require $cmsupdatedir."/cms_update.php";
 if (is_array($update_files)){
 	foreach($update_files AS $trgfile=>$info){
 
-		$trgfilepath = split("/", $trgfile);
+		$trgfilepath = explode("/", $trgfile);
 		$checkdir = $ROOT_DIR;
 		for($i=0;$i<sizeof($trgfilepath)-1;$i++) {
 			$checkdir .= "/".$trgfilepath[$i];

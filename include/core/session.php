@@ -32,6 +32,8 @@ ini_set("session.gc_divisor", "1");
 ini_set("session.gc_maxlifetime", $SESSION_LIFE);
 ini_set("arg_separator.output", "&amp;");
 
+session_cache_limiter(false);
+
 
 function sm_session_open_default() { return true; }
 

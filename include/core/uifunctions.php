@@ -127,6 +127,8 @@ function sm_inputfield( $params ) {
 			break;
 
 		case "select": case "select-multi":
+
+
 			$html  = "<div class=\"control-group\">";
 			$html .= "<label class=\"control-label\" for=\"".$params["id"]."\">".$params["title"]."</label>";
 			$html .= "<span class=\"help-block\">".$params["help"]."</span>";
@@ -137,7 +139,7 @@ function sm_inputfield( $params ) {
 				$html .= "<select multiple size=\"".$rows."\" id=\"".$params["id"]."\" name=\"".$params["name"]."\" class=\"input-".$params["size"]."\" ".($params["disabled"]?"disabled":"").">";
 			}
 			foreach($params["options"] AS $k=>$v) {
-				$html .= "<option value=\"".$k."\" ".($k==$params["value"]?"selected":"").">".$v."</option>";
+				$html .= "<option value=\"".$k."\" ".($k === $params["value"]?"selected":"").">".$v."</option>";
 			}
 			$html .= "</select>";	
 			$html .= "</div>";

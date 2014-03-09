@@ -8,6 +8,32 @@
  * @category	cron
  */
 
+
+$CMSCRONTAB[] = array(
+	"name" => "cmscore_optimize_tables",
+	"info" => "Optymalizacja tabel systemowych",
+);
+
+/**
+ * @category	crontab
+ * @package	core
+ * @version	5.0.0
+*/
+function cmscore_optimize_tables() {
+
+	content_cache_clear();
+	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_content_cache";
+	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
+
+	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_core_changed";
+	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
+
+	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_session";
+	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
+
+	return array(1,"");
+}
+
 $CMSCRONTAB[] = array(
 	"name" => "cmscore_coretask_process",
 	"info" => "wykonywanie procesów z kolejki",
@@ -20,38 +46,48 @@ $CMSCRONTAB[] = array(
 */
 function cmscore_coretask_process() {
 
+	$max_execution_time = 45;
+	$max_retries = 50;
+
 	$start_time = microtime(true);
 
-	if($result = core_task_fetch_waiting( $limit=50 ) ) {
-		while($row=$result->fetch(PDO::FETCH_ASSOC)){
+	for($a=1; $a<=$max_retries; $a++) {
+		if($result = core_task_fetch_waiting( $limit=1 ) ) {
+			while($row=$result->fetch(PDO::FETCH_ASSOC)){
 
-			$current_time = microtime(true);
+				core_task_lock( $row["core_task__id"] );
 
-			if( ($current_time - $start_time) > 60) {
-				// finish if process takes longer than a minute
-				return array(1,"");
+				$current_time = microtime(true);
+
+				if( ($current_time - $start_time) > 60) {
+					// finish if process takes longer than a minute
+					return array(1,"");
+				}
+
+				$start = microtime(true);
+
+				$_params = json_decode($row["core_task__params"], true);
+
+				$str  = " \$return = ".$row["core_task__function"]."(";
+				$str2="";
+				foreach($_params AS $k=>$v){
+					$str2 .= $str2 ? "," : "";
+					$str2 .= " \$$k=\"$v\"";
+				}
+				$str .= $str2;
+				$str .= " );\n";
+				eval ( $str );
+
+				$core_task__execution_time = microtime(true) - $start;
+			#	echo "totaltime: ".(microtime(true) - $start_time).", ";
+				echo "execution: $core_task__execution_time \n";
+
+
+				core_task_result( $row["core_task__id"], $return, $core_task__execution_time );
 			}
-
-			$start = microtime(true);
-
-			$_params = json_decode($row["core_task__params"], true);
-
-			$str  = " \$return = ".$row["core_task__function"]."(";
-			$str2="";
-			foreach($_params AS $k=>$v){
-				$str2 .= $str2 ? "," : "";
-				$str2 .= " \$$k=\"$v\"";
-			}
-			$str .= $str2;
-			$str .= " );\n";
-			eval ( $str );
-
-			$core_task__execution_time = microtime(true) - $start;
-			echo "execution: $core_task__execution_time \n";
-
-			core_task_result( $row["core_task__id"], $return, $core_task__execution_time );
-
 		}
+		if( (microtime(true) - $start_time) >= $max_execution_time)
+			return array(1,"");
 	}
 	return array(1,"");
 }
@@ -77,7 +113,7 @@ function cmscore_cron_systemupdate() {
 	$updates_info = file($update_url_version);
 	for($i=0; $i<sizeof($updates_info); $i++) {
 		$new_version = $version;
-		list($version) = split("\t", trim($updates_info[$i]));
+		list($version) = explode("\t", trim($updates_info[$i]));
 		if ($version == $SOFTWARE_INFORMATION["version"]) {
 			next;
 			break;
@@ -113,7 +149,7 @@ function cmscore_cron_systemupdate() {
 	if (is_array($update_files)){
 		foreach($update_files AS $trgfile=>$info){
 
-			$trgfilepath = split("/", $trgfile);
+			$trgfilepath = explode("/", $trgfile);
 			$checkdir = $ROOT_DIR;
 			for($i=0;$i<sizeof($trgfilepath)-1;$i++) {
 				$checkdir .= "/".$trgfilepath[$i];

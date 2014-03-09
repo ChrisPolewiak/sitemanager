@@ -238,14 +238,14 @@ function unlink_all( $file ) {
 */
 function root_wordwrap($string, $cols = 80, $prefix = "") {
 
-	$t_lines = split( "\n", $string);
+	$t_lines = explode( "\n", $string);
 	$outlines = "";
 
 	while(list(, $thisline) = each($t_lines)) {
 		if(strlen($thisline) > $cols) {
 
 			$newline = "";
-			$t_l_lines = split(" ", $thisline);
+			$t_l_lines = explode(" ", $thisline);
 
 			while(list(, $thisword) = each($t_l_lines)) {
 				while((strlen($thisword) + strlen($prefix)) > $cols) {

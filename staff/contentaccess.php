@@ -40,7 +40,7 @@ else {
 
 if( $content_access__id ) {
 	$dane = content_access_dane( $content_access__id );
-	$tmp = split("\|",$dane["content_access__tags"]);
+	$tmp = explode("|",$dane["content_access__tags"]);
 	foreach($tmp AS $k=>$v){
 		if($v) $content_access__tags[$v]=1;
 	}

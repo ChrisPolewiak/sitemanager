@@ -61,7 +61,7 @@ if(is_array($_SESSION["content_user"]))
 	{
 		while($row=$result->fetch(PDO::FETCH_ASSOC))
 		{
-			$tmp = split("\|", $row["content_access__tags"]);
+			$tmp = explode("|", $row["content_access__tags"]);
 			foreach($tmp AS $k=>$v)
 			{
 				if($v)
@@ -78,7 +78,7 @@ if(is_array($_SESSION["content_user"]))
 	{
 		while($row=$result->fetch(PDO::FETCH_ASSOC))
 		{
-			$tmp = split("\|", $row["content_access__tags"]);
+			$tmp = explode("|", $row["content_access__tags"]);
 			foreach($tmp AS $k=>$v){ if($v) $content_useracl[$v]=1; }
 		}
 	}

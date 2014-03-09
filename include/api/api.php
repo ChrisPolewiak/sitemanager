@@ -15,7 +15,7 @@ if ( is_array( $API[$apiMethod] ) ) {
 	$_api = $API[$apiMethod];
 
 	$RequestMethod = $_SERVER["REQUEST_METHOD"];
-	$RequestMethodAllowed = array_flip( split( "\|", $_api["RequestMethodAllowed"] ) );
+	$RequestMethodAllowed = array_flip( explode( "|", $_api["RequestMethodAllowed"] ) );
 	if ( ! isset( $RequestMethodAllowed[$RequestMethod] ) ) {
 		$response = array( "error" => "Invalid HTTP Request Method." );
 	} else {

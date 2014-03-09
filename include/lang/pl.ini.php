@@ -14,8 +14,70 @@ BUTTON__BACK_TO_LIST = "wróć do listy"
 BUTTON__RESTORE = "odtwórz"
 BUTTON__ADD_NEW = "dodaj nowy rekord"
 BUTTON__ADD = "dodaj"
+BUTTON__LOGIN = "Login"
 BUTTON__LOGOUT = "wyloguj się"
 BUTTON__MARSHAL = "uporządkuj dane"
+BUTTON__CLOSE = "Zamknij"
+BUTTON__SEARCH = "Szukaj"
+
+[SYSINFO]
+SYSINFO__MAIN_FIELDSET_TITLE = "Informacje o aplikacji"
+SYSINFO__PLUGIN = "Rozszerzenie"
+SYSINFO__VERSION = "Wersja"
+SYSINFO__PLUGIN_NAME = "Nazwa rozszerzenia"
+SYSINFO__PLUGIN_AUTHOR = "Autor"
+SYSINFO__LIBRARY_FIELDSET_TTTLE = "Biblioteki"
+SYSINFO__LIBRARY_NAME = "Biblioteka"
+SYSINFO__STATUS = "Stan"
+SYSINFO__STATUS_OK = "ok"
+SYSINFO__ERROR = "brak"
+SYSINFO__ERROR_INSTALLED_VERSION = "zainstalowana wersja %s, wymagana wersja >= %s"
+SYSINFO__INSTALL_CMD = "Procedura instalacji"
+SYSINFO__FIELD_MYSQL_SERVER = "Obsługa bazy danych MySQL"
+
+[SEARCH]
+SEARCH__FIELDSET_TITLE = "Wyszukiwanie"
+SEARCH__ERROR_NOT_FOUND = "Nie zdefiniowano wyszukiwarki dla obiektu"
+SEARCH__ERROR_MIN_CHARS_REQUIREMENT = "Należy podać minimum 1 znak"
+SEARCH__RESULT_FOUND = "Ilość znalezionych rekordów";
+SEARCH__ERROR_NOT_FOUND = "Nic nie znaleziono|Spróbuj inaczej sprecyzować swoje zapytanie..."
+SEARCH__ERROR_NOT_DEFINED = "Nie zdefiniowano wyszukiwarki dla obiektu"
+
+[FORM]
+FORM__SECURITY_ERROR = "Bład zabezpieczeń formularza"
+
+[LOGIN]
+LOGIN__ERROR_MISSING_USERNAME_AND_PASSWORD = "Podaj identyfikator oraz hasło"
+LOGIN__ERROR_WRONG_USERNAME = "Identyfikator nieprawidłowy"
+LOGIN__ERROR_PASSWORD_LOCK = "Trzykrotnie źle wprowadzono hasło, konto zablokowane.Odczekaj %s sekund przed kolejną próbą logowania."
+LOGIN__ERROR_BAD_PASSWORD = "Złe hasło"
+LOGIN__ERROR_ACCESS_DENIED_FROM_IP = "Nie masz dostępu do panelu zarządzania z aktualnego adresu IP"
+LOGIN__ERROR_ACCOUNT_DISABLED = "Twoje konto jest zablokowane"
+LOGIN__ERROR_ACL_MISSING = "Nie masz wystarczających uprawnień do panelu zarządzania"
+LOGIN__TITLE = "Logowanie"
+LOGIN__FIELD_USERNAME = "Identyfikator"
+LOGIN__FIELD_PASSWORD = "Hasło"
+
+[INSTALL]
+INSTALL__STEP_START = "Start"
+INSTALL__STEP_DB = "Baza danych"
+INSTALL__STEP_APP = "Dane aplikacji"
+INSTALL__STEP_ACCESS = "Dostęp"
+INSTALL__STEP_CONFIRM = "Potwierdź"
+INSTALL__STEP_FINISH = "Koniec"
+INSTALL__ERROR_MISSING_DBENGINE = "Podaj typ serwera baz danych"
+INSTALL__ERROR_MISSING_DBSERVER = "Podaj adres serwera baz danych"
+INSTALL__ERROR_MISSING_DBUSER = "Podaj nazwę użytkownika do bazy danych"
+INSTALL__ERROR_MISSING_DBPASS = "Podaj hasło dla użytkownika do bazy danych"
+INSTALL__ERROR_MISSING_DBPREFIX = "Podaj prefix dla tabel"
+INSTALL__ERROR_WRONG_DBPREFIX = "Prefix może składać się wyłacznie z liter i cyfr mi mieć od 2 do 5 znaków"
+INSTALL__ERROR_FOUND_DBDUPLICATE = "W bazie znajduje się już instancja SiteManager. Zmień prefix dla tabel, by nie nadpisać istniejących danych."
+INSTALL__ERROR_MISSING_CACHETTL = "Podaj domyślny czas przechowywania zdjęć w cache"
+INSTALL__ERROR_ADMINPANEL_TOO_SHORT = "Za krótki adres panelu zarządzania"
+INSTALL__ERROR_ADMIN_USERNAME_TOO_SHORT = "Identyfikat administratora musi zawierać min 5 znaków"
+INSTALL__ERROR_ADMIN_PASSWORD_WRONG = "Hasło musi spełniać wymogi złożoności. Musi zawierać minimum 5 znaków i składać się z cyfr, liter małych oraz dużych"
+
+
 
 [CORE_TRANSLATION]
 CORE_TRANSLATION__SECTION_CONFIG = "Definicja języka"
@@ -38,18 +100,6 @@ DATATABLE__SCRIPT_OPAGINATE_SPREVIOUS = "Poprzednia"
 DATATABLE__SCRIPT_OPAGINATE_SNEXT = "Następna"
 DATATABLE__SCRIPT_OPAGINATE_SLAST = "Ostatnia"
 
-[LOGIN]
-LOGIN__EROR_MISSING_USERNAME_AND_PASSWORD = "Podaj identyfikator oraz hasło"
-LOGIN__ERROR_WRONG_USERNAME = "Identyfikator nieprawidłowy"
-LOGIN__ERROR_PASSWORD_LOCK = "Trzykrotnie źle wprowadzono hasło, konto zablokowane.Odczekaj %s sekund przed kolejną próbą logowania."
-LOGIN__ERROR_BAD_PASSWORD = "Złe hasło"
-LOGIN__ERROR_ACCESS_DENIED_FROM_IP = "Nie masz dostępu do panelu zarządzania z aktualnego adresu IP"
-LOGIN__ERROR_ACCOUNT_DISABLED = "Twoje konto jest zablokowane"
-LOGIN__ERROR_ACL_MISSING = "Nie masz wystarczających uprawnień do panelu zarządzania"
-LOGIN__BOX_TITLE = "Panel Administracyjny"
-LOGIN__FIELD_USERNAME = "Identyfikator"
-LOGIN__FIELD_PASSWORD = "Hasło"
-LOGIN__BUTTON_LOGIN = "Login"
 
 [CORE_DELETED]
 CORE_DELETED__FIELD_TABLE = "Tabela"
@@ -118,22 +168,6 @@ MENU__CORE_CHANGED = "Bufor zmian"
 MENU__CORE_TASK = "Zadania"
 MENU__SYSINFO = "Informacje o aplikacji"
 MENU__LOGIN = "Logowanie"
-
-[SYSINFO]
-SYSINFO__ERROR = "brak"
-SYSINFO__STATUS_OK = "ok"
-SYSINFO__SECTION_MAIN_INFO = "Informacje o aplikacji"
-SYSINFO__FIELD_ELEMENT = "Element"
-SYSINFO__FIELD_VERSION = "Wersja"
-SYSINFO__FIELD_CORE = "Wersja SiteManager"
-SYSINFO__PLUGIN = "Plugin"
-SYSINFO__PLUGIN_AUTHOR = "Autor"
-SYSINFO__SECTION_LIBRARY = "Biblioteki"
-SYSINFO__LIBRARY = "Biblioteka"
-SYSINFO__FIELD_STATUS = "Stan"
-SYSINFO__FIELD_PHP = "Kompilator PHP"
-SYSINFO__FIELD_PHP_ERROR_INSTALLED_VERSION = "zainstalowana wersja %s, wymagana wersja >= %s"
-SYSINFO__FIELD_MYSQL_SERVER = "Obsługa bazy danych MySQL"
 
 [HEADER]
 HEADER__LOGED_USER = "Zalogowany"

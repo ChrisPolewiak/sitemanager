@@ -31,7 +31,7 @@ function smarty_function_sitemanager_calendar($params, &$smarty) {
 	
 	$today = date("Y-m-j");
 
-	list($current_year, $current_month) = split("-",$current_ym);
+	list($current_year, $current_month) = explode("-",$current_ym);
 
 	$starting_weekday = date("w", mktime(0,0,0, $current_month, 1, $current_year));
 	$starting_weekday = $starting_weekday ? $starting_weekday : 7;

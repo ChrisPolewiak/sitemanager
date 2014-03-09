@@ -156,9 +156,9 @@ if(!$table_cols) {
 					$add_childs=true;
 				}
 				if ($k=="params"){
-					$_params = split("([\|;])", $v);
+					$_params = preg_split("([\|;])", $v);
 					foreach($_params AS $_param) {
-						list($k2,$v2) = split("=",$_param);
+						list($k2,$v2) = explode("=",$_param);
 						if ($k2 && $v2) {
 							$xml .= "param_$k2=\"$v2\" ";
 						}

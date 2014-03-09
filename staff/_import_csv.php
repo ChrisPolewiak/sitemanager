@@ -8,7 +8,7 @@ if ( isset($action["import"]) ) {
 //	admin_access_check($admin_type_id, "add");
 $file= file($_FILES["import_file"]["tmp_name"]);
 
-$fields_show = split(";",$file[0]);
+$fields_show = explode(";",$file[0]);
 
 //print_r($file);
 

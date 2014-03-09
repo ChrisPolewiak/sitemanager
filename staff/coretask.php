@@ -42,7 +42,12 @@ $dane = htmlentitiesall($dane);
 								<td><?=$row["core_task__plugin"]?></td>
 								<td><?=$str?></td>
 								<td><?=date("Y-m-d H:i:s",$row["record_create_date"])?></td>
-								<td><?=$row["core_task__status"]!=0 ? date("Y-m-d H:i:s",$row["record_modify_date"]) : ""?></td>
+								<td><?
+			if($row["core_task__status"]==1)
+				echo date("Y-m-d H:i:s",$row["record_modify_date"]);
+			elseif($row["core_task__status"]==-1)
+				echo "processing";
+								?></td>
 								<td><?=$row["core_task__execution_time"]?> s.</td>
 								<td><?=$row["core_task__result"]?></td>
 							</tr>
