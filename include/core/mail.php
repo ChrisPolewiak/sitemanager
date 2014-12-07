@@ -1,7 +1,7 @@
 <?
 /**
  * mail
- * 
+ *
  * @author		Chris Polewiak <chris@polewiak.pl>
  * @version		5.0.0
  * @package		core
@@ -99,7 +99,7 @@ function mail_html_default( $sender_name, $sender_email, $recipient_name, $recip
 					$isfile = true );
 			}
 			else {
-				$objMime->addHTMLImage( 
+				$objMime->addHTMLImage(
 					$file["filepath"],
 					$file["contenttype"],
 					$fileid,
@@ -152,7 +152,7 @@ function mail_html_default( $sender_name, $sender_email, $recipient_name, $recip
  *                               - disposition (attachment|inline)
  *                               - filepath
  *                               - contenttype
- *  
+ *
  * @category	mail
  * @package		core
  * @version		5.0.2
@@ -275,9 +275,9 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 		}
 		$htmlbody = preg_replace($html_image_search, $html_image_replace, $htmlbody);
 	}
-	
+
 	if (isset($_FILES["mailform_files"])) {
-		
+
 		global $MIME_TYPES;
 		$filesArray = $_FILES["mailform_files"];
 		$filesCounter2 = 0;
@@ -289,21 +289,21 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 			$filesCounter2 = 0;
 		}
 		$tempDir = $ROOT_DIR."/temp";
-		
+
 		rmdir($tempDir);
 		mkdir($tempDir, 0777);
 		foreach ($tempFiles as $key => $value) {
 			$filesToDelete[] = $tempDir."/".$tempFiles[$key]["name"];
 			move_uploaded_file($tempFiles[$key]["tmp_name"], $filesToDelete[$key]);
-			
+
 			$files[$key]["disposition"] = "attachment";
 			$files[$key]["filepath"] = $filesToDelete[$key];
 			$files[$key]["contenttype"] = $tempFiles[$key]["type"];
 			$files[$key]["filename"] = $tempFiles[$key]["name"];
 		}
-		
+
 	}
-	
+
 	if(is_array($files)) {
 		foreach ($files AS $fileid=>$file) {
 			if($file["disposition"] == "attachment") {
@@ -314,7 +314,7 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 					$isfile = true );
 			}
 			else {
-				$objMime->addHTMLImage( 
+				$objMime->addHTMLImage(
 					$file["filepath"],
 					$file["contenttype"],
 					$fileid,
@@ -322,8 +322,8 @@ function sitemanager_mail( $content_mailtemplate__sysname, $variables, $sender_n
 			}
 		}
 	}
-	
-	
+
+
 
 	if($textbody) {
 		$objMime->setTXTBody ($textbody);

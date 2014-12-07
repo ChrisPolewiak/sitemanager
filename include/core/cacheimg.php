@@ -1,46 +1,46 @@
 <?
 
-function content_cache_generator( $datastore, $id, $width, $height, $showimg=false ) {
-	global $CACHEIMG; 
+function content_cache_generator( $datastore, $id, $width, $height, $showimg=false, $backend="content_cache" ) {
+	global $SM_CONTENTCACHE_BACKEND, $SM_CONTENTCACHE_DATASTORE;
 
-	$debug=0;
-
-echo $debug ? "<pre>" : "";
-
-$start = microtime(true);
+	// WHAT
+	$datastore = strtolower( $datastore );
+	// WHERE
+	$backend = strtolower( $backend );
 
 	if ($datastore != "content_file")
 	{
-
-		$image_filepath = $CACHEIMG[ strtolower($datastore) ]["path"];
-		$image_filedata = $CACHEIMG[ strtolower($datastore) ]["data"];
-		$image_function = $CACHEIMG[ strtolower($datastore) ]["function"];
-
-echo $debug ? microtime(true)-$start."\tstart<br>\n" : "";
+		$image_filepath = $SM_CONTENTCACHE_DATASTORE[ $datastore ]["path"];
+		$image_function = $SM_CONTENTCACHE_DATASTORE[ $datastore ]["function"];
 
 		eval(" \$dane = $image_function( '$id' ); ");
-
 		if (! $dane)
 			return 0;
 
-echo $debug ? microtime(true)-$start."\tget data from sql to resize<br>\n" : "";
-
-		if($CACHEIMG[ strtolower($datastore) ]["type"] == "file")
+		if($SM_CONTENTCACHE_DATASTORE[ $datastore ]["backend"] != "internal")
 		{
-			$filedata = file_get_contents( $dane[ $image_filepath ] );
+			$backend = $SM_CONTENTCACHE_DATASTORE[ $datastore ]["backend"];
+			$fn = $SM_CONTENTCACHE_BACKEND[ $backend ]["fn_open"];
+			if(function_exists($fn))
+			{
+				eval(" \$filedata = $fn(\"" . $dane["forum_photo__photo_path"] . "\"); ");
+			}
+			else
+				error("Not found backend function '$fn'");
+sm_trace( "file_get_contents ( ".$dane[ $image_filepath ]." )" );
 		}
 		else
 		{
 			$filedata = $dane[ $image_filedata ];
 		}
-
-echo $debug ? microtime(true)-$start."\tget data from file to resize '".$dane[ $image_filepath ]."' <br>\n" : "";
+sm_trace( "filedata" );
 
 		if(!$filedata)
 			$ERROR = "Can't open source file";
 		else
 		{
 			$size = @GetImageSizeFromString( $filedata );
+sm_trace( "GetImageSizeFromString" );
 		}
 
 		$mimetype = "";
@@ -49,22 +49,20 @@ echo $debug ? microtime(true)-$start."\tget data from file to resize '".$dane[ $
 		else
 		{
 			$mimetype = $size["mime"];
-echo $debug ? microtime(true)-$start."\tdatastore: file (". $dane[ $image_filepath ] .") - size: ".$size.", mimetype: ".$mimetype."\n" : "";
+sm_trace( "mimetype" );
 		}
 	}
 	else
 	{
-
 		if ($dane = content_file_dane( $id ))
 		{
+sm_trace( "content_file_dane" );
 			$filedata = base64_decode($dane["content_file__filedata"]);
+sm_trace( "base64_decode" );
 			$mimetype = $dane["content_file__filetype"];
 		}
 		else
 			$ERROR[] = "Can't load file";
-
-echo $debug ? microtime(true)-$start."\tget filedata (content_file_dane)<br>\n" : "";
-
 	}
 
 	if( $filedata && preg_match("/^image/", $mimetype) )
@@ -72,11 +70,11 @@ echo $debug ? microtime(true)-$start."\tget filedata (content_file_dane)<br>\n" 
 		$image = new Imagick();
 		$image->ReadImageBlob( $filedata );
 
-echo $debug ? microtime(true)-$start."\tReadImageBlob<br>\n" : "";
+sm_trace( "ReadImageBlob" );
 
 		$geo=$image->getImageGeometry();
 
-echo $debug ? microtime(true)-$start."\tgetImageGeometry<br>\n" : "";
+sm_trace( "getImageGeometry" );
 
 		if ($width && !$height || !$width && $height)
 		{
@@ -85,7 +83,7 @@ echo $debug ? microtime(true)-$start."\tgetImageGeometry<br>\n" : "";
 			$h = $height ? $height : $width;
 			$image->cropThumbnailImage ( $w, $h );
 
- echo $debug ? microtime(true)-$start."\tcropThumbnailImage<br>\n" : "";
+sm_trace( "cropThumbnailImage" );
 
 		}
 		elseif($width && $height)
@@ -93,11 +91,11 @@ echo $debug ? microtime(true)-$start."\tgetImageGeometry<br>\n" : "";
 			// scale
 			$image->scaleImage( $width, $height, TRUE );
 
- echo $debug ? microtime(true)-$start."\tscaleImage<br>\n" : "";
+sm_trace( "scaleImage" );
 
 		}
 
-		if($showimg && !$debug)
+		if($showimg && !SM_TRACE)
 		{
 			header("Content-type: ".$dane["content_file__filetype"]);
 			echo $image;
@@ -105,20 +103,30 @@ echo $debug ? microtime(true)-$start."\tgetImageGeometry<br>\n" : "";
 
 		if($width || $height) {
 
- echo $debug ? microtime(true)-$start."\tpre-content_cache_add<br>\n" : "";
+sm_trace( "cache upload start" );
 
 			$cache=array(
-				"content_cache__table" => $datastore,
-				"content_cache__tableid" => $id,
-				"content_cache__w" => $width,
-				"content_cache__h" => $height,
-				"content_cache__ttl" => CACHE_IMAGE_TIMEOUT,
-				"content_cache__contenttype" => $mimetype,
-				"content_cache__data" => $image,
+				"content_cache__table"		=> $datastore,
+				"content_cache__tableid"	=> $id,
+				"content_cache__w"			=> $width,
+				"content_cache__h"			=> $height,
+				"content_cache__ttl"		=> CACHE_IMAGE_TIMEOUT,
+				"content_cache__contenttype"	=> $mimetype,
+				"content_cache__data"		=> $image->getImageBlob(),
 			);
-			content_cache_add( $cache );
+			if(content_cache_add( $cache, $backend ))
+			{
+				if($showimg && !SM_TRACE)
+				{
+					header("Content-Type: image/jpg");
+					echo $image->getImageBlob();
+				}
+			}
+			else {
+				echo "ERROR: $ERROR";
+			}
 
- echo $debug ? microtime(true)-$start."\tcontent_cache_add<br>\n" : "";
+sm_trace( "cache upload finish" );
 
 		}
 		return 1;
@@ -132,7 +140,7 @@ echo $debug ? microtime(true)-$start."\tgetImageGeometry<br>\n" : "";
 			$draw->setFillColor('black');
 			$image->annotateImage($draw, 10, 45, 0, $ERROR);
 			$image->setImageFormat('png');
-if(!$debug)
+if(!SM_TRACE)
 {
 			header("Content-Type: image/png");
 			echo $image;

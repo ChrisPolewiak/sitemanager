@@ -1,17 +1,17 @@
 <?
 /**
- * cote_task
- * 
+ * core_task
+ *
  * Asynchronous Service Task
- * 
+ *
  * @author		Chris Polewiak <chris@polewiak.pl>
  * @version		5.0.0
  * @package		sql
- * @category	cote_task
+ * @category	core_task
  */
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -52,7 +52,7 @@ function core_task_add(  $dane )
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -75,18 +75,20 @@ function core_task_edit( $dane )
 		$dane["core_task__id"] = uuid();
 		$dane["core_task__params"] = json_encode($dane["core_task__params"]);
 		$dane["core_task__status"] = 0;
+		$dane["core_task__priority"] = $dane["core_task__priority"] ? $dane["core_task__priority"] : 1;
 
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
 #		core_changed_add( $core_task__id, "core_task", $tmp_dane="", "add" );
 	}
-	
+
 	$dane["record_modify_date"] = time();
 	$dane["record_modify_id"] = $_SESSION["content_user"]["content_user__id"];
 
 	$SQL_QUERY  = "REPLACE INTO ".DB_TABLEPREFIX."_core_task VALUES (\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["core_task__id"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["core_task__plugin"])."',\n";
+	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["core_task__priority"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["core_task__function"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["core_task__params"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["core_task__status"])."',\n";
@@ -104,7 +106,7 @@ function core_task_edit( $dane )
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -125,7 +127,22 @@ function core_task_delete( $core_task__id )
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
+ * @package	sql
+ * @version	5.0.0
+*/
+function core_task_delete_by_param( $param )
+{
+	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_core_task \n";
+	$SQL_QUERY .= "WHERE core_task__params='". sm_secure_string_sql( $param)."'";
+
+	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("core_task_delete_by_param()",$SQL_QUERY,$e); }
+
+	return $result->rowCount();
+}
+
+/**
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -142,7 +159,7 @@ function core_task_dane( $core_task__id )
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -158,7 +175,7 @@ function core_task_fetch_all()
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -179,7 +196,7 @@ function core_task_count_by_status( $core_task_count_by_status="" )
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -189,7 +206,7 @@ function core_task_delete_by_status( $core_task_count_by_status, $delay=0 )
 	$SQL_QUERY  = "DELETE FROM ".DB_TABLEPREFIX."_core_task \n";
 	$SQL_QUERY .= "WHERE core_task__status='". sm_secure_string_sql( $core_task_count_by_status )."' \n";
 	if( $delay!="" )
-		$SQL_QUERY .= "AND record_modify_date<". sm_secure_string_sql( $delay )."*86400 \n";
+		$SQL_QUERY .= "AND UNIX_TIMESTAMP()-record_modify_date < ". sm_secure_string_sql( $delay ). "*86400 \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("core_task_delete_by_status()",$SQL_QUERY,$e); }
 
@@ -197,7 +214,7 @@ function core_task_delete_by_status( $core_task_count_by_status, $delay=0 )
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -206,8 +223,9 @@ function core_task_fetch_waiting($limit=5)
 	$SQL_QUERY  = "SELECT * \n";
 	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_core_task \n";
 	$SQL_QUERY .= "WHERE core_task__status=0 \n";
-	$SQL_QUERY .= "ORDER BY record_create_date ASC \n";
-	$SQL_QUERY .= "LIMIT $limit ";
+	$SQL_QUERY .= "ORDER BY core_task__priority DESC, record_create_date ASC \n";
+	$SQL_QUERY .= "LIMIT $limit \n";
+	$SQL_QUERY .= "FOR UPDATE \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("core_task_fetch_waiting()",$SQL_QUERY,$e); }
 
@@ -215,24 +233,28 @@ function core_task_fetch_waiting($limit=5)
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
 function core_task_fetch_active()
 {
+	global $SM_ENGINE_VARS;
+
 	$SQL_QUERY  = "SELECT * \n";
 	$SQL_QUERY .= "FROM ".DB_TABLEPREFIX."_core_task \n";
 	$SQL_QUERY .= "WHERE core_task__status=1 \n";
 	$SQL_QUERY .= "ORDER BY record_create_date DESC ";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("core_task_fetch_active()",$SQL_QUERY,$e); }
+	$endtime = $time = round(microtime(true)-$_SERVER["REQUEST_TIME_FLOAT"],4);
+	$SM_ENGINE_VARS["core_task_fetch_active_time"] = $endtime-$starttime;
 
 	return ($result->rowCount()>0 ? $result : 0);
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package		sql
  * @version		5.0.0
 */
@@ -251,7 +273,7 @@ function core_task_result( $core_task__id, $message, $core_task__execution_time 
 }
 
 /**
- * @category	cote_task
+ * @category	core_task
  * @package	sql
  * @version	5.0.0
 */

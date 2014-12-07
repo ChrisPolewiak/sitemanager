@@ -1,7 +1,7 @@
 <?
 /**
  * cron
- * 
+ *
  * @author		Chris Polewiak <chris@polewiak.pl>
  * @version		5.0.0
  * @package		core
@@ -21,14 +21,19 @@ $CMSCRONTAB[] = array(
 */
 function cmscore_optimize_tables() {
 
-	content_cache_clear();
-	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_content_cache";
-	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
+#	content_cache_clear();
+#	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_content_cache";
+#	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
 
-	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_core_changed";
-	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
+#	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_core_changed";
+#	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
 
 	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_session";
+	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
+
+	core_task_delete_by_status( $core_task_count_by_status=1, $delay=1 );
+
+	$SQL_QUERY = "OPTIMIZE TABLE ".DB_TABLEPREFIX."_core_task";
 	try { $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("sql()",$SQL_QUERY,$e); }
 
 	return array(1,"");

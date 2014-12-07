@@ -79,9 +79,9 @@ if (!$content_user__id && $content_user__id!="0")
 			array( "title"=>"Identyfikator", "width"=>"100%", "value"=>"%%{content_user__username}%%", "order"=>1, ),
 			array( "title"=>"Ostatni dostęp", "width"=>"110", "value"=>"%%[date]{content_user__login_correct}%%", ),
 			array( "title"=>"Status", "align"=>"center", "value"=>"%%{content_user__status}%%", "order"=>1,
-				"valuesmatch"=>array( 
+				"valuesmatch"=>array(
 		                    1=>"<div class=gray>Nowy - nieaktywny</div>",
-		                    2=>"<div class=green>Aktywny</div>", 
+		                    2=>"<div class=green>Aktywny</div>",
 		                    3=>"<div class=red>Zablokowany</div>"
                 ),
 			),
@@ -197,7 +197,7 @@ $('#tabs').ready(function() {
 																"xss_secured"=>true
 															));?>
 														</div>
-														<td><a href="<?=$ENGINE?>/content_usergroup.php?content_usergroup__id=<?=$row["content_usergroup__id"]?>"><?=$row["content_usergroup__name"]?></a></td>
+														<td><a href="<?=$ENGINE?>/contentusergroup.php?content_usergroup__id=<?=$row["content_usergroup__id"]?>"><?=$row["content_usergroup__name"]?></a></td>
 													</tr>
 <?
 		}

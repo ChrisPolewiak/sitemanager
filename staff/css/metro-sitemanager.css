@@ -1,0 +1,41 @@
+.metro .alert {
+	padding: 5px 10px;
+	border: 1px solid;
+	border-left: 4px solid;
+	margin-bottom: 4px;
+}
+.metro .alert .grid, .alert .grid .row, .alert .p {
+	margin: 0;
+}
+.metro .alert.alert-muted {
+	border-color: #999999;
+	color: #999999;
+}
+.metro .alert.alert-info {
+	border-color: #1ba1e2;
+	color: #1ba1e2;
+}
+.metro .alert.alert-alert, .alert.alert-error {
+	border-color: #e51400;
+	color: #e51400;
+}
+.metro .alert.alert-warning {
+	border-color: #fa6800;
+	color: #fa6800;
+}
+.metro .alert.alert-success {
+	border-color: #60a917;
+	color: #60a917;
+}
+.metro .tile-group {
+	padding-top: 0px;
+}
+.icon-edit:before {
+  content: "\e002";
+}
+.icon-plus-sign:before {
+  content: "\e083";
+}
+.icon-ok:before {
+  content: "\e08a";
+}

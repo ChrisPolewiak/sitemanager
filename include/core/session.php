@@ -1,7 +1,7 @@
 <?
 /**
  * session
- * 
+ *
  * @author		Chris Polewiak <chris@polewiak.pl>
  * @version		5.0.0
  * @package		core
@@ -78,7 +78,8 @@ function sm_session_destroy($core_session__sid) {
  * @version		5.0.0
 */
 function sm_session_gc() {
-	return core_session_delete_old();
+//	if(time("i")>=0 && time("i")<20)
+		return core_session_delete_old();
 }
 
 /**
@@ -120,7 +121,6 @@ if ( !defined("SESSION_DISABLED") ) {
 	session_start();
 	$_SESSION = sm_session_read( $core_session__sid );
 	register_shutdown_function("sm_session_write");
-//	register_shutdown_function("sm_session_gc");
 }
 
 $_SESSION["sm_core"] = array(

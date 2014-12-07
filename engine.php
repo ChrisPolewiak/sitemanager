@@ -1,5 +1,7 @@
 <?
 
+require "trace.php";
+
 if(!isset($_SERVER["PATH_INFO"])){
 	$_SERVER["PATH_INFO"] = "/index";
 }
@@ -43,8 +45,11 @@ if($page == "captcha" || preg_match("/^captcha\//", $page)) {
 	exit;
 }
 
+sm_trace( "Before include/init.php" );
+
 require_once "include/init.php";
 
+sm_trace( "After include/init.php" );
 
 /*
  * Admin
@@ -73,14 +78,17 @@ foreach($_GET AS $k=>$v) {
 $SM_LANG = $LANG;
 
 checkaccss_to_site_by_hostallowlist();
+sm_trace( "checkaccss_to_site_by_hostallowlist" );
 
 sm_content_user_access_prepare();
+sm_trace( "sm_content_user_access_prepare" );
 
 //
 // AVAILABLE PAGES
 //
 
 if($result=content_page_fetch_by_lang( $SM_LANG )){
+sm_trace( "content_page_fetch_by_lang" );
 	while($row=$result->fetch(PDO::FETCH_ASSOC)){
 		if( $row["content_page__url"] ) {
 			$PAGES_ALLOW[$row["content_page__url"]] = $row;

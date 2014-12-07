@@ -1,7 +1,7 @@
 <?
 /**
  * content_user
- * 
+ *
  * @author		Chris Polewiak <chris@polewiak.pl>
  * @version		5.0.0
  * @package		sql
@@ -33,6 +33,7 @@ function content_user_edit( $dane ) {
 		$dane["content_user__login_false"] = $tmp_dane["content_user__login_false"];
 		$dane["content_user__login_falsecount"] = $tmp_dane["content_user__login_falsecount"];
 		$dane["content_user__security_token"] = $tmp_dane["content_user__security_token"];
+		$dane["content_user__autologin_token"] = $tmp_dane["content_user__autologin_token"];
 		$dane["record_create_date"] = $tmp_dane["record_create_date"];
 		$dane["record_create_id"]   = $tmp_dane["record_create_id"];
 		core_changed_add( $dane["content_user__id"], "content_user", $tmp_dane, "edit" );
@@ -43,6 +44,7 @@ function content_user_edit( $dane ) {
 		$dane["content_user__login_false"] = 0;
 		$dane["content_user__login_falsecount"] = 0;
 		$dane["content_user__security_token"] = md5(rand()*microtime());
+		$dane["content_user__autologin_token"] = md5(rand()*microtime());
 		$dane["record_create_date"] = time();
 		$dane["record_create_id"]   = $_SESSION["content_user"]["content_user__id"];
 		core_changed_add( $dane["content_user__id"], "content_user", "", "add" );
@@ -64,6 +66,7 @@ function content_user_edit( $dane ) {
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__login_false"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__login_falsecount"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__security_token"])."',\n";
+	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["content_user__autologin_token"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_create_date"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_create_id"])."',\n";
 	$SQL_QUERY .= "'". sm_secure_string_sql( $dane["record_modify_date"])."',\n";
@@ -78,7 +81,7 @@ function content_user_edit( $dane ) {
 	sitemanager_codetrigger_exec("post:sitemanager_content_user_edit_phpuser", array(
 		"username"=>$dane["content_user__username"],
 	));
-	
+
 	return $dane["content_user__id"];
 }
 
@@ -98,6 +101,24 @@ function content_user_token_change( $content_user__id ) {
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_token_change()",$SQL_QUERY,$e); }
 
 	return $content_user__security_token;
+}
+
+/**
+ * @category	content_user_autologin_token_change
+ * @package		sql
+ * @version		5.0.0
+*/
+function content_user_autologin_token_change( $content_user__id ) {
+
+	$content_user__autologin_token = md5(microtime());
+
+	$SQL_QUERY  = "UPDATE ".DB_TABLEPREFIX."_content_user SET ";
+	$SQL_QUERY .= "content_user__autologin_token = '".$content_user__autologin_token."' ";
+	$SQL_QUERY .= "WHERE content_user__id = '". sm_secure_string_sql($content_user__id)."' ";
+
+	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_user_autologin_token_change()",$SQL_QUERY,$e); }
+
+	return $content_user__autologin_token;
 }
 
 /**
@@ -343,14 +364,17 @@ function content_user_validate( $dane ) {
 	}
 	else if($tmp=content_user_get_by_username($dane["content_user__username"])) {
 		if($tmp["content_user__id"] != $dane["content_user__id"]) {
-			$ERROR["content_user__username"] = "Podany identyfikator jest już przypisany do innego użytkownika";
+			$ERROR["content_user__username"] = "Podany adres e-mail jest już przypisany do innego użytkownika";
 		}
+	}
+	else if(! check_email_valid($dane["content_user__username"]) ) {
+		$ERROR["content_user__username"] = "Podany e-mail '".$dane["content_user__username"]."' nie jest poprawnym adresem";
 	}
 	if( CheckPasswordStrength( $dane["content_user__password"] ) < 2 ||  strlen($dane["content_user__password"]) < 8 ) {
 		$ERROR["content_user__password"] = "Nieprawidłowe hasło - hasło musi się składać z liter i cyfr oraz musi zawierać min 8 znaków";
 	}
 	else if ( strtolower($dane["content_user__username"]) == strtolower($dane["content_user__password"]) ) {
-		$ERROR[] = "Hasło musi być inne niż identyfikator";
+		$ERROR[] = "Hasło musi być inne niż adres e-mail";
 	}
 	if ( $dane["content_user__password"] != $dane["content_user__password2"]) {
 		$ERROR["content_user__password2"] = "Hasło i jego powtórzenie muszą być identyczne";

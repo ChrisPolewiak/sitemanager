@@ -57,7 +57,9 @@ if( $content_usergroup__id )
 	if($result=content_usergroup2content_access_fetch_by_usergroup($dane["content_usergroup__id"]))
 	{
 		while($row=$result->fetch(PDO::FETCH_ASSOC))
-			$content_usergroupacl[$row["content_access__id"]] = $row["content_usergroupacl__bit"];
+		{
+			$content_usergroupacl[$row["content_access__id"]] = $row["content_usergroup2content_access__bit"];
+		}
 	}
 }
 
@@ -132,7 +134,7 @@ else
 			$even=$even?0:1;
 ?>
 									<tr class="<?=$even?"even":"odd"?>">
-										<td><a href="content_access.php?content_access__id=<?=$row["content_access__id"]?>"><?=$row["content_access__name"]?></a></td>
+										<td><a href="contentaccess.php?content_access__id=<?=$row["content_access__id"]?>"><?=$row["content_access__name"]?></a></td>
 										<td align=center><input type="checkbox" name="set[<?=$row["content_access__id"]?>]" <?=($content_usergroupacl[$row["content_access__id"]]?"checked":"")?>></td>
 									</tr>
 <?
@@ -202,10 +204,10 @@ $('#action-add').click(function() {
 			"mainkey" => "content_user__id",
 			"columns" => array(
 				array( "title"=>__("core", "Identyfikator"), "width"=>"100%", "value"=>"%%{content_user__username}%%", "order"=>1, ),
-				array( "title"=>__("core", "Status"), "width"=>"10%", "align"=>"center", "value"=>"%%{content_user__status}%%", "order"=>1, 
-					"valuesmatch"=>array( 
+				array( "title"=>__("core", "Status"), "width"=>"10%", "align"=>"center", "value"=>"%%{content_user__status}%%", "order"=>1,
+					"valuesmatch"=>array(
 						1=>"<div class=gray>".__("core", "Nowy - nieaktywny")."</div>",
-						2=>"<div class=green>".__("core", "Aktywny")."</div>", 
+						2=>"<div class=green>".__("core", "Aktywny")."</div>",
 						3=>"<div class=red>".__("core", "Zablokowany")."</div>"
 					),
 				),

@@ -34,24 +34,32 @@ if (preg_match("/cacheimg\/(.+)/", $page, $tmp))
 
 if ( $cache = content_cache_get( $datastore, $id, $width, $height ) )
 {
+sm_trace( "content_cache_get" );
+
 	$image = new Imagick();
 
 	switch($cache["content_cache__encode"])
 	{
 		case "base64":
 			$filedata = base64_decode( $cache["content_cache__data"] );
+sm_trace( "base64_decode" );
 			break;
 	}
 
 	$image = new Imagick();
 	$image->ReadImageBlob( $filedata );
+if(!SM_TRACE)
+{
 	header("Content-type: ".$cache["content_cache__contenttype"]);
 	echo $image;
+}
 	
 	exit;
 }
 else
 {
 	content_cache_generator( $datastore, $id, $width, $height, $showimg=true );
+	sm_trace( "content_cache_generator" );
+
 }
 ?>

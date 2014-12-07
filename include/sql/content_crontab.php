@@ -1,7 +1,7 @@
 <?
 /**
  * content_cache
- * 
+ *
  * @author		Chris Polewiak <chris@polewiak.pl>
  * @version		1.0
  * @package		sql
@@ -146,8 +146,8 @@ function content_crontab_fetch_active() {
 function content_crontab_updaterunat( $content_crontab__id ) {
 
 	$SQL_QUERY  = "UPDATE ".DB_TABLEPREFIX."_content_crontab \n";
-	$SQL_QUERY .= "SET content_crontab__lastrunat=".time().", content_crontab__laststatus=0, content_crontab__lastmessage=''  \n";
-	$SQL_QUERY .= "WHERE content_crontab__id='". sm_secure_string_sql( $content_crontab__id)."' \n";
+	$SQL_QUERY .= "SET content_crontab__lastrunat='".date("Y-m-d H:i:s")."', content_crontab__laststatus=0, content_crontab__lastmessage=''  \n";
+	$SQL_QUERY .= "WHERE content_crontab__id='". sm_secure_string_sql( $content_crontab__id )."' \n";
 
 	try { $result = $GLOBALS["SM_PDO"]->query($SQL_QUERY); } catch(PDOException $e) { sqlerr("content_crontab_updaterunat()",$SQL_QUERY,$e); }
 

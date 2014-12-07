@@ -4,6 +4,8 @@
 //foreach($_GET AS $k=>$v){ $$k = $_GET[$k]; }
 // Config
 $SM_CONFIG = parse_ini_file ($ROOT_DIR."/config.ini.php", $process_sections=true );
+sm_trace( "parse_ini_file" );
+
 if(is_array($SM_CONFIG)) {
 
 	if ($SM_CONFIG["database"]["engine"]) {
@@ -70,10 +72,10 @@ else {
 $BACKUP_DIR="";
 
 $SOFTWARE_INFORMATION = array(
-	"version"     => "5.09",
+	"version"     => "5.10",
 	"author"      => "Chris Polewiak",
 	"application" => "SiteManager Engine",
-	"date"        => "2014-03-09",
+	"date"        => "2014-12-07",
 );
 
 $BACKUP_DIR = $BACKUP_DIR ? $BACKUP_DIR : $ROOT_DIR."/backup";
@@ -91,19 +93,27 @@ $CONTENTFILESSHOWTYPE_AVAILABLEOBJECT = array();
 $CACHE_DIR = $ROOT_DIR."/cache";
 
 require $INCLUDE_DIR."/lang/init.php";
+sm_trace( "inc lang/init.php" );
 require $INCLUDE_DIR."/core/init.php";
+sm_trace( "inc core/init.php" );
 require $INCLUDE_DIR."/vars/init.php";
+sm_trace( "inc vars/init.php" );
 
 /*
  * SQL CONNECT
  */
-try { $SM_PDO = new PDO($DB_ENGINE .":dbname=". $DB_NAME .";host=". $DB_SERVER, $DB_USER, $DB_PASS); } catch(PDOException $e) { error("Connection failed: " . $e->getMessage() ); }
+try { $SM_PDO = new PDO($DB_ENGINE .":dbname=". $DB_NAME .";host=". $DB_SERVER, $DB_USER, $DB_PASS, array(PDO::ATTR_PERSISTENT => true) ); } catch(PDOException $e) { error("Connection failed: " . $e->getMessage() ); }
+sm_trace( "PDO Connect $DB_ENGINE, $DB_NAME, $DB_SERVER, $DB_USER " );
 // PDO Error handling
 $SM_PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+sm_trace( "PDO setAttributes" );
 $SM_PDO->query("SET NAMES 'utf8'");
+sm_trace( "PDO set UTF" );
 
 require $INCLUDE_DIR."/sql/init.php";
+sm_trace( "inc sql/init.php" );
 require $ROOT_DIR."/plugin/plugin.php";
+sm_trace( "inc plugin/plugin.php" );
 
 // musi byc po sql'ach
 #require $INCLUDE_DIR."/addons/download.php";
@@ -111,6 +121,7 @@ require $ROOT_DIR."/plugin/plugin.php";
 
 // SESSION
 require $INCLUDE_DIR."/core/session.php";
+sm_trace( "inc core/session.php" );
 
 $LANG = core_language_load();
 
