@@ -20,7 +20,7 @@
 	<link rel="stylesheet" href="/staff/css/theme-<?=$_REQUEST["sm_theme"]?>.css" type="text/css" media="screen">
 <? } ?>
 
-	<script language="JavaScript" type="text/javascript" src="/staff/js/jquery-1.8.3.min.js"></script>
+	<script language="JavaScript" type="text/javascript" src="/staff/js/jquery-3.7.1.min.js"></script>
 	<script language="JavaScript" type="text/javascript" src="/staff/js/jquery-ui-1.9.2.custom.min.js"></script>
 	<script language="JavaScript" type="text/javascript" src="/staff/js/sitemanager.js"></script>
 
